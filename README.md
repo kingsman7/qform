@@ -1,4 +1,4 @@
-## QFORM  | 0.0.1
+## QFORM  | 1.0.0
 ##### By Imagina Soluciones Web
 
 ## Installation
