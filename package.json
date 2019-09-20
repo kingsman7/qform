@@ -1,0 +1,53 @@
+{
+  "_from": "@imagina/qcommerce@^1.0.4",
+  "_id": "@imagina/qcommerce@1.0.5",
+  "_inBundle": false,
+  "_integrity": "sha512-+TgnYMb33uPQc8hYuhRBYW1l4w+evN+HCx7eOqVC6DRz8cbthihV0NptCqBTgKiqkZPKUknhBRBDJXqct7wkCg==",
+  "_location": "/@imagina/qcommerce",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@imagina/qcommerce@^1.0.4",
+    "name": "@imagina/qcommerce",
+    "escapedName": "@imagina%2fqcommerce",
+    "scope": "@imagina",
+    "rawSpec": "^1.0.4",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.4"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@imagina/qcommerce/-/qcommerce-1.0.5.tgz",
+  "_shasum": "c3ba4b1c7dbfb7c128a93493340cb5fceeda79b4",
+  "_spec": "@imagina/qcommerce@^1.0.4",
+  "_where": "D:\\basequasar-app",
+  "author": {
+    "name": "http://imaginacolombia.com"
+  },
+  "bugs": {
+    "url": "https://github.com/imagina/qcommerce/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Package to use Icommerce in Base Quasar 1.0.0",
+  "homepage": "https://github.com/imagina/qcommerce#readme",
+  "keywords": [
+    "quasar",
+    "laravel",
+    "asgardcms",
+    "qcommerce"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "@imagina/qcommerce",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imagina/qcommerce.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.5"
+}
