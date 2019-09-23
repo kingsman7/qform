@@ -7,6 +7,7 @@ export default {
     label: 'Label',
     placeholder: 'Placeholder',
     form: 'Form',
+    order: 'Order',
   },
   message : {
 

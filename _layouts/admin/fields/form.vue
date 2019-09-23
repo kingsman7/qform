@@ -5,7 +5,8 @@
     <div class="relative-position q-mb-lg backend-page">
       <div class="box">
         <div class="row gutter-x-sm" v-if="success">
-  
+          
+          
           <!--Language-->
           <div class="col-12">
             <locales v-model="locale" ref="localeComponent" @validate="$v.$touch()"/>
@@ -54,7 +55,6 @@
               :options="types"
               placeholder=""/>
             
-            
             <div v-if="locale.formTemplate.type == 5 || locale.formTemplate.type == 6">
               <optionsForSelect :model="locale.formTemplate"/>
             </div>
@@ -64,29 +64,25 @@
           <!--Form right-->
           <div class="col-12 col-md-4" v-if="locale.success">
   
-            <div class="input-title">{{$tr('ui.form.parent')}}</div>
-            <tree-select
-              v-model="locale.formTemplate.parentId"
+            <div class="input-title q-mt-xs" v-if="false">{{$tr('qform.layout.form.form')}}</div>
+            <tree-select v-if="false"
+              v-model="locale.formTemplate.formId"
               :clearable="false"
-              :options="fields"
+              :options="forms"
               placeholder=""/>
             
             <q-checkbox
               :label="$tr('ui.form.required')"
               v-model="locale.formTemplate.required"
               class="q-mt-lg"/>
-            
-            <div class="input-title q-mt-sm q-mt-md">{{$tr('qform.layout.form.form')}}</div>
-            <tree-select
-              v-model="locale.formTemplate.formId"
-              :clearable="false"
-              :options="forms"
-              placeholder=""/>
-          </div>
   
-
-          
-          
+            <q-field>
+              <q-input
+                v-model="locale.formTemplate.order"
+                :stack-label="`${$tr('qform.layout.form.order')}`"/>
+            </q-field>
+            
+          </div>
         </div>
       </div>
     </div>
@@ -168,9 +164,9 @@
             type: null,
             name: '',
             required: false,
-            parentId: null,
-            formId: null,
+            formId: this.$route.params.formId,
             selectable: [],
+            order: 0,
           },
           fieldsTranslatable: {
             label: '',
@@ -256,6 +252,7 @@
       //order data item to locale component
       orderDataItemToLocale(data) {
         let orderData = _cloneDeep(data)
+        orderData.selectable = JSON.parse(data.selectable)
         this.locale.form = _cloneDeep(orderData)
       },
       //Create Product
@@ -267,7 +264,7 @@
           let configName = 'apiRoutes.qform.fields'
           this.$crud.create(configName, this.getDataForm()).then(response => {
             this.$alert.success({message: `${this.$tr('ui.message.recordCreated')} ID: ${response.data.id}`})
-            this.$router.push({name: 'qform.admin.fields.index'})
+            this.$router.push({name: 'qform.admin.fields.index', params:{id: this.$route.params.formId}})
           }).catch(error => {
             this.loading = false
             this.$alert.error({message: this.$tr('ui.message.recordNoCreated'), pos: 'bottom'})

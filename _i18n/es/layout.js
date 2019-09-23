@@ -7,6 +7,7 @@ export default {
     label: 'Etiqueta',
     placeholder: 'Placeholder',
     form: 'Formulario',
+    order: 'Orden',
   },
   message : {
 
