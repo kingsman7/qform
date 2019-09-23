@@ -7,7 +7,6 @@ export default [
     icon: 'fas fa-wallet',
     children: [
       pages.qform.forms,
-      pages.qform.fields,
       pages.qform.leads,
     ]
   },
