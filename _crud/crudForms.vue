@@ -33,7 +33,17 @@
                   select: {label: 'fullName', id: 'id'},
                 }
               }
-            }
+            },
+            actions : [
+              {
+                icon : 'view_compact',
+                color : 'info',
+                route : 'qform.admin.fields.index',
+                action : () => {
+                
+                }
+              }
+            ]
           },
           update: {
             title: this.$tr('qform.layout.updateForm'),
