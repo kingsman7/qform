@@ -34,9 +34,10 @@
   
 ## Components  
 
-  | NAME | PATH |
-  | ------------- | ------------- |
-  | optionsForSelect | @imagina/qform/_components/admin/fields/optionsForSelect |
+  | NAME |TYPE |PATH | PROPS |
+  | ------------- | ------------- | ------------- | ------------- |
+  | optionsForSelect | ADMIN|@imagina/qform/_components/admin/fields/optionsForSelect | - |
+  | renderForm | FRONTEND |@imagina/qform/_components/frontend/forms/renderForm | (Number)formId |
 
 
 ## Store VUEX  
