@@ -54,7 +54,7 @@
               :options="types"
               placeholder=""/>
             
-            <div v-if="locale.formTemplate.type == 5 || locale.formTemplate.type == 6">
+            <div v-if="locale.formTemplate.type == 5 || locale.formTemplate.type == 6 || locale.formTemplate.type == 8">
               <optionsForSelect :model="locale.formTemplate"/>
             </div>
             
