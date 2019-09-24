@@ -3,6 +3,7 @@
     id="pageId"
     class="q-layout-page layout-padding">
     <div class="relative-position q-mb-lg backend-page">
+      
       <div class="box">
         <div class="row gutter-y-sm">
           <div class="col-md-12 relative-position">
@@ -95,12 +96,17 @@
   </div>
 </template>
 <script>
+  
+  import renderForm from '@imagina/qform/_components/frontend/forms/renderForm'
+  
   import draggable from 'vuedraggable'
   import {helper} from "@imagina/qhelper/_plugins/helper";
   export default {
     props: {},
     components:{
-      draggable
+      draggable,
+
+      renderForm
     },
     computed: {
       dragOptions() {
