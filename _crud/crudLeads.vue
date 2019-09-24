@@ -10,11 +10,11 @@
           read: {
             columns: [
               {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
-              {name: 'form', label: this.$tr('qform.layout.form.form'), field: 'form',
+              {name: '_form.vue', label: this.$tr('qform.layout.form.form'), field: '_form.vue',
                 format: val => (val && val.title) ? val.title : '-'},
               {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
             ],
-            requestParams: {include: 'form'},
+            requestParams: {include: '_form.vue'},
             filters: {
               formId: {
                 label: this.$tr('qform.layout.form.form'),
