@@ -3,18 +3,21 @@
     id="pageId"
     class="q-layout-page layout-padding">
     <div class="relative-position q-mb-lg backend-page">
-      
+      <div class="box q-mb-sm" v-if="false">
+        <render-form :formId="$route.params.id"/>
+      </div>
       <div class="box">
         <div class="row gutter-y-sm">
           <div class="col-md-12 relative-position">
             <div class="float-right">
               <q-btn
-                icon="arrow_back_ios"
+                icon="fas fa-arrow-alt-circle-left"
                 :to="{name: 'qform.admin.form.index'}"
                 label="Back to forms"
-                color="green"
+                color="primary"
                 class="q-ml-xs"/>
               <q-btn
+                v-if="false"
                 @click="updateOrder()"
                 icon="reorder"
                 label="Update Order"
@@ -39,6 +42,7 @@
           </div>
           <div class="col-md-12">
             <draggable
+              @update="updateOrder"
               v-bind="dragOptions"
               v-model="fields">
               <transition-group class="list-group">
@@ -46,19 +50,21 @@
                   class="list-group-item"
                   v-for="(field, index) in fields"
                   :key="field.id">
-                  <q-btn
-                    flat
-                    icon="fas fa-pen"
-                    @click="goTo(field)"
-                    size="sm"
-                    color="positive"/>
-                  <q-btn
-                    @click="dialogDeleteItem = true; itemIdToDelete = field"
-                    flat
-                    icon="fas fa-trash-alt"
-                    size="sm"
-                    color="negative"/>
-                  {{field.label}}
+                  <small>({{index+1}})</small> {{field.label}}
+                  <div style="display:inline; position: absolute; right: 30px">
+                    <q-btn
+                      icon="fas fa-pen"
+                      @click="goTo(field)"
+                      size="xs"
+                      class="q-mr-sm"
+                      color="positive"/>
+                    <q-btn
+                      @click="dialogDeleteItem = true; itemIdToDelete = field"
+                      icon="fas fa-trash-alt"
+                      size="xs"
+                      class="q-mr-sm"
+                      color="negative"/>
+                  </div>
                 </div>
               </transition-group>
             </draggable>
@@ -96,16 +102,14 @@
   </div>
 </template>
 <script>
-  
   import renderForm from '@imagina/qform/_components/frontend/forms/renderForm'
-  
   import draggable from 'vuedraggable'
   import {helper} from "@imagina/qhelper/_plugins/helper";
+  
   export default {
     props: {},
     components:{
       draggable,
-
       renderForm
     },
     computed: {
@@ -124,9 +128,6 @@
           element.order = index
         })
       }
-    },
-    validations() {
-      return {}
     },
     mounted() {
       this.$nextTick(function () {
@@ -148,7 +149,11 @@
           refresh: refresh,
           params :{
             filter: {
-              formId: this.$route.params.id
+              formId: this.$route.params.id,
+              order:{
+                field:'order',
+                way: 'asc'
+              }
             }
           }
         }
@@ -168,7 +173,12 @@
         this.updateOrderInField(event.moved.element, event.moved.newIndex)
       },
       goTo(field){
-        this.$router.push({name: 'qform.admin.fields.update', params: {id: field.id} })
+        this.$router.push({
+          name: 'qform.admin.fields.update',
+          params: {
+            id: field.id
+          }
+        })
       },
       deleteItem(){
         this.loading = true
@@ -184,19 +194,12 @@
           })
       },
       updateOrder () {
-        /*let data = {
+        let data = {
           id: this.$route.params.id,
           fields: this.fields
         }
-
-        this.fields.forEach( item => {
-          delete item.typeName
-        })
-
-
         this.loading = true
-        let params = { params:{} }
-        this.$crud.update('apiRoutes.qform.forms', this.$route.params.id, data, params)
+        this.$crud.create('apiRoutes.qform.updateOrders', data)
         .then( response => {
           this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
           this.loading = false
@@ -204,7 +207,7 @@
         .catch( error => {
           this.loading = false
           this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-        })*/
+        })
       }
     }
   }
