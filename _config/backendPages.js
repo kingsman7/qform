@@ -83,5 +83,16 @@ export default {
 		title: 'qform.sidebar.adminLead',
 		icon: 'fas fa-chalkboard-teacher',
 		middleware: [auth,access]
-	}
+	},
+  leadsShow: {
+    permission: null,
+    activated: true,
+    path: '/iform/lead/:id',
+    name: 'qform.admin.leads.show',
+    layout: require('@imagina/qform/_layouts/admin/leads/show').default,
+    containerLayout: master,
+    title: 'qform.sidebar.adminLead',
+    icon: 'fas fa-chalkboard-teacher',
+    middleware: [auth,access]
+  },
 }

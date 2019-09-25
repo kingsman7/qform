@@ -10,5 +10,5 @@ export default {
   fields : `${urlBase}/fields`,
   leads : `${urlBase}/leads`,
   types : `${urlBase}/types`,
-
+  updateOrders : `${urlBase}/fields/updateOrders`,
 }
