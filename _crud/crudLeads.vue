@@ -34,7 +34,7 @@
               {
                 icon : 'fas fa-home',
                 color : 'teal',
-                route : 'app.home', //method add data from record as params of route
+                route : 'qform.admin.leads.show', //method add data from record as params of route
                 action : () => {
                   //this.$alert.info({message : 'Tes!'})
                 }
