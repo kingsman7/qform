@@ -23,7 +23,7 @@ export default {
     activated: true,
     path: '/iform/forms/:id/edit',
     name: 'qform.admin.form.fields.create',
-    layout: require('@imagina/qform/_layouts/admin/forms/form').default,
+    layout: require('@imagina/qform/_layouts/admin/forms/index').default,
     containerLayout: master,
     title: 'qform.sidebar.adminForm',
     icon: 'fab fa-wpforms',
