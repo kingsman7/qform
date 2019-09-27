@@ -1,9 +1,9 @@
-## QFORM  | 1.0.2
+## QFORM  | 1.0.3
 ##### By Imagina Soluciones Web
 
 ## Installation
 
-`` npm i @imagina/qform@1.0.2 ``
+`` npm i @imagina/qform@1.0.3 ``
 
 ## API Routes
 
