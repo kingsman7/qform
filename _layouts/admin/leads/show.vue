@@ -15,11 +15,14 @@
             </div>
           </div>
           <div class="table-top-right col-12 col-md-8 col-xl-9 text-right">
+            
             <q-btn
+              @click="forceDownload()"
               icon="fas fa-download"
               color="primary"
               class="q-ml-xs"/>
             <q-btn
+              @click="getLeads(true)"
               icon="fas fa-sync-alt"
               color="info"
               class="q-ml-xs"/>
@@ -33,6 +36,7 @@
 </template>
 
 <script>
+  import config from 'src/config/index'
   export default {
     data () {
       return {
@@ -97,8 +101,9 @@
           }
         })
       },
-      getLeads(){
+      getLeads( refresh = false){
         let params = {
+          refresh: refresh,
           params:{
             filter:{
               formId: this.$route.params.id
@@ -129,7 +134,12 @@
           }
         }
         return response
+      },
+      forceDownload(){
+        let url = `${config('apiRoutes.qform.leads')}?filter={"formId":${this.$route.params.id},"export":"true"}`
+        window.open(url, '_blank');
       }
+
     }
   }
 </script>

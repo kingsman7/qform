@@ -2,72 +2,99 @@
   <div
     id="pageId"
     class="q-layout-page layout-padding">
-    <div class="relative-position q-mb-lg backend-page">
+    <div class=" q-mb-lg backend-page">
+      
       <div class="box q-mb-sm" v-if="false">
         <render-form :formId="$route.params.id"/>
       </div>
-      <div class="box">
-        <div class="row gutter-y-sm">
-          <div class="col-md-12 relative-position">
-            <div class="float-right">
-              <q-btn
-                icon="fas fa-arrow-alt-circle-left"
-                :to="{name: 'qform.admin.form.index'}"
-                label="Back to forms"
-                color="primary"
-                class="q-ml-xs"/>
-              <q-btn
-                v-if="false"
-                @click="updateOrder()"
-                icon="reorder"
-                label="Update Order"
-                color="primary"
-                class="q-ml-xs"/>
-              <q-btn
-                icon="fas fa-edit"
-                :to="{name: 'qform.admin.fields.create', params: {formId: $route.params.id} }"
-                label="new Redcord"
-                color="green"
-                class="q-ml-xs"/>
-              <q-btn
-                @click.native="getFields(true)"
-                icon="fas fa-sync-alt"
-                color="info"
-                class="q-ml-xs">
-                <q-tooltip :delay="300">
-                  {{$tr('ui.label.refresh')}}
-                </q-tooltip>
-              </q-btn>
+      
+      <div class="row gutter-x-sm">
+        <div class="col-md-7 relative-position">
+          <div class="box">
+            <div class="row gutter-y-sm">
+              <div class="col-md-12 ">
+                <div class="float-right">
+                  <q-btn
+                    icon="fas fa-arrow-alt-circle-left"
+                    :to="{name: 'qform.admin.form.index'}"
+                    label="Back to forms"
+                    color="primary"
+                    class="q-ml-xs"/>
+                  <q-btn
+                    v-if="false"
+                    @click="updateOrder()"
+                    icon="reorder"
+                    label="Update Order"
+                    color="primary"
+                    class="q-ml-xs"/>
+                  <q-btn
+                    icon="fas fa-edit"
+                    :to="{name: 'qform.admin.fields.create', params: {formId: $route.params.id} }"
+                    label="new Redcord"
+                    color="green"
+                    class="q-ml-xs"/>
+                  <q-btn
+                    :to="{name: 'qform.admin.leads.show', params:{id: $route.params.id}}"
+                    icon="fab fa-wpforms"
+                    color="info"
+                    class="q-ml-xs">
+                    <q-tooltip :delay="300">
+                      Leads
+                    </q-tooltip>
+                  </q-btn>
+                  <q-btn
+                    @click.native="getFields(true)"
+                    icon="fas fa-sync-alt"
+                    color="info"
+                    class="q-ml-xs">
+                    <q-tooltip :delay="300">
+                      {{$tr('ui.label.refresh')}}
+                    </q-tooltip>
+                  </q-btn>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <draggable
+                  @update="updateOrder"
+                  v-bind="dragOptions"
+                  v-model="fields">
+                  <transition-group class="list-group">
+                    <div
+                      class="list-group-item"
+                      v-for="(field, index) in fields"
+                      :key="field.id">
+                     
+                      <div style="display:inline; position: relative; right: 0px">
+                        <q-btn
+                          icon="fas fa-pen"
+                          @click="goTo(field)"
+                          size="xs"
+                          class="q-mr-sm"
+                          color="positive"/>
+                        <q-btn
+                          @click="dialogDeleteItem = true; itemIdToDelete = field"
+                          icon="fas fa-trash-alt"
+                          size="xs"
+                          class="q-mr-sm"
+                          color="negative"/>
+                      </div>
+                      {{field.label}}
+                    </div>
+                  </transition-group>
+                </draggable>
+              </div>
             </div>
           </div>
-          <div class="col-md-12">
-            <draggable
-              @update="updateOrder"
-              v-bind="dragOptions"
-              v-model="fields">
-              <transition-group class="list-group">
-                <div
-                  class="list-group-item"
-                  v-for="(field, index) in fields"
-                  :key="field.id">
-                  <small>({{index+1}})</small> {{field.label}}
-                  <div style="display:inline; position: absolute; right: 30px">
-                    <q-btn
-                      icon="fas fa-pen"
-                      @click="goTo(field)"
-                      size="xs"
-                      class="q-mr-sm"
-                      color="positive"/>
-                    <q-btn
-                      @click="dialogDeleteItem = true; itemIdToDelete = field"
-                      icon="fas fa-trash-alt"
-                      size="xs"
-                      class="q-mr-sm"
-                      color="negative"/>
-                  </div>
-                </div>
-              </transition-group>
-            </draggable>
+          <inner-loading :visible="loading"/>
+        </div>
+        <div class="col-md-5">
+  
+          <div class="box">
+            <div class="row gutter-y-sm">
+              <div class="col-md-12 ">
+              <formForm/>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -98,19 +125,21 @@
           @click="deleteItem()"/>
       </div>
     </q-dialog>
-    <inner-loading :visible="loading"/>
   </div>
 </template>
 <script>
   import renderForm from '@imagina/qform/_components/frontend/forms/renderForm'
+  import formForm from '@imagina/qform/_components/admin/forms/form'
   import draggable from 'vuedraggable'
   import {helper} from "@imagina/qhelper/_plugins/helper";
+  
   
   export default {
     props: {},
     components:{
       draggable,
-      renderForm
+      renderForm,
+      formForm
     },
     computed: {
       dragOptions() {
