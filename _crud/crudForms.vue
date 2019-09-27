@@ -45,10 +45,7 @@
               }
             ]
           },
-          update: {
-            title: this.$tr('qform.layout.updateForm'),
-            requestParams: {include: 'fields,leads,user'}
-          },
+          update: false,
           delete: true,
           formLeft: {
             id: {value: ''},

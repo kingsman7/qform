@@ -4,17 +4,16 @@
     computed: {
       crudData() {
         return {
-          apiRoute: 'apiRoutes.qform.leads',
+          apiRoute: 'apiRoutes.qform.forms',
           permission: 'iform.leads',
           create: false,
           read: {
             columns: [
               {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
-              {name: 'form', label: this.$tr('qform.layout.form.form'), field: 'form',
-                format: val => (val && val.title) ? val.title : '-'},
+              {name: 'title', label: this.$tr('qform.layout.form.form'), field: 'title', align: 'left'},
               {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
             ],
-            requestParams: {include: 'form'},
+            requestParams: {},
             filters: {
               formId: {
                 label: this.$tr('qform.layout.form.form'),
@@ -32,9 +31,9 @@
             },
             actions : [
               {
-                icon : 'fas fa-home',
+                icon : 'fab fa-wpforms',
                 color : 'teal',
-                route : 'qform.admin.leads.show', //method add data from record as params of route
+                route : 'qform.admin.leads.show',
                 action : () => {
                   //this.$alert.info({message : 'Tes!'})
                 }
