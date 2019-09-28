@@ -15,19 +15,20 @@
             ],
             requestParams: {},
             filters: {
-              formId: {
-                label: this.$tr('qform.layout.form.form'),
-                value: '',
+              userId: {
+                label: this.$tr('ui.label.user'),
+                value: '0',
                 type: 'select',
                 isRequired: true,
+                isTranslatable: false,
                 options: [
-                  {label: this.$tr('ui.label.all'), id: ''}
+                  {label: this.$tr('ui.label.all'), id: '0'}
                 ],
                 loadOptions: {
-                  apiRoute: 'apiRoutes.qform.forms',
-                  select: {label: 'title', id: 'id'},
+                  apiRoute: 'apiRoutes.quser.users',
+                  select: {label: 'fullName', id: 'id'},
                 }
-              },
+              }
             },
             actions : [
               {
