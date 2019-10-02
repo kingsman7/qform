@@ -91,12 +91,12 @@
       <q-btn
         v-if="productId"
         color="positive" :loading="loading"
-        icon="fas fa-edit" :label="$tr('ui.label.update')" @click="updateItem()"
+        icon="fas fa-edit" :label="$tr('ui.label.update')" @click="update()"
         rounded/>
       <q-btn
         v-else
         color="positive" :loading="loading"
-        icon="fas fa-edit" :label="$tr('ui.label.create')" @click="createItem()"
+        icon="fas fa-edit" :label="$tr('ui.label.create')" @click="create()"
         rounded/>
     </q-page-sticky>
     
@@ -256,7 +256,7 @@
         this.locale.form = _cloneDeep(orderData)
       },
       //Create Product
-      createItem() {
+      create() {
         this.$refs.localeComponent.vTouch()//Validate component locales
         //Check validations
         if (!this.$v.$error) {
@@ -274,7 +274,7 @@
         }
       },
       //Update Product
-      updateItem() {
+      update() {
         this.$refs.localeComponent.vTouch()//Validate component locales
         //Check validations
         if (!this.$v.$error) {
