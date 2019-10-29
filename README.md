@@ -1,9 +1,8 @@
-## QFORM  | 0.0.1
-##### By Imagina Soluciones Web
+## QFORM  | 2.0.0
 
 ## Installation
 
-`` npm i @imagina/qform@0.0.1 ``
+`` npm i @imagina/qform@2.0.0 ``
 
 ## API Routes
 
@@ -16,12 +15,12 @@
 
 ## Pages
 
-- #### Front-End
+  - ##### Front-End
 
   | PAGE | NAME | PARAMS |
   | ------------- | ------------- | ------------- |
   
-- #### Back-End
+  - ##### Back-End
 
   | PAGE | NAME | PARAMS |
   | ------------- | ------------- | ------------- |
@@ -38,8 +37,3 @@
   | ------------- | ------------- | ------------- | ------------- |
   | optionsForSelect | ADMIN|@imagina/qform/_components/admin/fields/optionsForSelect | - |
   | renderForm | FRONTEND |@imagina/qform/_components/frontend/forms/renderForm | (Number)formId |
-
-
-## Store VUEX  
-- ##### States
-  - None

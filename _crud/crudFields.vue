@@ -5,7 +5,7 @@
       crudData() {
         return {
           apiRoute: 'apiRoutes.qform.fields',
-          permission: 'iform.fields',
+          permission: 'iforms.fields',
           create: {
             title: this.$tr('qform.layout.newField'),
             to : {name:'qform.admin.fields.create'}

@@ -10,7 +10,6 @@
             <div class="q-subheading">{{form.user.fullName}}</div>
           </div>
           <div class="col-md-12">
-            
             <draggable
               @change="handleEvents"
               v-bind="dragOptions"

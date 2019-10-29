@@ -3,12 +3,21 @@
     id="pageId"
     class="q-layout-page layout-padding">
     <div class=" q-mb-lg backend-page">
-      
+
       <div class="box q-mb-sm" v-if="false">
         <render-form :formId="$route.params.id"/>
       </div>
-      
-      <div class="row gutter-x-sm">
+
+      <div class="row q-col-gutter-md">
+        <div class="col-md-5">
+          <div class="box">
+            <div class="row gutter-y-sm">
+              <div class="col-md-12 ">
+                <formForm/>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col-md-7 relative-position">
           <div class="box">
             <div class="row gutter-y-sm">
@@ -53,18 +62,15 @@
                   </q-btn>
                 </div>
               </div>
-              <div class="col-md-12">
-                <draggable
-                  @update="updateOrder"
-                  v-bind="dragOptions"
-                  v-model="fields">
+              <div class="col-md-12 q-mt-md">
+                <draggable @update="updateOrder" v-bind="dragOptions" v-model="fields">
                   <transition-group class="list-group">
-                    <div
-                      class="list-group-item"
-                      v-for="(field, index) in fields"
-                      :key="field.id">
-                     
-                      <div style="display:inline; position: relative; right: 0px">
+                    <div class="row" v-for="(field, index) in fields" :key="field.id">
+                      <div class="col-6 q-py-xs">
+                        <q-icon class="cursor-pointer" name="fas fa-arrows-alt-v"/>
+                        {{field.label}}
+                      </div>
+                      <div class="col-6 q-py-xs text-right">
                         <q-btn
                           icon="fas fa-pen"
                           @click="goTo(field)"
@@ -78,7 +84,9 @@
                           class="q-mr-sm"
                           color="negative"/>
                       </div>
-                      {{field.label}}
+                      <div class="col-12">
+                        <q-separator/>
+                      </div>
                     </div>
                   </transition-group>
                 </draggable>
@@ -87,43 +95,24 @@
           </div>
           <inner-loading :visible="loading"/>
         </div>
-        <div class="col-md-5">
-  
-          <div class="box">
-            <div class="row gutter-y-sm">
-              <div class="col-md-12 ">
-              <formForm/>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-  
-    <q-dialog
-      v-model="dialogDeleteItem"
-      class="backend-page"
-      prevent-close>
-      <!-- Message -->
-      <div slot="message">
-        <h1 class="q-title text-negative">{{itemIdToDelete.label}}</h1>
-        {{$tr('ui.message.deleteRecord')}}
-      </div>
-      <!--Buttons-->
-      <div slot="buttons" >
-        <!--Button cancel-->
-        <q-btn
-          color="blue-grey"
-          label="Cancel"
-          @click="dialogDeleteItem = false"/>
-        <!--Button confirm delete category-->
-        <q-btn
-          color="negative"
-          icon="fas fa-trash-alt"
-          :loading="loading"
-          label="Delete"
-          @click="deleteItem()"/>
-      </div>
+
+    <q-dialog v-model="dialogDeleteItem" prevent-close>
+      <q-card class="backend-page">
+        <q-card-section>
+          <h5 class="q-ma-none text-negative">{{itemIdToDelete.label}}</h5>
+          {{$tr('ui.message.deleteRecord')}}
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <!--Button cancel-->
+          <q-btn color="blue-grey" label="Cancel" @click="dialogDeleteItem = false"/>
+          <!--Button confirm delete category-->
+          <q-btn color="negative" icon="fas fa-trash-alt" :loading="loading"
+                 label="Delete" @click="deleteItem()"/>
+        </q-card-actions>
+      </q-card>
     </q-dialog>
   </div>
 </template>
@@ -132,11 +121,11 @@
   import formForm from '@imagina/qform/_components/admin/forms/form'
   import draggable from 'vuedraggable'
   import {helper} from "@imagina/qhelper/_plugins/helper";
-  
-  
+
+
   export default {
     props: {},
-    components:{
+    components: {
       draggable,
       renderForm,
       formForm
@@ -153,7 +142,7 @@
     },
     watch: {
       fields: function () {
-        this.fields.forEach( (element, index) => {
+        this.fields.forEach((element, index) => {
           element.order = index
         })
       }
@@ -172,36 +161,36 @@
       }
     },
     methods: {
-      getFields(refresh = false){
+      getFields(refresh = false) {
         this.loading = true
         let params = {
           refresh: refresh,
-          params :{
+          params: {
             filter: {
               formId: this.$route.params.id,
-              order:{
-                field:'order',
+              order: {
+                field: 'order',
                 way: 'asc'
               }
             }
           }
         }
         this.$crud.index('apiRoutes.qform.fields', params)
-        .then( response => {
-          this.fields =  response.data.map(item => {
-            return helper.toSnakeCase(item)
+          .then(response => {
+            this.fields = response.data.map(item => {
+              return helper.toSnakeCase(item)
+            })
+            this.loading = false
           })
-          this.loading = false
-        })
-        .catch( error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-        })
+          .catch(error => {
+            this.loading = false
+            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          })
       },
-      handleEvents(event){
+      handleEvents(event) {
         this.updateOrderInField(event.moved.element, event.moved.newIndex)
       },
-      goTo(field){
+      goTo(field) {
         this.$router.push({
           name: 'qform.admin.fields.update',
           params: {
@@ -209,7 +198,7 @@
           }
         })
       },
-      deleteItem(){
+      deleteItem() {
         this.loading = true
         this.$crud.delete('apiRoutes.qform.fields', this.itemIdToDelete.id)
           .then(response => {
@@ -218,25 +207,25 @@
             this.getFields(true)
             this.loading = false
           }).catch(error => {
-            this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom'})
-            this.loading = false
-          })
+          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom'})
+          this.loading = false
+        })
       },
-      updateOrder () {
+      updateOrder() {
         let data = {
           id: this.$route.params.id,
           fields: this.fields
         }
         this.loading = true
         this.$crud.create('apiRoutes.qform.updateOrders', data)
-        .then( response => {
-          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
-          this.loading = false
-        })
-        .catch( error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-        })
+          .then(response => {
+            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.loading = false
+          })
+          .catch(error => {
+            this.loading = false
+            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          })
       }
     }
   }

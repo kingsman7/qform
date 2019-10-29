@@ -5,7 +5,7 @@
       crudData() {
         return {
           apiRoute: 'apiRoutes.qform.forms',
-          permission: 'iform.leads',
+          permission: 'iforms.leads',
           create: false,
           read: {
             columns: [
@@ -19,10 +19,8 @@
                 label: this.$tr('ui.label.user'),
                 value: '0',
                 type: 'select',
-                isRequired: true,
-                isTranslatable: false,
                 options: [
-                  {label: this.$tr('ui.label.all'), id: '0'}
+                  {label: this.$tr('ui.label.all'), value: '0'}
                 ],
                 loadOptions: {
                   apiRoute: 'apiRoutes.quser.users',
@@ -34,20 +32,12 @@
               {
                 icon : 'fab fa-wpforms',
                 color : 'teal',
-                route : 'qform.admin.leads.show',
-                action : () => {
-                  //this.$alert.info({message : 'Tes!'})
-                }
+                route : 'qform.admin.leads.show'
               }
             ]
           },
           update: false,
-          delete: false,
-          formLeft: {
-            id: {value: ''},
-          },
-          formRight: {
-          },
+          delete: false
         }
       }
     }

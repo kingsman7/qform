@@ -4,102 +4,60 @@
     class="q-layout-page layout-padding">
     <div class="relative-position q-mb-lg backend-page">
       <div class="box">
-        <div class="row gutter-x-sm" v-if="success">
-          
-          
+        <div class="row" v-if="success">
           <!--Language-->
-          <div class="col-12">
-            <locales v-model="locale" ref="localeComponent" @validate="$v.$touch()"/>
+          <div class="col-12 q-mb-md">
+            <locales v-model="locale" ref="localeComponent" :form="$refs.formContent"/>
           </div>
-          
-          <!--Form left-->
-          <div class="col-12 col-md-8" v-if="locale.success">
-            
-            <q-field
-              class="q-mt-sm"
-              :error="$v.locale.formTemplate.name.$error"
-              :error-label="$tr('ui.message.fieldRequired')">
-              <q-input
-                v-model="locale.formTemplate.name"
-                :stack-label="`${$tr('ui.form.name')}*`"/>
-            </q-field>
-            
-            <q-field
-              :error="$v.locale.formTemplate.label.$error"
-              :error-label="$tr('ui.message.fieldRequired')">
-              <q-input
-                v-model="locale.formTemplate.label"
-                :stack-label="`${$tr('qform.layout.form.label')} (${locale.language})*`"/>
-            </q-field>
-  
-            <q-field
-              :error="$v.locale.formTemplate.placeholder.$error"
-              :error-label="$tr('ui.message.fieldRequired')">
-              <q-input
-                v-model="locale.formTemplate.placeholder"
-                :stack-label="`${$tr('qform.layout.form.placeholder')} (${locale.language})*`"/>
-            </q-field>
-  
-            <q-field
-              :error="$v.locale.formTemplate.description.$error"
-              :error-label="$tr('ui.message.fieldRequired')">
-              <q-input
-                v-model="locale.formTemplate.description"
-                :stack-label="`${$tr('ui.form.description')} (${locale.language})*`"/>
-            </q-field>
-  
-            <div class="input-title">{{$tr('ui.form.type')}}</div>
-            <tree-select
-              v-model="locale.formTemplate.type"
-              :clearable="false"
-              :options="types"
-              placeholder=""/>
-            
-            <div v-if="locale.formTemplate.type == 5 || locale.formTemplate.type == 6 || locale.formTemplate.type == 8">
-              <optionsForSelect :model="locale.formTemplate"/>
+
+          <q-form autocorrect="off" autocomplete="off" ref="formContent" class="q-col-gutter-x-md full-width row"
+                  v-if="locale.success" @submit="productId ? update() : create()"
+                  @validation-error="$alert.error($tr('ui.message.formInvalid'))">
+            <!--Form left-->
+            <div class="col-12 col-md-8" v-if="locale.success">
+              <q-input outlined dense v-model="locale.formTemplate.name" :label="`${$tr('ui.form.name')}*`"
+                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"/>
+
+              <q-input outlined dense v-model="locale.formTemplate.label"
+                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
+                       :label="`${$tr('qform.layout.form.label')} (${locale.language})*`"/>
+
+              <q-input outlined dense v-model="locale.formTemplate.placeholder"
+                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
+                       :label="`${$tr('qform.layout.form.placeholder')} (${locale.language})*`"/>
+
+              <q-input outlined dense v-model="locale.formTemplate.description"
+                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
+                       :label="`${$tr('ui.form.description')} (${locale.language})*`"/>
+
+              <q-select v-model="locale.formTemplate.type" :options="types"
+                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
+                        outlined dense emit-value map-options :label="`${$tr('ui.form.type')}*`"/>
+
+              <div v-if="[5,6,8].indexOf(locale.formTemplate.type) >= 0">
+                <optionsForSelect :model="locale.formTemplate"/>
+              </div>
+
             </div>
-            
-          </div>
-  
-          <!--Form right-->
-          <div class="col-12 col-md-4" v-if="locale.success">
-  
-            <div class="input-title q-mt-xs" v-if="false">{{$tr('qform.layout.form.form')}}</div>
-            <tree-select v-if="false"
-              v-model="locale.formTemplate.formId"
-              :clearable="false"
-              :options="forms"
-              placeholder=""/>
-            
-            <q-checkbox
-              :label="$tr('ui.form.required')"
-              v-model="locale.formTemplate.required"
-              class="q-mt-lg"/>
-  
-            <q-field>
-              <q-input
-                v-model="locale.formTemplate.order"
-                :stack-label="`${$tr('qform.layout.form.order')}`"/>
-            </q-field>
-            
-          </div>
+
+            <!--Form right-->
+            <div class="col-12 col-md-4" v-if="locale.success">
+              <q-input outlined dense v-model="locale.formTemplate.order" :label="`${$tr('qform.layout.form.order')}`"/>
+              <q-checkbox :label="$tr('ui.form.required')" v-model="locale.formTemplate.required"/>
+            </div>
+
+            <!--buttons-->
+            <div class="col-12 text-right">
+              <q-btn v-if="productId" color="positive" :loading="loading" icon="fas fa-edit"
+                     :label="$tr('ui.label.update')" rounded type="submit"/>
+              <q-btn v-else color="positive" :loading="loading" icon="fas fa-edit"
+                     :label="$tr('ui.label.create')" rounded type="submit"/>
+            </div>
+          </q-form>
         </div>
       </div>
     </div>
-  
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn
-        v-if="productId"
-        color="positive" :loading="loading"
-        icon="fas fa-edit" :label="$tr('ui.label.update')" @click="update()"
-        rounded/>
-      <q-btn
-        v-else
-        color="positive" :loading="loading"
-        icon="fas fa-edit" :label="$tr('ui.label.create')" @click="create()"
-        rounded/>
-    </q-page-sticky>
-    
+
     <inner-loading :visible="loading"/>
   </div>
 </template>
@@ -108,7 +66,7 @@
   //Components
   import locales from '@imagina/qsite/_components/locales'
   import optionsForSelect from '@imagina/qform/_components/admin/fields/optionsForSelect'
-  
+
   //Plugins
   import _cloneDeep from 'lodash.clonedeep'
   import {required} from 'vuelidate/lib/validators'
@@ -172,16 +130,7 @@
             label: '',
             placeholder: '',
             description: '',
-          },
-          validations: {
-            name: {required},
-            type: {required},
-            required: {required},
-            formId: {required},
-            label: {required},
-            placeholder: {required},
-            description: {required},
-          },
+          }
         }
       },
       //Check if update options
@@ -196,11 +145,10 @@
       },
       //Options translatables
       options() {
-        return {
-        }
+        return {}
       },
       //Has manage master record
-      canManageRecordMaster(){
+      canManageRecordMaster() {
         return true
       }
     },
@@ -214,7 +162,6 @@
         this.productId = this.$route.params.id//Update param from route
         if (this.locale.success) this.$refs.localeComponent.vReset()//Reset locale
         await this.getData()//Get Data Item
-        this.$v.$reset()//Reset validations
         this.getTypes()
         this.getForms()
         this.getFields()
@@ -256,28 +203,24 @@
         this.locale.form = _cloneDeep(orderData)
       },
       //Create Product
-      create() {
-        this.$refs.localeComponent.vTouch()//Validate component locales
-        //Check validations
-        if (!this.$v.$error) {
+      async create() {
+        if (await this.$refs.localeComponent.validateForm()) {
+          //Check validations
           this.loading = true
           let configName = 'apiRoutes.qform.fields'
           this.$crud.create(configName, this.getDataForm()).then(response => {
             this.$alert.success({message: `${this.$tr('ui.message.recordCreated')} ID: ${response.data.id}`})
-            this.$router.push({name: 'qform.admin.fields.index', params:{id: this.$route.params.formId}})
+            this.$router.push({name: 'qform.admin.fields.index', params: {id: this.$route.params.formId}})
           }).catch(error => {
             this.loading = false
             this.$alert.error({message: this.$tr('ui.message.recordNoCreated'), pos: 'bottom'})
           })
-        } else {
-          this.$alert.error({message: this.$tr('ui.message.formInvalid'), pos: 'bottom'})
         }
       },
       //Update Product
-      update() {
-        this.$refs.localeComponent.vTouch()//Validate component locales
-        //Check validations
-        if (!this.$v.$error) {
+      async update() {
+        if (await this.$refs.localeComponent.validateForm()) {
+          //Check validations
           this.loading = true
           let configName = 'apiRoutes.qform.fields'
           this.$crud.update(configName, this.productId, this.getDataForm()).then(response => {
@@ -287,8 +230,6 @@
             this.loading = false
             this.$alert.error({message: this.$tr('ui.message.recordNoUpdated'), pos: 'bottom'})
           })
-        } else {
-          this.$alert.error({message: this.$tr('ui.message.formInvalid'), pos: 'bottom'})
         }
       },
       //Get just values not null from form
@@ -303,64 +244,54 @@
         return response
       },
       //Action after created
-      
-      //Return object to validations
-      getObjectValidation() {
-        let response = {}
-        if (this.locale && this.locale.formValidations)
-          response = {locale: this.locale.formValidations}
-        return response
-      },
       getTypes() {
         this.loading = true
-        let params = { params: {} }
-        this.$crud.index('apiRoutes.qform.types', params)
-          .then( response => {
-            this.types = response.data.map( item => {
-              return {
-                id: item.id,
-                label: item.name
-              }
-            })
-            this.loading = false
+        let params = {params: {}}
+        this.$crud.index('apiRoutes.qform.types', params).then(response => {
+          this.types = response.data.map(item => {
+            return {
+              value: item.id,
+              label: item.name
+            }
           })
-          .catch( error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-            this.loading = false
-          })
+          this.loading = false
+        }).catch(error => {
+          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          this.loading = false
+        })
       },
       getForms() {
         this.loading = true
-        let params = { params: {} }
+        let params = {params: {}}
         this.$crud.index('apiRoutes.qform.forms', params)
-          .then( response => {
-            this.forms = response.data.map( item => {
+          .then(response => {
+            this.forms = response.data.map(item => {
               return {
-                id: item.id,
+                value: item.id,
                 label: item.title
               }
             })
             this.loading = false
           })
-          .catch( error => {
+          .catch(error => {
             this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
       },
       getFields() {
         this.loading = true
-        let params = { params: {} }
+        let params = {params: {}}
         this.$crud.index('apiRoutes.qform.fields', params)
-          .then( response => {
-            this.fields = response.data.map( item => {
+          .then(response => {
+            this.fields = response.data.map(item => {
               return {
-                id: item.id,
+                value: item.id,
                 label: item.label
               }
             })
             this.loading = false
           })
-          .catch( error => {
+          .catch(error => {
             this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })

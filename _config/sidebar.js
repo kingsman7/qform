@@ -4,7 +4,7 @@ const pages = config('pages') // Get Pages from config
 export default [
   {
     title: 'qform.sidebar.adminGroup',
-    icon: 'fas fa-wallet',
+    icon: 'fas fa-clipboard-list',
     children: [
       pages.qform.forms,
       pages.qform.leads,
