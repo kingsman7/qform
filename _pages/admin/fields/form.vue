@@ -63,8 +63,6 @@
 </template>
 
 <script>
-  //Components
-  import locales from '@imagina/qsite/_components/locales'
   import optionsForSelect from '@imagina/qform/_components/admin/fields/optionsForSelect'
 
   //Plugins
@@ -76,7 +74,6 @@
 
   export default {
     components: {
-      locales,
       optionsForSelect,
     },
     watch: {

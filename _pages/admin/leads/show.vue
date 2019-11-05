@@ -15,7 +15,7 @@
             </div>
           </div>
           <div class="table-top-right col-12 col-md-8 col-xl-9 text-right">
-            
+
             <q-btn
               @click="forceDownload()"
               icon="fas fa-download"
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-  import config from 'src/config/index'
   export default {
     data () {
       return {

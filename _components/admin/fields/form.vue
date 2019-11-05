@@ -10,10 +10,10 @@
           <div class="col-12">
             <locales v-model="locale" ref="localeComponent" @validate="$v.$touch()"/>
           </div>
-          
+
           <!--Form left-->
           <div class="col-12 col-md-8" v-if="locale.success">
-            
+
             <q-field
               class="q-mt-sm"
               :error="$v.locale.formTemplate.name.$error"
@@ -22,7 +22,7 @@
                 v-model="locale.formTemplate.name"
                 :stack-label="`${$tr('ui.form.name')}*`"/>
             </q-field>
-            
+
             <q-field
               :error="$v.locale.formTemplate.label.$error"
               :error-label="$tr('ui.message.fieldRequired')">
@@ -30,7 +30,7 @@
                 v-model="locale.formTemplate.label"
                 :stack-label="`${$tr('qform.layout.form.label')} (${locale.language})*`"/>
             </q-field>
-  
+
             <q-field
               :error="$v.locale.formTemplate.placeholder.$error"
               :error-label="$tr('ui.message.fieldRequired')">
@@ -38,7 +38,7 @@
                 v-model="locale.formTemplate.placeholder"
                 :stack-label="`${$tr('qform.layout.form.placeholder')} (${locale.language})*`"/>
             </q-field>
-  
+
             <q-field
               :error="$v.locale.formTemplate.description.$error"
               :error-label="$tr('ui.message.fieldRequired')">
@@ -46,46 +46,46 @@
                 v-model="locale.formTemplate.description"
                 :stack-label="`${$tr('ui.form.description')} (${locale.language})*`"/>
             </q-field>
-  
+
             <div class="input-title">{{$tr('ui.form.type')}}</div>
             <tree-select
               v-model="locale.formTemplate.type"
               :clearable="false"
               :options="types"
               placeholder=""/>
-            
+
             <div v-if="locale.formTemplate.type == 5 || locale.formTemplate.type == 6 || locale.formTemplate.type == 8">
               <optionsForSelect :model="locale.formTemplate"/>
             </div>
-            
+
           </div>
-  
+
           <!--Form right-->
           <div class="col-12 col-md-4" v-if="locale.success">
-  
+
             <div class="input-title q-mt-xs">{{$tr('qform.layout.form.form')}}</div>
             <tree-select
               v-model="locale.formTemplate.formId"
               :clearable="false"
               :options="forms"
               placeholder=""/>
-            
+
             <q-checkbox
               :label="$tr('ui.form.required')"
               v-model="locale.formTemplate.required"
               class="q-mt-lg"/>
-  
+
             <q-field>
               <q-input
                 v-model="locale.formTemplate.order"
                 :stack-label="`${$tr('qform.layout.form.order')}`"/>
             </q-field>
-            
+
           </div>
         </div>
       </div>
     </div>
-  
+
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
         v-if="productId"
@@ -98,16 +98,14 @@
         icon="fas fa-edit" :label="$tr('ui.label.create')" @click="createItem()"
         rounded/>
     </q-page-sticky>
-    
+
     <inner-loading :visible="loading"/>
   </div>
 </template>
 
 <script>
-  //Components
-  import locales from '@imagina/qsite/_components/locales'
   import optionsForSelect from '@imagina/qform/_components/admin/fields/optionsForSelect'
-  
+
   //Plugins
   import _cloneDeep from 'lodash.clonedeep'
   import {required} from 'vuelidate/lib/validators'
@@ -117,7 +115,6 @@
 
   export default {
     components: {
-      locales,
       optionsForSelect,
     },
     watch: {
@@ -301,7 +298,7 @@
         return response
       },
       //Action after created
-      
+
       //Return object to validations
       getObjectValidation() {
         let response = {}

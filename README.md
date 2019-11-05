@@ -1,8 +1,8 @@
-## QFORM  | 2.0.0
+## QFORM  | 2.0.1
 
 ## Installation
 
-`` npm i @imagina/qform@2.0.0 ``
+`` npm i @imagina/qform@2.0.1 ``
 
 ## API Routes
 
