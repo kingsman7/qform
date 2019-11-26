@@ -1,9 +1,15 @@
 <template></template>
 <script>
   export default {
+    data() {
+      return {
+        crudId: this.$uid()
+      }
+    },
     computed: {
       crudData() {
         return {
+          crudId: this.crudId,
           apiRoute: 'apiRoutes.qform.forms',
           permission: 'iforms.leads',
           create: false,
@@ -16,12 +22,14 @@
             requestParams: {},
             filters: {
               userId: {
-                label: this.$tr('ui.label.user'),
                 value: '0',
                 type: 'select',
-                options: [
-                  {label: this.$tr('ui.label.all'), value: '0'}
-                ],
+                props : {
+                  label: this.$tr('ui.label.user'),
+                  options: [
+                    {label: this.$tr('ui.label.all'), value: '0'}
+                  ],
+                },
                 loadOptions: {
                   apiRoute: 'apiRoutes.quser.users',
                   select: {label: 'fullName', id: 'id'},
@@ -39,6 +47,10 @@
           update: false,
           delete: false
         }
+      },
+      //Crud info
+      crudInfo() {
+        return this.$store.state.qcrudComponent.component[this.crudId] || {}
       }
     }
   }

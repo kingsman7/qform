@@ -1,9 +1,15 @@
 <template></template>
 <script>
   export default {
+    data() {
+      return {
+        crudId: this.$uid()
+      }
+    },
     computed: {
       crudData() {
         return {
+          crudId: this.crudId,
           apiRoute: 'apiRoutes.qform.fields',
           permission: 'iforms.fields',
           create: {
@@ -36,68 +42,93 @@
           formLeft: {
             id: {value: ''},
             type:{
-              label: this.$tr('ui.form.type'),
               value: 0,
               type: 'select',
-              clearable: true,
-              options: [
-                {label: 'Text', id: 0},
-                {label: 'Number', id: 1},
-                {label: 'Email', id: 2},
-                {label: 'Text Area', id: 3},
-              ]
+              props : {
+                label: this.$tr('ui.form.type'),
+                options: [
+                  {label: 'Text', id: 0},
+                  {label: 'Number', id: 1},
+                  {label: 'Email', id: 2},
+                  {label: 'Text Area', id: 3},
+                ]
+              }
             },
             name:{
-              label: this.$tr('ui.form.name'),
               value: '',
-              type: 'text',
-              isRequired: true,
+              type: 'input',
               isTranslatable: false,
+              props : {
+                label: this.$tr('ui.form.name'),
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ]
+              }
             },
             label:{
-              label: this.$tr('qform.layout.form.label'),
               value: '',
-              type: 'text',
-              isRequired: true,
+              type: 'input',
               isTranslatable: true,
+              props : {
+                label: this.$tr('qform.layout.form.label'),
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ]
+              }
             },
             placeholder:{
-              label: this.$tr('qform.layout.form.placeholder'),
               value: '',
-              type: 'text',
-              isRequired: true,
+              type: 'input',
               isTranslatable: true,
+              props : {
+                label: this.$tr('qform.layout.form.placeholder'),
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ]
+              }
             },
             description:{
-              label: this.$tr('ui.form.description'),
               value: '',
-              type: 'text',
-              isRequired: true,
+              type: 'input',
               isTranslatable: true,
+              props : {
+                label: this.$tr('ui.form.description'),
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ]
+              }
             },
           },
           formRight: {
             required:{
-              label: this.$tr('ui.form.required'),
               value: false,
               type: 'checkbox',
+              props : {
+                label: this.$tr('ui.form.required'),
+              }
             },
             parentId:{
-              label: this.$tr('ui.form.parent'),
               value: null,
               type: 'select',
-              clearable: true,
+              props : {
+                label: this.$tr('ui.form.parent'),
+                clearable: true,
+              },
               loadOptions: {
                 apiRoute: 'apiRoutes.qform.fields',
                 select: {label: 'label', id: 'id'},
               }
             },
             formId:{
-              label: this.$tr('qform.layout.form.form'),
               value: null,
               type: 'select',
-              clearable: true,
-              isRequired: true,
+              props : {
+                label: this.$tr('qform.layout.form.form'),
+                clearable: true,
+                rules: [
+                  val => !!val || this.$tr('ui.message.fieldRequired')
+                ]
+              },
               loadOptions: {
                 apiRoute: 'apiRoutes.qform.forms',
                 select: {label: 'title', id: 'id'},
@@ -105,6 +136,10 @@
             },
           },
         }
+      },
+      //Crud info
+      crudInfo() {
+        return this.$store.state.qcrudComponent.component[this.crudId] || {}
       }
     }
   }
