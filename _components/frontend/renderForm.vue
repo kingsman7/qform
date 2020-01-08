@@ -37,7 +37,7 @@
 </template>
 <script>
   //components
-  import captcha from '@imagina/qsite/_components/captcha'
+  import captcha from '@imagina/qsite/_components/master/captcha'
 
   export default {
     components : {captcha},
