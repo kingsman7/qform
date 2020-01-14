@@ -10,12 +10,10 @@
       <q-form @submit="sendForm()" ref="formContent" autocomplete="off"
               @validation-error="$alert.error($tr('ui.message.formInvalid'))"
               class="row q-col-gutter-x-md relative-position backend-page q-pa-md">
-
         <!--Load dynamic fields-->
-        <div v-for="(field, key) in fields"
-             :class="fields.length >= 6 ? 'col-12 col-md-6' : 'col-12'">
+        <div v-for="(field, key) in fields" :class="fields.length >= 6 ? 'col-12 col-md-6' : 'col-12'">
           <dynamic-field v-model="form[field.name]" :key="key" :field="field"
-                         @enter="$refs.formContent.submit()"/>
+                         @enter="$refs.formContent.submit()" />
         </div>
 
         <!--captcha-->
@@ -71,11 +69,14 @@
           this.formData.fields.forEach(item => {
             //Get daulft atributes to field
             response.push({
+              name: item.name,
               value: '',
-              type: item.type,
-              name : item.name,
-              label: item.required ? `${item.label} *` : item.label,
-              rules : item.required ? [val => !!val || this.$tr('ui.message.fieldRequired')] : []
+              type : 'input',
+              props : {
+                type: item.type,
+                label: item.required ? `${item.label} *` : item.label,
+                rules: item.required ? [val => !!val || this.$tr('ui.message.fieldRequired')] : []
+              }
             })
           })
         }
@@ -84,8 +85,9 @@
     },
     methods: {
       //Init form
-      init(){
-        if(this.formName){}
+      init() {
+        if (this.formName) {
+        }
         this.createFormModels()
       },
       //Create dynamic models of form
