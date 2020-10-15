@@ -19,7 +19,7 @@
             columns: [
               {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
               {name: 'title', label: this.$tr('ui.form.title'), field: 'title'},
-              {name: 'slug', label: this.$tr('ui.form.slug'), field: 'systemName'},
+              {name: 'slug', label: this.$tr('ui.form.systemName'), field: 'systemName'},
               {
                 name: 'user', label: this.$tr('ui.label.user'), field: 'user',
                 format: val => (val && val.fullName) ? val.fullName : '-'
@@ -61,6 +61,14 @@
               isTranslatable: true,
               props : {
                 label: `${this.$tr('ui.form.title')}*`,
+                rules: [val => !!val || this.$tr('ui.message.fieldRequired')],
+              }
+            },
+            systemName: {
+              value: '',
+              type: 'input',
+              props : {
+                label: `${this.$tr('ui.form.systemName')}*`,
                 rules: [val => !!val || this.$tr('ui.message.fieldRequired')],
               }
             },
