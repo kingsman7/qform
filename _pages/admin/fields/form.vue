@@ -30,11 +30,9 @@
                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
                        :label="`${$tr('ui.form.description')} (${locale.language})*`"/>
 
-              <q-input data-testid="prefix" outlined dense v-model="locale.formTemplate.prefix"
-                       :label="`${$tr('ui.form.prefix')}`"/>
+              <dynamic-field v-model="locale.form.prefix" :field="dynamicFields.prefix" />
 
-              <q-input data-testid="suffix" outlined dense v-model="locale.formTemplate.suffix"
-                       :label="`${$tr('qform.layout.form.suffix')}`"/>
+              <dynamic-field v-model="locale.form.suffix" :field="dynamicFields.suffix" />
 
               <q-select data-testid="type" v-model="locale.formTemplate.type" :options="types"
                         :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
@@ -118,6 +116,45 @@
       }
     },
     computed: {
+      //set dynamicFields
+      dynamicFields() {
+        return {
+          prefix: {
+            type: 'textWithOptions',
+            testId: 'prefix',
+            props: {
+              label: this.$tr('ui.form.prefix'),
+              options:[
+                {
+                  label: this.$tr('ui.label.text'),
+                  value: 'text'
+                },
+                {
+                  label: this.$tr('ui.form.icon'),
+                  value: 'icon'
+                },
+              ]
+            },
+          },
+          suffix: {
+            type: 'textWithOptions',
+            testId: 'prefix',
+            props: {
+              label: this.$tr('qform.layout.form.suffix'),
+              options:[
+                {
+                  label: this.$tr('ui.label.text'),
+                  value: 'text'
+                },
+                {
+                  label: this.$tr('ui.form.icon'),
+                  value: 'icon'
+                },
+              ]
+            },
+          },
+        }
+      },
       //Data locale component
       dataLocale() {
         return {
@@ -128,8 +165,14 @@
             formId: this.$route.params.formId,
             selectable: [],
             order: 0,
-            prefix: '',
-            suffix: '',
+            prefix: {
+              type: '',
+              value: '',
+            },
+            suffix: {
+              type: '',
+              value: '',
+            },
           },
           fieldsTranslatable: {
             label: '',

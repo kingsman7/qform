@@ -1,6 +1,6 @@
 export default {
   forms: {
-		permission: null,
+		permission: 'iforms.forms.manage',
 		activated: true,
 		path: '/form/form',
 		name: 'qform.admin.form.index',
@@ -11,7 +11,7 @@ export default {
     authenticated : true
 	},
   formsUpdate: {
-    permission: null,
+    permission: 'iforms.forms.edit',
     activated: true,
     path: '/form/forms/:id/edit',
     name: 'qform.admin.form.fields.create',
@@ -22,7 +22,7 @@ export default {
     authenticated : true
   },
   formsDesign: {
-    permission: null,
+    permission: 'iforms.forms,update',
     activated: true,
     path: '/form/form/:id',
     name: 'qform.admin.form.design',
@@ -33,7 +33,7 @@ export default {
     authenticated : true
   },
   fields: {
-    permission: null,
+    permission: 'iforms.fields.manage',
     activated: true,
     path: '/form/fields/:id',
     name: 'qform.admin.fields.index',
@@ -44,7 +44,7 @@ export default {
     authenticated : true
   },
   fieldsCreate: {
-    permission: null,
+    permission: 'iforms.fields.create',
     activated: true,
     path: '/form/fields/create/:formId',
     name: 'qform.admin.fields.create',
@@ -55,7 +55,7 @@ export default {
     authenticated : true
   },
   fieldsUpdate: {
-    permission: null,
+    permission: 'iforms.fields.update',
     activated: true,
     path: '/form/fields/:id/update',
     name: 'qform.admin.fields.update',
