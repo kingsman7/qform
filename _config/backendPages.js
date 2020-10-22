@@ -55,7 +55,7 @@ export default {
     authenticated : true
   },
   fieldsUpdate: {
-    permission: 'iforms.fields.update',
+    permission: 'iforms.fields.edit',
     activated: true,
     path: '/form/fields/:id/update',
     name: 'qform.admin.fields.update',

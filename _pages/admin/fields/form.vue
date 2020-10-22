@@ -15,12 +15,13 @@
                   @validation-error="$alert.error($tr('ui.message.formInvalid'))">
             <!--Form left-->
             <div class="col-12 col-md-8" v-if="locale.success">
-              <q-input data-testid="name" outlined dense v-model="locale.formTemplate.name" :label="`${$tr('ui.form.name')}*`"
-                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"/>
 
-              <q-input data-testid="label" outlined dense v-model="locale.formTemplate.label"
+              <q-input data-testid="label" outlined dense v-model="locale.formTemplate.label" @input="setLabelCamelize"
                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
                        :label="`${$tr('qform.layout.form.label')} (${locale.language})*`"/>
+
+              <q-input data-testid="name" outlined dense v-model="locale.formTemplate.name" :label="`${$tr('ui.form.name')}*`"
+                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]" />
 
               <q-input data-testid="placeholder" outlined dense v-model="locale.formTemplate.placeholder"
                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
@@ -33,6 +34,7 @@
               <dynamic-field v-model="locale.form.prefix" :field="dynamicFields.prefix" />
 
               <dynamic-field v-model="locale.form.suffix" :field="dynamicFields.suffix" />
+
 
               <q-select data-testid="type" v-model="locale.formTemplate.type" :options="types"
                         :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
@@ -344,6 +346,10 @@
             this.loading = false
           })
       },
+      setLabelCamelize(){
+        let label = this.$clone(this.locale.formTemplate.label)
+        this.locale.formTemplate.name = this.$helper.convertStringToCamelCase(label)
+      }
     }
   }
 </script>
