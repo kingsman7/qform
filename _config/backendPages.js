@@ -4,25 +4,15 @@ export default {
 		activated: true,
 		path: '/form/form',
 		name: 'qform.admin.form.index',
-    page: () => import('@imagina/qform/_pages/admin/forms/index'),
+    crud : import('@imagina/qform/_crud/crudForms'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
 		title: 'qform.sidebar.adminForm',
 		icon: 'fab fa-wpforms',
     authenticated : true
 	},
-  formsUpdate: {
-    permission: 'iforms.forms.edit',
-    activated: true,
-    path: '/form/forms/:id/edit',
-    name: 'qform.admin.form.fields.create',
-    page: () => import('@imagina/qform/_pages/admin/forms/index'),
-    layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qform.sidebar.adminForm',
-    icon: 'fab fa-wpforms',
-    authenticated : true
-  },
   formsDesign: {
-    permission: 'iforms.forms,update',
+    permission: null,
     activated: true,
     path: '/form/form/:id',
     name: 'qform.admin.form.design',
@@ -33,7 +23,7 @@ export default {
     authenticated : true
   },
   fields: {
-    permission: 'iforms.fields.manage',
+    permission: null,
     activated: true,
     path: '/form/fields/:id',
     name: 'qform.admin.fields.index',
@@ -44,7 +34,7 @@ export default {
     authenticated : true
   },
   fieldsCreate: {
-    permission: 'iforms.fields.create',
+    permission: null,
     activated: true,
     path: '/form/fields/create/:formId',
     name: 'qform.admin.fields.create',
@@ -55,7 +45,7 @@ export default {
     authenticated : true
   },
   fieldsUpdate: {
-    permission: 'iforms.fields.edit',
+    permission: null,
     activated: true,
     path: '/form/fields/:id/update',
     name: 'qform.admin.fields.update',
@@ -66,11 +56,12 @@ export default {
     authenticated : true
   },
   leads: {
-    permission: 'iforms.leads.manage',
+    permission: null,
 		activated: true,
 		path: '/form/lead',
 		name: 'qform.admin.leads.index',
-		page: () => import('@imagina/qform/_pages/admin/leads/index'),
+    crud : import('@imagina/qform/_crud/crudLeads'),
+    page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
 		layout: () => import('@imagina/qsite/_layouts/master.vue'),
 		title: 'qform.sidebar.adminLead',
 		icon: 'fas fa-chalkboard-teacher',

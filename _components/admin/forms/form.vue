@@ -29,6 +29,10 @@
       <q-select :label="$tr('ui.form.type')" v-model="locale.formTemplate.userId" :clearable="true"
                 :options="users" outlined dense emit-value map-options/>
 
+      <q-input data-testid="urlTermsAndConditions" outlined dense
+               v-model="locale.formTemplate.options.urlTermsAndConditions"
+               :label="`${$tr('qform.layout.form.urlTermsAndConditions')}`"/>
+
       <q-btn class="float-right" v-if="itemId" color="positive" :loading="loading" rounded
              icon="fas fa-edit" :label="$tr('ui.label.update')" type="submit"/>
     </q-form>
@@ -72,7 +76,8 @@
             systemName : '',
             userId: null,
             active: '1',
-            destinationEmail: []
+            destinationEmail: [],
+            options : {}
           },
           fieldsTranslatable: {
             title: '',

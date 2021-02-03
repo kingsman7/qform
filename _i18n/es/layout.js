@@ -9,6 +9,7 @@ export default {
     form: 'Formulario',
     order: 'Orden',
     suffix: 'Sufijo',
+    urlTermsAndConditions : 'URL Terminos y condiciones'
   },
   message : {
 
