@@ -60,6 +60,7 @@ export default {
     getForm() {
       this.loading = true
       let params = {
+        refresh : true,
         params: {}
       }
       this.$crud.show('apiRoutes.qform.forms', this.$route.params.id, params)
@@ -75,6 +76,7 @@ export default {
     getFields() {
       this.loading = true
       let params = {
+        refresh : true,
         params: {
           filter: {
             formId: this.$route.params.id
@@ -103,7 +105,7 @@ export default {
     },
     getLeads(refresh = false) {
       let params = {
-        refresh: refresh,
+        refresh: true,
         params: {
           filter: {
             formId: this.$route.params.id

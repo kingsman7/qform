@@ -65,7 +65,10 @@ export default {
 		layout: () => import('@imagina/qsite/_layouts/master.vue'),
 		title: 'qform.sidebar.adminLead',
 		icon: 'fas fa-chalkboard-teacher',
-		authenticated : true
+		authenticated : true,
+    subHeader : {
+      refresh : true
+    }
 	},
   leadsShow: {
     permission: null,
