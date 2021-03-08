@@ -120,7 +120,7 @@
   import renderForm from '@imagina/qform/_components/frontend/forms/renderForm'
   import formForm from '@imagina/qform/_components/admin/forms/form'
   import draggable from 'vuedraggable'
-  import {helper} from "@imagina/qhelper/_plugins/helper";
+  import {helper} from "@imagina/qsite/_plugins/helper";
 
 
   export default {
