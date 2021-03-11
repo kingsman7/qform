@@ -74,7 +74,13 @@ export default {
             {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
           ],
           requestParams: {
-            include: 'form'
+            include: 'form',
+            filter:{
+              order:{
+                field: 'created_at',
+                way: 'desc',
+              }
+            }
           },
           filters: {
             formId: {
