@@ -301,10 +301,6 @@
             this.loading = false
           })
       },
-      setLabelCamelize(){
-        let label = this.$clone(this.locale.formTemplate.label)
-        this.locale.formTemplate.name = this.$helper.convertStringToCamelCase(label)
-      }
     }
   }
 </script>
