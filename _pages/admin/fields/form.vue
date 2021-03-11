@@ -15,13 +15,12 @@
                   @validation-error="$alert.error($tr('ui.message.formInvalid'))">
             <!--Form left-->
             <div class="col-12 col-md-8" v-if="locale.success">
+              <q-input data-testid="name" outlined dense v-model="locale.formTemplate.name" :label="`${$tr('ui.form.name')}*`"
+                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"/>
 
-              <q-input data-testid="label" outlined dense v-model="locale.formTemplate.label" @input="setLabelCamelize"
+              <q-input data-testid="label" outlined dense v-model="locale.formTemplate.label"
                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
                        :label="`${$tr('qform.layout.form.label')} (${locale.language})*`"/>
-
-              <q-input data-testid="name" outlined dense v-model="locale.formTemplate.name" :label="`${$tr('ui.form.name')}*`"
-                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]" />
 
               <q-input data-testid="placeholder" outlined dense v-model="locale.formTemplate.placeholder"
                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
@@ -31,10 +30,11 @@
                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
                        :label="`${$tr('ui.form.description')} (${locale.language})*`"/>
 
-              <dynamic-field v-model="locale.form.prefix" :field="dynamicFields.prefix" />
+              <q-input data-testid="prefix" outlined dense v-model="locale.formTemplate.prefix"
+                       :label="`${$tr('ui.form.prefix')}`"/>
 
-              <dynamic-field v-model="locale.form.suffix" :field="dynamicFields.suffix" />
-
+              <q-input data-testid="suffix" outlined dense v-model="locale.formTemplate.suffix"
+                       :label="`${$tr('qform.layout.form.suffix')}`"/>
 
               <q-select data-testid="type" v-model="locale.formTemplate.type" :options="types"
                         :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
@@ -118,45 +118,6 @@
       }
     },
     computed: {
-      //set dynamicFields
-      dynamicFields() {
-        return {
-          prefix: {
-            type: 'textWithOptions',
-            testId: 'prefix',
-            props: {
-              label: this.$tr('ui.form.prefix'),
-              options:[
-                {
-                  label: this.$tr('ui.label.text'),
-                  value: 'text'
-                },
-                {
-                  label: this.$tr('ui.form.icon'),
-                  value: 'icon'
-                },
-              ]
-            },
-          },
-          suffix: {
-            type: 'textWithOptions',
-            testId: 'prefix',
-            props: {
-              label: this.$tr('qform.layout.form.suffix'),
-              options:[
-                {
-                  label: this.$tr('ui.label.text'),
-                  value: 'text'
-                },
-                {
-                  label: this.$tr('ui.form.icon'),
-                  value: 'icon'
-                },
-              ]
-            },
-          },
-        }
-      },
       //Data locale component
       dataLocale() {
         return {
@@ -167,14 +128,8 @@
             formId: this.$route.params.formId,
             selectable: [],
             order: 0,
-            prefix: {
-              type: '',
-              value: '',
-            },
-            suffix: {
-              type: '',
-              value: '',
-            },
+            prefix: '',
+            suffix: '',
           },
           fieldsTranslatable: {
             label: '',
