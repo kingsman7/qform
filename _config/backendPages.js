@@ -56,7 +56,7 @@ export default {
     authenticated : true
   },
   leads: {
-    permission: 'iforms.leads.manage',
+    permission: null,
 		activated: true,
 		path: '/form/lead',
 		name: 'qform.admin.leads.index',
