@@ -1,16 +1,16 @@
 export default {
   forms: {
-		permission: 'iforms.forms.manage',
-		activated: true,
-		path: '/form/form',
-		name: 'qform.admin.form.index',
-    crud : import('@imagina/qform/_crud/crudForms'),
+    permission: 'iforms.forms.manage',
+    activated: true,
+    path: '/form/form',
+    name: 'qform.admin.form.index',
+    crud: import('@imagina/qform/_crud/crudForms'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-		title: 'qform.sidebar.adminForm',
-		icon: 'fab fa-wpforms',
-    authenticated : true
-	},
+    title: 'qform.sidebar.adminForm',
+    icon: 'fab fa-wpforms',
+    authenticated: true
+  },
   formsDesign: {
     permission: null,
     activated: true,
@@ -20,7 +20,7 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qform.sidebar.designForm',
     icon: 'fab fa-wpforms',
-    authenticated : true
+    authenticated: true
   },
   fields: {
     permission: null,
@@ -31,7 +31,7 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qform.sidebar.adminField',
     icon: 'fas fa-grip-horizontal',
-    authenticated : true
+    authenticated: true
   },
   fieldsCreate: {
     permission: null,
@@ -42,7 +42,7 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qform.layout.newField',
     icon: 'fas fa-grip-horizontal',
-    authenticated : true
+    authenticated: true
   },
   fieldsUpdate: {
     permission: null,
@@ -53,23 +53,45 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qform.layout.updateField',
     icon: 'fas fa-grip-horizontal',
-    authenticated : true
+    authenticated: true
   },
   leads: {
     permission: null,
-		activated: true,
-		path: '/form/lead',
-		name: 'qform.admin.leads.index',
-    crud : import('@imagina/qform/_crud/crudLeads'),
+    activated: true,
+    path: '/form/lead',
+    name: 'qform.admin.leads.index',
+    crud: import('@imagina/qform/_crud/crudLeads'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
-		layout: () => import('@imagina/qsite/_layouts/master.vue'),
-		title: 'qform.sidebar.adminLead',
-		icon: 'fas fa-chalkboard-teacher',
-		authenticated : true,
-    subHeader : {
-      refresh : true
+    layout: () => import('@imagina/qsite/_layouts/master.vue'),
+    title: 'qform.sidebar.adminLead',
+    icon: 'fas fa-leaf',
+    authenticated: true,
+    subHeader: {
+      refresh: true,
+      breadcrumb: ['qform.forms'],
+      export: {
+        title: 'qform.sidebar.adminLead',
+        icon: 'fas fa-leaf',
+        moduleName: "Iforms",
+        exportName: "LeadsPerFormExport",
+        fileName: "Leads"
+      },
+      exportFields: {
+        formId: {
+          value: null,
+          type: 'select',
+          required : true,
+          props: {
+            label: 'Formulario*',
+          },
+          loadOptions: {
+            apiRoute: 'apiRoutes.qform.forms',
+            select: {label: 'title', id: 'id'},
+          }
+        }
+      },
     }
-	},
+  },
   leadsShow: {
     permission: null,
     activated: true,
@@ -79,6 +101,6 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qform.sidebar.adminLead',
     icon: 'fas fa-chalkboard-teacher',
-    authenticated : true
+    authenticated: true
   },
 }
