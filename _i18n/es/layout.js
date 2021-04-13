@@ -9,7 +9,16 @@ export default {
     form: 'Formulario',
     order: 'Orden',
     suffix: 'Sufijo',
-    urlTermsAndConditions : 'URL Terminos y condiciones'
+    urlTermsAndConditions : 'URL Terminos y condiciones',
+    value: 'Valor',
+    columns:{
+      three: '25%',
+      four: '33%',
+      six: '50%',
+      eight: '66%',
+      nine: '75%',
+      full: 'Ancho Total',
+    },
   },
   message : {
 

@@ -9,7 +9,16 @@ export default {
     form: 'Form',
     order: 'Order',
     suffix: 'Suffix',
-    urlTermsAndConditions: 'URL Terms and Conditions'
+    urlTermsAndConditions: 'URL Terms and Conditions',
+    value: 'Value',
+    columns:{
+      three: '25%',
+      four: '33%',
+      six: '50%',
+      eight: '66%',
+      nine: '75%',
+      full: 'Full Width',
+    },
   },
   message: {}
 }
