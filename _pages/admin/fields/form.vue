@@ -11,7 +11,7 @@
           </div>
 
           <q-form autocorrect="off" autocomplete="off" ref="formContent" class="q-col-gutter-x-md full-width row"
-                  v-if="locale.success" @submit="productId ? update() : create()"
+                  v-if="locale.success" @submit="fieldId ? update() : create()"
                   @validation-error="$alert.error($tr('ui.message.formInvalid'))">
             <!--Form left-->
             <div class="col-12 col-md-8" v-if="locale.success">
@@ -29,12 +29,34 @@
               <q-input data-testid="description" outlined dense v-model="locale.formTemplate.description"
                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
                        :label="`${$tr('ui.form.description')} (${locale.language})*`"/>
+              <div class="row q-col-gutter-sm">
+                  <div class="col-12">
+                    <span class="text-caption">{{ `${$tr('ui.form.prefix')}` }}</span>
+                  </div>
+                  <div class="col-4">
+                    <q-select data-testid="prefixType" v-model="locale.formTemplate.prefix.type" :options="prefixTypes"
+                              outlined dense emit-value map-options :label="`${$tr('ui.form.type')}`"/>
+                  </div>
+                  <div class="col-8">
+                    <q-input data-testid="prefixValue" outlined dense :label="`${$tr('qform.layout.form.value')}`" v-model="locale.formTemplate.prefix.value" />
+                  </div>
+              </div>
+              <div class="row q-col-gutter-sm">
+                  <div class="col-12">
+                    <span class="text-caption">{{ `${$tr('qform.layout.form.suffix')}` }}</span>
+                  </div>
+                  <div class="col-4">
+                    <q-select data-testid="prefixType" v-model="locale.formTemplate.suffix.type" :options="prefixTypes"
+                              outlined dense emit-value map-options :label="`${$tr('ui.form.type')}`"/>
+                  </div>
+                  <div class="col-8">
+                    <q-input data-testid="suffix" outlined dense :label="`${$tr('qform.layout.form.value')}`" v-model="locale.formTemplate.suffix.value" />
+                  </div>
+              </div>
 
-              <q-input data-testid="prefix" outlined dense v-model="locale.formTemplate.prefix"
-                       :label="`${$tr('ui.form.prefix')}`"/>
-
-              <q-input data-testid="suffix" outlined dense v-model="locale.formTemplate.suffix"
-                       :label="`${$tr('qform.layout.form.suffix')}`"/>
+              <q-select data-testid="type" v-model="locale.formTemplate.width" :options="columnWidths"
+                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
+                        outlined dense emit-value map-options :label="`${$tr('ui.form.width')}*`"/>
 
               <q-select data-testid="type" v-model="locale.formTemplate.type" :options="types"
                         :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
@@ -54,7 +76,7 @@
 
             <!--buttons-->
             <div class="col-12 text-right">
-              <q-btn v-if="productId" color="positive" :loading="loading" icon="fas fa-edit"
+              <q-btn v-if="fieldId" color="positive" :loading="loading" icon="fas fa-edit"
                      :label="$tr('ui.label.update')" rounded type="submit"/>
               <q-btn v-else color="positive" :loading="loading" icon="fas fa-edit"
                      :label="$tr('ui.label.create')" rounded type="submit"/>
@@ -72,7 +94,6 @@
   import optionsForSelect from '@imagina/qform/_components/admin/fields/optionsForSelect'
 
   //Plugins
-  import _cloneDeep from 'lodash.clonedeep'
   import {required} from 'vuelidate/lib/validators'
   import {scroll} from 'quasar'
 
@@ -102,7 +123,7 @@
         loading: false,
         loadingCategory: false,
         success: false,
-        productId: false,
+        fieldId: false,
         optionsTemplate: {
           categories: [],
           products: [],
@@ -115,6 +136,18 @@
         types: [],
         forms: [],
         fields: [],
+        prefixTypes:[
+          {value: 'icon', label: this.$tr('ui.form.icon')},
+          {value: 'text', label: this.$tr('ui.label.text')}
+        ],
+        columnWidths:[
+          {value: 12, label: this.$tr('qform.layout.form.columns.full')},
+          {value: 9, label: this.$tr('qform.layout.form.columns.nine')},
+          {value: 8, label: this.$tr('qform.layout.form.columns.eight')},
+          {value: 6, label: this.$tr('qform.layout.form.columns.six')},
+          {value: 4, label: this.$tr('qform.layout.form.columns.four')},
+          {value: 3, label: this.$tr('qform.layout.form.columns.three')},
+        ]
       }
     },
     computed: {
@@ -128,8 +161,15 @@
             formId: this.$route.params.formId,
             selectable: [],
             order: 0,
-            prefix: '',
-            suffix: '',
+            width: '12',
+            prefix: {
+              type: 'icon',
+              value: ''
+            },
+            suffix: {
+              type: 'icon',
+              value: ''
+            },
           },
           fieldsTranslatable: {
             label: '',
@@ -163,8 +203,8 @@
         this.loading = true
         this.success = false//Disable status of page
         this.vTab = 'data'
-        this.locale = _cloneDeep(this.dataLocale)//Add fields
-        this.productId = this.$route.params.id//Update param from route
+        this.locale = this.$clone(this.dataLocale)//Add fields
+        this.fieldId = this.$route.params.id//Update param from route
         if (this.locale.success) this.$refs.localeComponent.vReset()//Reset locale
         await this.getData()//Get Data Item
         this.getTypes()
@@ -177,8 +217,8 @@
       //Get product if is edit
       getData() {
         return new Promise((resolve, reject) => {
-          const productId = _cloneDeep(this.productId)
-          if (productId) {
+          const fieldId = this.$clone(this.fieldId)
+          if (fieldId) {
             let configName = 'apiRoutes.qform.fields'
             //Params
             let params = {
@@ -187,11 +227,12 @@
                 filter: {allTranslations: true}
               }
             }
-            //Request
-            this.$crud.show(configName, productId, params).then(response => {
+            //Requesta
+            this.$crud.show(configName, fieldId, params).then(response => {
               this.orderDataItemToLocale(response.data)
               resolve(true)//Resolve
             }).catch(error => {
+              console.error(error)
               this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
               this.loading = false
               reject(false)//Resolve
@@ -203,9 +244,9 @@
       },
       //order data item to locale component
       orderDataItemToLocale(data) {
-        let orderData = _cloneDeep(data)
+        let orderData = this.$clone(data)
         orderData.selectable = JSON.parse(data.selectable)
-        this.locale.form = _cloneDeep(orderData)
+        this.locale.form = this.$clone(orderData)
       },
       //Create Product
       async create() {
@@ -228,7 +269,7 @@
           //Check validations
           this.loading = true
           let configName = 'apiRoutes.qform.fields'
-          this.$crud.update(configName, this.productId, this.getDataForm()).then(response => {
+          this.$crud.update(configName, this.fieldId, this.getDataForm()).then(response => {
             this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
             this.initForm()
           }).catch(error => {
@@ -246,6 +287,8 @@
             delete response[item]
         }
         response.selectable = JSON.stringify(response.selectable)
+        response.prefix = response.prefix || {type: '', value: ''}
+        response.suffix = response.suffix || {type: '', value: ''}
         return response
       },
       //Action after created
@@ -279,6 +322,7 @@
             this.loading = false
           })
           .catch(error => {
+            console.error(error)
             this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
