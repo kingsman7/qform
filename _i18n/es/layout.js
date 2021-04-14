@@ -17,7 +17,7 @@ export default {
       six: '50%',
       eight: '66%',
       nine: '75%',
-      full: 'Ancho Total',
+      full: 'Full Ancho',
     },
   },
   message : {
