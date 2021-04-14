@@ -86,8 +86,8 @@
       },
       optionStatus() {
         return [
-          {label: this.$tr('ui.label.enabled'), value: '1',},
-          {label: this.$tr('ui.label.disabled'), value: '0',},
+          {label: this.$tr('ui.label.enabled'), value: 1,},
+          {label: this.$tr('ui.label.disabled'), value: 0,},
         ]
       }
     },
