@@ -10,6 +10,7 @@
       crudData() {
         return {
           crudId: this.crudId,
+          entityName: config("main.qform.entityNames.field"),
           apiRoute: 'apiRoutes.qform.fields',
           permission: 'iforms.fields',
           create: {

@@ -10,6 +10,7 @@ export default {
     crudData() {
       return {
         crudId: this.crudId,
+        entityName: config("main.qform.entityNames.form"),
         apiRoute: 'apiRoutes.qform.forms',
         permission: 'iforms.forms',
         create: {

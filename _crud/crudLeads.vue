@@ -46,6 +46,7 @@ export default {
     crudData() {
       return {
         crudId: this.crudId,
+        entityName: config("main.qform.entityNames.lead"),
         apiRoute: 'apiRoutes.qform.leads',
         permission: 'iforms.leads',
         create: false,
