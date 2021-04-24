@@ -124,7 +124,7 @@ export default {
 
       if (this.modal.lead) {
         let fields = this.$clone(this.modal.fields)
-        let leadValues = this.$clone(this.modal.lead.values)
+        let leadValues = this.$clone(this.modal.lead.values || [])
 
         //Merge values
         fields.forEach(field => {
