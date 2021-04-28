@@ -12,7 +12,7 @@
 
       <!--systemName-->
       <q-input outlined dense v-model="locale.formTemplate.systemName" :label="`${$tr('ui.form.slug')} *`"
-               :rules="[val => !!val || $tr('ui.message.fieldRequired')]"/>
+               :rules="[val => !!val || $tr('ui.message.fieldRequired')]" readonly/>
 
       <!--Destinations email-->
       <q-select :label="`${$trp('ui.form.email')} *`" v-model="locale.formTemplate.destinationEmail"
