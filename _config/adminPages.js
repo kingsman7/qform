@@ -9,7 +9,10 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qform.sidebar.adminForm',
     icon: 'fab fa-wpforms',
-    authenticated: true
+    authenticated: true,
+    subHeader: {
+        refresh: true
+    }
   },
   formsDesign: {
     permission: null,

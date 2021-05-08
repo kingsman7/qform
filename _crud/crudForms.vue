@@ -18,13 +18,19 @@ export default {
         },
         read: {
           columns: [
-            {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
-            {name: 'title', label: this.$tr('ui.form.title'), field: 'title'},
-            {name: 'slug', label: this.$tr('ui.form.systemName'), field: 'systemName'},
+            {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px', align: 'left'},
+            {name: 'title', label: this.$tr('ui.form.title'), field: 'title', align: 'left'},
+            {name: 'slug', label: this.$tr('ui.form.slug'), field: 'systemName', align: 'left'},
+            {name: 'active', label: this.$tr('ui.form.status'), field: 'active', align: 'left'},
             {
-              name: 'user', label: this.$tr('ui.label.user'), field: 'user',
+              name: 'user', label: this.$tr('ui.label.user'), field: 'user', align: 'left',
               format: val => (val && val.fullName) ? val.fullName : '-'
             },
+            {
+              name: 'destinationEmail', label: this.$trp('ui.label.email'), field: 'destinationEmail', align: 'left',
+              classes: 'ellipsis', style: 'max-width : 250px', format: val => val ? val.join(', ') : '-'
+            },
+
             {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
           ],
           requestParams: {include: 'fields,leads,user'},
@@ -46,13 +52,13 @@ export default {
           },
           actions: [
             {
-              icon: 'view_compact',
+              icon: 'fas fa-list-ol',
               color: 'info',
               route: 'qform.admin.fields.index'
             }
           ]
         },
-        update: false,
+        update: true,
         delete: true,
         formLeft: {
           id: {value: ''},
@@ -65,12 +71,30 @@ export default {
               rules: [val => !!val || this.$tr('ui.message.fieldRequired')],
             }
           },
-          systemName: {
-            value: '',
-            type: 'input',
+          status: {
+            value: '1',
+            type: 'select',
             props: {
-              label: `${this.$tr('ui.form.systemName')}*`,
-              rules: [val => !!val || this.$tr('ui.message.fieldRequired')],
+              label: this.$tr('ui.form.status'),
+              options: [
+                {label: this.$tr('ui.label.enabled'), value: '1'},
+                {label: this.$tr('ui.label.disabled'), value: '0'}
+              ]
+            },
+          },
+          destinationEmail: {
+            value: null,
+            type: 'select',
+            props: {
+              label: `${this.$tr('ui.label.email')}`,
+              useInput: true,
+              useChips: true,
+              multiple: true,
+              hideDropdownIcon: true,
+              inputDebounce: "0",
+              newValueMode: "add-unique",
+              outlined: true,
+              dense: true,
             }
           },
           userId: {
@@ -93,6 +117,16 @@ export default {
               label: `${this.$tr('qform.layout.form.urlTermsAndConditions')}`,
             }
           },
+        },
+        getDataForm: (data, typeForm) => {
+          return new Promise((resolve, reject) => {
+            if (typeForm == 'create') {
+              let defaultLocale = this.$store.state.qsiteApp.defaultLocale
+              let formTitle = data[defaultLocale].title
+              data.systemName = this.$helper.getSlug(formTitle)
+            }
+            resolve(data)
+          })
         }
       }
     },
