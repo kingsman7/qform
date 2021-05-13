@@ -58,6 +58,10 @@ export default {
               format: val => val ? val.title : ''
             },
             {
+              name: 'assignedTo', label: this.$tr('ui.form.assignedTo'), field: 'assignedTo', align: 'left',
+              format: val => val ? val.fullName : '-'
+            },
+            {
               name: 'values', label: this.$trp('ui.label.data'), field: 'values', align: 'left',
               classes: 'ellipsis', style: 'max-width : 350px',
               format: val => val ? Object.values(val).join(', ') : ''
@@ -75,9 +79,9 @@ export default {
             {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
           ],
           requestParams: {
-            include: 'form',
-            filter:{
-              order:{
+            include: 'form,assignedTo',
+            filter: {
+              order: {
                 field: 'created_at',
                 way: 'desc',
               }
@@ -101,7 +105,7 @@ export default {
             {
               icon: 'fas fa-eye',
               color: 'info',
-              tooltip : this.$tr('ui.label.view'),
+              tooltip: this.$tr('ui.label.view'),
               action: (item) => {
                 this.modal.lead = item
                 this.modal.show = true
@@ -110,8 +114,27 @@ export default {
             }
           ]
         },
-        update: false,
-        delete: false
+        update: true,
+        delete: false,
+        formLeft: {
+          id: {value: ''},
+          assignedToId: {
+            value: null,
+            type: 'crud',
+            props: {
+              crudType: 'select',
+              crudData: import('@imagina/quser/_crud/users'),
+              crudProps: {
+                label: `${this.$trp('ui.form.assignedTo')}`,
+              },
+              config: {
+                options: {
+                  label: 'fullName', value: 'id'
+                }
+              },
+            },
+          }
+        }
       }
     },
     //Crud info
