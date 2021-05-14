@@ -1,232 +1,408 @@
 <template>
-  <div
-    id="pageId"
-    class="q-layout-page layout-padding">
-    <div class=" q-mb-lg backend-page">
+  <div id="formfieldsPage">
+    <!--Blocks Crud-->
+    <crud :crud-data="import('@imagina/qform/_crud/blocks')" :custom-data="customCrudBlocks" type="no-index"
+          ref="crudBlocks"/>
+    <!--Fields Crud-->
+    <crud :crud-data="import('@imagina/qform/_crud/fields')" :custom-data="customCrudFields" type="no-index"
+          ref="crudFields"/>
 
-      <div class="box q-mb-sm" v-if="false">
-        <render-form :formId="$route.params.id"/>
-      </div>
-
-      <div class="row q-col-gutter-md">
-        <div class="col-md-5">
-          <div class="box">
-            <div class="row gutter-y-sm">
-              <div class="col-md-12 ">
-                <formForm/>
-              </div>
-            </div>
+    <!--page Content-->
+    <div id="formfieldsPageContent" class="row q-col-gutter-md relative-position">
+      <!--Form info-->
+      <div class="col-12" v-if="formData">
+        <!--Content-->
+        <div class="box box-auto-height row items-center justify-between">
+          <!--Form Info-->
+          <div class="box-title">
+            <q-icon name="fab fa-wpforms"/>
+            {{ $tr('ui.label.form') }}: {{ formData.title }}
+          </div>
+          <!--Actions-->
+          <div class="row">
+            <!--Button to create block-->
+            <q-btn @click="$refs.crudBlocks.create()" color="green" icon="fas fa-plus" round unelevated
+                   size="12px" style="font-size: 8px; padding: 6px">
+              <q-tooltip>{{ $tr('qform.layout.newBlock') }}</q-tooltip>
+            </q-btn>
           </div>
         </div>
-        <div class="col-md-7 relative-position">
-          <div class="box">
-            <div class="row gutter-y-sm">
-              <div class="col-md-12 ">
-                <div class="float-right">
-                  <q-btn
-                    icon="fas fa-arrow-alt-circle-left"
-                    :to="{name: 'qform.admin.form.index'}"
-                    label="Back to forms"
-                    color="primary"
-                    class="q-ml-xs"/>
-                  <q-btn
-                    v-if="false"
-                    @click="updateOrder()"
-                    icon="reorder"
-                    label="Update Order"
-                    color="primary"
-                    class="q-ml-xs"/>
-                  <q-btn
-                    icon="fas fa-edit"
-                    :to="{name: 'qform.admin.fields.create', params: {formId: $route.params.id} }"
-                    label="new Redcord"
-                    color="green"
-                    class="q-ml-xs"/>
-                  <q-btn
-                    :to="{name: 'qform.admin.leads.show', params:{id: $route.params.id}}"
-                    icon="fab fa-wpforms"
-                    color="info"
-                    class="q-ml-xs">
-                    <q-tooltip :delay="300">
-                      Leads
-                    </q-tooltip>
-                  </q-btn>
-                  <q-btn
-                    @click.native="getFields(true)"
-                    icon="fas fa-sync-alt"
-                    color="info"
-                    class="q-ml-xs">
-                    <q-tooltip :delay="300">
-                      {{$tr('ui.label.refresh')}}
-                    </q-tooltip>
+      </div>
+      <div class="col-12">
+        <!--Block Content-->
+        <draggable @update="updateOrderBlock" @change="updateOrderBlock" :list="formData.blocks" v-bind="dragOptions"
+                   style="min-height: 60px" group="bocksBlocks" v-model="formData.blocks" class="row q-col-gutter-md">
+          <div v-for="block in formData.blocks" class="block-content col-12 col-md-6 col-lg-4">
+            <div class="box">
+              <!--Block info-->
+              <div class="block-info q-mb-md">
+                <!--Block Title-->
+                <div class="box-title  row justify-between">
+                  <div class="block-info__title ellipsis cursor-pointer col">
+                    <q-icon name="fas fa-arrows-alt"></q-icon>
+                    {{ $tr('ui.label.block') }} #{{ block.sortOrder }} | {{ block.title }}
+                    <q-tooltip>{{ block.title }}</q-tooltip>
+                  </div>
+                  <!--Button action-->
+                  <q-btn class="file-card__bottom_actions col-1" icon="fas fa-ellipsis-v" unelevated round
+                         size="xs" color="blue-grey" flat>
+                    <!---Menu actions-->
+                    <q-menu anchor="bottom left" self="bottom end">
+                      <q-list style="min-width: 100px">
+                        <q-item clickable v-close-popup v-for="(actionBlock, itemKey) in fileActionsBlock"
+                                :key="itemKey"
+                                @click.native="actionBlock.action(block)">
+                          <q-item-section>
+                            <div class="row items-center">
+                              <q-icon :name="actionBlock.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
+                              {{ actionBlock.label }}
+                            </div>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </q-menu>
                   </q-btn>
                 </div>
+                <!--Separator-->
+                <q-separator class="q-mb-md q-mt-sm"/>
+                <!--Block description-->
+                <div class="block-info__description ellipsis-3-lines">
+                  {{ block.description }}
+                  <q-tooltip>{{ block.description }}</q-tooltip>
+                </div>
               </div>
-              <div class="col-md-12 q-mt-md">
-                <draggable @update="updateOrder" v-bind="dragOptions" v-model="fields">
-                  <transition-group class="list-group">
-                    <div class="row" v-for="(field, index) in fields" :key="field.id">
-                      <div class="col-6 q-py-xs">
-                        <q-icon class="cursor-pointer" name="fas fa-arrows-alt-v"/>
-                        {{field.label}}
-                      </div>
-                      <div class="col-6 q-py-xs text-right">
-                        <q-btn
-                          icon="fas fa-pen"
-                          @click="goTo(field)"
-                          size="xs"
-                          class="q-mr-sm"
-                          color="positive"/>
-                        <q-btn
-                          @click="dialogDeleteItem = true; itemIdToDelete = field"
-                          icon="fas fa-trash-alt"
-                          size="xs"
-                          class="q-mr-sm"
-                          color="negative"/>
-                      </div>
-                      <div class="col-12">
-                        <q-separator/>
-                      </div>
-                    </div>
-                  </transition-group>
-                </draggable>
+              <!--Block Fields-->
+              <div class="block-fields">
+                <!--Fields Information-->
+                <div class="row justify-between items-center">
+                  <!--Title-->
+                  <div class="box-title">{{ $trp('ui.label.field') }}</div>
+                  <!--Btn to create field-->
+                  <q-btn @click="blockCreateField = block.id; $refs.crudFields.create()" icon="fas fa-plus"
+                         color="green"
+                         size="12px" style="font-size: 8px; padding: 6px" round unelevated>
+                    <q-tooltip>{{ $tr('qform.layout.newField') }}</q-tooltip>
+                  </q-btn>
+                </div>
+                <!--Separator-->
+<!--                <q-separator class="q-mb-md q-mt-sm"/>-->
+                <div id="contentFields" class="q-mt-md">
+                  <q-scroll-area :thumb-style="thumbStyle" :content-active-style="contentActiveStyle"
+                                 style="height: 200px">
+                    <!--Fields content (draggable)-->
+                    <draggable @update="updateOrderField" @change="updateOrderField" v-bind="dragOptions"
+                               :list="block.fields" group="bocksfields" v-model="block.fields">
+                      <transition-group class="list-group block" style="min-height: 199px; width: 100%">
+
+                        <div v-for="(field, fieldKey) in block.fields" :key="field.name"
+                             class="block-field items-center cursor-pointer">
+                          <!--Field-->
+                          <div class="row row justify-between">
+                            <!--Field title-->
+                            <div class="block-field__title text-grey-9">
+                              <q-icon class="cursor-pointer" name="fas fa-arrows-alt"/>
+                              {{ field.label }}
+                            </div>
+                            <!--Field Actions-->
+                            <q-btn class="file-card__bottom_actions col-1" icon="fas fa-ellipsis-v" unelevated round
+                                   size="xs" color="blue-grey" flat>
+                              <!---Menu actions-->
+                              <q-menu anchor="bottom left" self="bottom end">
+                                <q-list style="min-width: 100px">
+                                  <q-item clickable v-close-popup v-for="(actionfield, itemKey) in fileActionsField"
+                                          :key="itemKey"
+                                          @click.native="actionfield.action(block)">
+                                    <q-item-section>
+                                      <div class="row items-center">
+                                        <q-icon :name="actionfield.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
+                                        {{ actionfield.label }}
+                                      </div>
+                                    </q-item-section>
+                                  </q-item>
+                                </q-list>
+                              </q-menu>
+                            </q-btn>
+                            <!--Separator-->
+                            <div class="col-12 q-my-sm">
+                              <q-separator/>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </transition-group>
+                    </draggable>
+                  </q-scroll-area>
+
+                </div>
               </div>
             </div>
+
           </div>
-          <inner-loading :visible="loading"/>
-        </div>
+        </draggable>
       </div>
+      <!--Inner Loading-->
+      <inner-loading :visible="loading"/>
     </div>
-
-    <q-dialog v-model="dialogDeleteItem" prevent-close>
-      <q-card class="backend-page">
-        <q-card-section>
-          <h5 class="q-ma-none text-negative">{{itemIdToDelete.label}}</h5>
-          {{$tr('ui.message.deleteRecord')}}
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <!--Button cancel-->
-          <q-btn color="blue-grey" label="Cancel" @click="dialogDeleteItem = false"/>
-          <!--Button confirm delete category-->
-          <q-btn color="negative" icon="fas fa-trash-alt" :loading="loading"
-                 label="Delete" @click="deleteItem()"/>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </div>
 </template>
+
 <script>
-  import renderForm from '@imagina/qform/_components/frontend/forms/renderForm'
-  import formForm from '@imagina/qform/_components/admin/forms/form'
-  import draggable from 'vuedraggable'
-  import {helper} from "@imagina/qsite/_plugins/helper";
+//import Component
+import renderForm from '@imagina/qform/_components/frontend/forms/renderForm'
+import formForm from '@imagina/qform/_components/admin/forms/form'
+import draggable from 'vuedraggable'
 
-
-  export default {
-    props: {},
-    components: {
-      draggable,
-      renderForm,
-      formForm
-    },
-    computed: {
-      dragOptions() {
-        return {
-          animation: 200,
-          group: "description",
-          disabled: false,
-          ghostClass: "ghost"
-        };
-      },
-    },
-    watch: {
-      fields: function () {
-        this.fields.forEach((element, index) => {
-          element.order = index
-        })
-      }
-    },
-    mounted() {
-      this.$nextTick(function () {
-        this.getFields(true)
+export default {
+  beforeDestroy() {
+    this.$root.$off('page.data.refresh')
+  },
+  props: {},
+  components: {
+    draggable,
+    renderForm,
+    formForm
+  },
+  watch: {
+    fields: function () {
+      this.fields.forEach((element, index) => {
+        element.order = index
       })
     },
-    data() {
-      return {
-        loading: false,
-        fields: [],
-        dialogDeleteItem: false,
-        itemIdToDelete: {},
-      }
-    },
-    methods: {
-      getFields(refresh = false) {
-        this.loading = true
-        let params = {
-          refresh: refresh,
-          params: {
-            filter: {
-              formId: this.$route.params.id,
-              order: {
-                field: 'order',
-                way: 'asc'
-              }
-            }
-          }
-        }
-        this.$crud.index('apiRoutes.qform.fields', params)
-          .then(response => {
-            this.fields = response.data.map(item => {
-              return helper.toSnakeCase(item)
-            })
-            this.loading = false
-          })
-          .catch(error => {
-            this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-          })
+  },
+  mounted() {
+    this.$nextTick(function () {
+      this.init()
+    })
+  },
+  data() {
+    return {
+      loading: false,
+      dragOptions: {
+        animation: 200,
+        group: "bocksfields",
+        disabled: false,
+        ghostClass: "ghost"
       },
-      handleEvents(event) {
-        this.updateOrderInField(event.moved.element, event.moved.newIndex)
+      formData: false,
+      blockCreateField: false,
+      fields: [],
+
+      //Style of Scroll area
+      thumbStyle: {
+        right: '-1px',
+        borderRadius: '5px',
+        backgroundColor: '#555',
+        width: '5px',
+        opacity: 0.75,
       },
-      goTo(field) {
-        this.$router.push({
-          name: 'qform.admin.fields.update',
-          params: {
-            id: field.id
-          }
-        })
-      },
-      deleteItem() {
-        this.loading = true
-        this.$crud.delete('apiRoutes.qform.fields', this.itemIdToDelete.id)
-          .then(response => {
-            this.$alert.success({message: this.$tr('ui.message.recordDeleted')})
-            this.dialogDeleteItem = false
-            this.getFields(true)
-            this.loading = false
-          }).catch(error => {
-          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom'})
-          this.loading = false
-        })
-      },
-      updateOrder() {
-        let data = {
-          id: this.$route.params.id,
-          fields: this.fields
-        }
-        this.loading = true
-        this.$crud.create('apiRoutes.qform.updateOrders', data)
-          .then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
-            this.loading = false
-          })
-          .catch(error => {
-            this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-          })
+      contentActiveStyle: {
+        color: 'black'
       }
     }
+  },
+  computed: {
+    //Custom Crud blocks
+    customCrudBlocks() {
+      return {
+        getDataForm: (data, typeForm) => {
+          return new Promise((resolve, reject) => {
+            //Transform data of created
+            if (typeForm == 'create') {
+              loading: true,
+                //asigned sortOrder
+                data.sortOrder = this.formData.blocks ? (this.formData.blocks.length + 1) : 1
+            }
+            resolve(data)
+          })
+        },
+      }
+    },
+    //Custom Crud fields
+    customCrudFields() {
+      return {
+        getDataForm: (data, typeForm) => {
+          return new Promise((resolve, reject) => {
+            //Transform data of created
+            if (typeForm == 'create') {
+              loading: true,
+                data.blockId = this.blockCreateField
+              //asigned order
+              data.Order = this.formData.order ? (this.formData.order.length + 1) : 1
+            }
+            resolve(data)
+          })
+        },
+      }
+    },
+    //File Actions field
+    fileActionsField() {
+      return [
+        {
+          label: this.$tr('ui.label.edit'),
+          icon: 'fas fa-pen',
+          color: 'green',
+          action: (field) => {
+            this.$refs.crudFields.update(field)
+          }
+        },
+        {
+          label: this.$tr('ui.label.delete'),
+          icon: 'fas fa-trash',
+          color: 'red',
+          action: (field) => {
+            this.$refs.crudFields.delete(field)
+          }
+        }
+      ]
+    },
+    //File Actions Block
+    fileActionsBlock() {
+      return [
+        {
+          label: this.$tr('ui.label.edit'),
+          icon: 'fas fa-pen',
+          color: 'green',
+          action: (block) => {
+            this.$refs.crudBlocks.update(block)
+          }
+        },
+        {
+          label: this.$tr('ui.label.delete'),
+          icon: 'fas fa-trash',
+          color: 'red',
+          action: (block) => {
+            this.$refs.crudBlocks.put(block)
+          }
+        }
+      ]
+    },
+  },
+  methods: {
+    init() {
+      //Get form data
+      this.getData(true)
+      //Listen refresh page
+      this.$root.$on('page.data.refresh', () => this.getData(true))
+    },
+    //Get form data
+    getData(refresh = false) {
+      return new Promise((resolve, reject) => {
+        this.loading = true
+        //request params
+        let requestParams = {
+          refresh: refresh,
+          params: {
+            include: 'blocks.fields'
+          }
+        }
+        //Request
+        this.$crud.show('apiRoutes.qform.forms', this.$route.params.id, requestParams).then(response => {
+          this.formData = response.data
+          this.loading = false
+        }).catch(error => this.loading = false)
+      })
+    },
+
+    //order data Fields
+    getDataFields() {
+      let response = []
+      let formData = this.$clone(this.formData)
+
+      //travel blocks
+      formData.blocks.forEach(block => {
+        //travel fields
+        block.fields.forEach(field => {
+          //assigned field `blockID`
+          field.block_id = this.$clone(block.id)
+          //assigned field `order`
+          field.order = response.length + 1
+          response.push(field)
+        })
+      })
+
+      //Response
+      return response
+    },
+
+    //update order field
+    updateOrderField() {
+      // return this.getDataFields()
+      this.loading = true
+      let dataFields = {attributes: this.getDataFields()}
+
+      this.$crud.put('apiRoutes.qform.formFields', dataFields)
+        .then(response => {
+          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+          this.loading = false
+        })
+        .catch(error => {
+          this.loading = false
+          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+        })
+    },
+
+    getDataBlock() {
+      let response = []
+      let formData = this.$clone(this.formData)
+      //travel blocks
+      formData.blocks.forEach(block => {
+        block.sort_order = response.length + 1
+        response.push(block)
+      })
+      //Response
+      return response
+    },
+    //update order block
+    updateOrderBlock() {
+      this.loading = true
+      let dataBlocks = {attributes: this.getDataBlock()}
+      this.$crud.put('apiRoutes.qform.formBlocks', dataBlocks)
+        .then(response => {
+          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+          this.loading = false
+        })
+        .catch(error => {
+          this.loading = false
+          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+        })
+    }
   }
+}
 </script>
+<style lang="stylus">
+#formfieldsPageContent
+
+  .block-content
+
+    .block-info
+      position relative
+
+      .block-info__title, .file-card__bottom_actions
+        padding 7px 7px 7px 0
+
+      .block-info__actions
+        position absolute
+        top 0
+        right 0
+
+      .block-info__description
+        line-height 1.2
+        font-size 14px
+        text-align justify
+        color $grey-8
+
+    .file-card__bottom_actions
+      height 30px
+      width 30px
+
+      i
+        margin 0px !important
+
+
+  #contentFields
+    border-style dotted
+    border-width 1px
+    boder-color #cccccc
+    padding 5px
+</style>
