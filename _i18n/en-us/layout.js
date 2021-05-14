@@ -3,6 +3,9 @@ export default {
   updateForm: 'Update Form',
   newField: 'New Field',
   updateField: 'Update Field',
+  newBlock: 'new Block',
+  updateBlock: 'Update Block',
+  deleteBlock: 'Delete Block',
   form: {
     label: 'Label',
     placeholder: 'Placeholder',
@@ -11,7 +14,7 @@ export default {
     suffix: 'Suffix',
     urlTermsAndConditions: 'URL Terms and Conditions',
     value: 'Value',
-    columns:{
+    columns: {
       three: '25%',
       four: '33%',
       six: '50%',

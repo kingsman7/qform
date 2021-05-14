@@ -11,7 +11,7 @@ export default {
     icon: 'fab fa-wpforms',
     authenticated: true,
     subHeader: {
-        refresh: true
+      refresh: true
     }
   },
   formsDesign: {
@@ -34,7 +34,11 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qform.sidebar.adminField',
     icon: 'fas fa-grip-horizontal',
-    authenticated: true
+    authenticated: true,
+    subHeader: {
+      refresh: true,
+      breadcrumb: ['qform.forms']
+    }
   },
   fieldsCreate: {
     permission: null,
@@ -45,7 +49,10 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qform.layout.newField',
     icon: 'fas fa-grip-horizontal',
-    authenticated: true
+    authenticated: true,
+    subHeader: {
+      refresh: true
+    }
   },
   fieldsUpdate: {
     permission: null,
@@ -56,7 +63,10 @@ export default {
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qform.layout.updateField',
     icon: 'fas fa-grip-horizontal',
-    authenticated: true
+    authenticated: true,
+    subHeader: {
+      refresh: true
+    }
   },
   leads: {
     permission: null,
@@ -83,7 +93,7 @@ export default {
         formId: {
           value: null,
           type: 'select',
-          required : true,
+          required: true,
           props: {
             label: 'Formulario*',
           },

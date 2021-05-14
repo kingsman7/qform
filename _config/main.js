@@ -3,6 +3,7 @@ export default {
   entityNames: {
     field: 'field',
     form: 'form',
-    lead: 'lead'
+    lead: 'lead',
+    blocks: 'blocks'
   },
 }

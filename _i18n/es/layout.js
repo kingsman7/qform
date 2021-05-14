@@ -3,6 +3,9 @@ export default {
   updateForm : 'Actualizar Formulario',
   newField : 'Nuevo Campo',
   updateField : 'Actualizar Campo',
+  newBlock: 'Nuevo Bloque',
+  updateBlock: 'Actualizar bloque',
+  deleteBlock: 'Eliminar bloque',
   form : {
     label: 'Etiqueta',
     placeholder: 'Placeholder',
