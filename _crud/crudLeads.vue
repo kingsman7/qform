@@ -49,6 +49,7 @@ export default {
         entityName: config("main.qform.entityNames.lead"),
         apiRoute: 'apiRoutes.qform.leads',
         permission: 'iforms.leads',
+        extraFormFields: 'iforms.crud-fields.leads',
         create: false,
         read: {
           columns: [

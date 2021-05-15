@@ -13,6 +13,7 @@ export default {
         entityName: config("main.qform.entityNames.form"),
         apiRoute: 'apiRoutes.qform.forms',
         permission: 'iforms.forms',
+        extraFormFields: 'iforms.crud-fields.forms',
         create: {
           title: this.$tr('qform.layout.newForm'),
         },

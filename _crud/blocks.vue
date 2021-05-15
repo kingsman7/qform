@@ -35,7 +35,8 @@ export default {
         crudId: this.crudId,
         entityName: config("main.qform.entityNames.blocks"),
         apiRoute: 'apiRoutes.qform.blocks',
-        // permission: 'iforms.blocks',
+        permission: 'iforms.blocks',
+        extraFormFields: 'iforms.crud-fields.blocks',
         create: {
           title: this.$tr('qform.layout.newBlock'),
         },
