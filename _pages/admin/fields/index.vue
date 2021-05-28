@@ -2,10 +2,10 @@
   <div id="formfieldsPage">
     <!--Blocks Crud-->
     <crud :crud-data="import('@imagina/qform/_crud/blocks')" :custom-data="customCrudBlocks" type="no-index"
-          ref="crudBlocks"/>
+          ref="crudBlocks" @updated="getData(true)" @deleted="getData(true)" @created="getData(true)"/>
     <!--Fields Crud-->
     <crud :crud-data="import('@imagina/qform/_crud/fields')" :custom-data="customCrudFields" type="no-index"
-          ref="crudFields"/>
+          ref="crudFields" @deleted="getData(true)" @created="getData(true)"/>
 
     <!--page Content-->
     <div id="formfieldsPageContent" class="row q-col-gutter-md relative-position">
@@ -50,8 +50,7 @@
                     <q-menu anchor="bottom left" self="bottom end">
                       <q-list style="min-width: 100px">
                         <q-item clickable v-close-popup v-for="(actionBlock, itemKey) in fileActionsBlock"
-                                :key="itemKey"
-                                @click.native="actionBlock.action(block)">
+                                :key="itemKey" @click.native="actionBlock.action(block)">
                           <q-item-section>
                             <div class="row items-center">
                               <q-icon :name="actionBlock.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
@@ -85,7 +84,7 @@
                   </q-btn>
                 </div>
                 <!--Separator-->
-<!--                <q-separator class="q-mb-md q-mt-sm"/>-->
+                <!--                <q-separator class="q-mb-md q-mt-sm"/>-->
                 <div id="contentFields" class="q-mt-md">
                   <q-scroll-area :thumb-style="thumbStyle" :content-active-style="contentActiveStyle"
                                  style="height: 200px">
@@ -110,8 +109,7 @@
                               <q-menu anchor="bottom left" self="bottom end">
                                 <q-list style="min-width: 100px">
                                   <q-item clickable v-close-popup v-for="(actionfield, itemKey) in fileActionsField"
-                                          :key="itemKey"
-                                          @click.native="actionfield.action(block)">
+                                          :key="itemKey" @click.native="actionfield.action(field)">
                                     <q-item-section>
                                       <div class="row items-center">
                                         <q-icon :name="actionfield.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
@@ -210,8 +208,8 @@ export default {
             //Transform data of created
             if (typeForm == 'create') {
               loading: true,
-                //asigned sortOrder
-                data.sortOrder = this.formData.blocks ? (this.formData.blocks.length + 1) : 1
+                  //asigned sortOrder
+                  data.sortOrder = this.formData.blocks ? (this.formData.blocks.length + 1) : 1
             }
             resolve(data)
           })
@@ -226,7 +224,7 @@ export default {
             //Transform data of created
             if (typeForm == 'create') {
               loading: true,
-                data.blockId = this.blockCreateField
+                  data.blockId = this.blockCreateField
               //asigned order
               data.Order = this.formData.order ? (this.formData.order.length + 1) : 1
             }
@@ -272,7 +270,7 @@ export default {
           icon: 'fas fa-trash',
           color: 'red',
           action: (block) => {
-            this.$refs.crudBlocks.put(block)
+            this.$refs.crudBlocks.delete(block)
           }
         }
       ]
@@ -332,14 +330,14 @@ export default {
       let dataFields = {attributes: this.getDataFields()}
 
       this.$crud.put('apiRoutes.qform.formFields', dataFields)
-        .then(response => {
-          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
-          this.loading = false
-        })
-        .catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-        })
+          .then(response => {
+            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.loading = false
+          })
+          .catch(error => {
+            this.loading = false
+            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          })
     },
 
     getDataBlock() {
@@ -358,14 +356,14 @@ export default {
       this.loading = true
       let dataBlocks = {attributes: this.getDataBlock()}
       this.$crud.put('apiRoutes.qform.formBlocks', dataBlocks)
-        .then(response => {
-          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
-          this.loading = false
-        })
-        .catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-        })
+          .then(response => {
+            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.loading = false
+          })
+          .catch(error => {
+            this.loading = false
+            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          })
     }
   }
 }

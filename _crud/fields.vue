@@ -53,7 +53,7 @@ export default {
             type: 'input',
             isTranslatable: false,
             props: {
-              label: this.$tr('ui.form.name'),
+              label: this.$tr('ui.form.name') + '*',
               rules: [
                 val => !!val || this.$tr('ui.message.fieldRequired')
               ]
@@ -64,25 +64,10 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('qform.layout.form.label'),
+              label: this.$tr('qform.layout.form.label') + '*',
               rules: [
                 val => !!val || this.$tr('ui.message.fieldRequired')
               ]
-            }
-          },
-          type: {
-            value: 0,
-            type: 'select',
-            props: {
-              label: this.$tr('ui.form.parent'),
-              options: [
-                {label: this.$tr('ui.label.disabled'), value: 0},
-              ],
-            },
-            loadOptions: {
-              apiRoute: 'apiRoutes.qform.types',
-              select: {label: 'name', id: 'id'},
-              requestParams: {include: 'parent'}
             }
           },
           placeholder: {
@@ -90,7 +75,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('qform.layout.form.placeholder'),
+              label: this.$tr('qform.layout.form.placeholder') + '*',
               rules: [
                 val => !!val || this.$tr('ui.message.fieldRequired')
               ]
@@ -101,14 +86,14 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('ui.form.description'),
+              label: this.$tr('ui.form.description') + '*',
               rules: [
                 val => !!val || this.$tr('ui.message.fieldRequired')
               ]
             }
           },
           width: {
-            value: '',
+            value: 12,
             type: 'select',
             props: {
               label: this.$tr('ui.form.width'),
@@ -125,6 +110,34 @@ export default {
               ],
             },
           },
+          type: {
+            value: 1,
+            type: 'select',
+            props: {
+              label: this.$tr('ui.form.type'),
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qform.types',
+              select: {label: 'name', id: 'id'},
+              requestParams: {include: 'parent'}
+            }
+          },
+          fieldOptions: {
+            value: [],
+            type: 'select',
+            isFakeField: true,
+            props: {
+              label: this.$trp('ui.form.option'),
+              useInput: true,
+              useChips: true,
+              multiple: true,
+              hideDropdownIcon: true,
+              inputDebounce: "0",
+              newValueMode: "add-unique",
+              vIf: ([5, 6, 8].indexOf(parseInt(this.crudInfo.type || 0)) != -1) ? true : false,
+              hint: this.$tr('qform.layout.message.helpToOptionsField')
+            }
+          },
         },
         formRight: {
           prefixType: {
@@ -133,7 +146,7 @@ export default {
             type: 'select',
             fakeFieldName: 'prefix',
             props: {
-              label: this.$tr('ui.form.type'),
+              label: `${this.$tr('ui.form.type')} ${this.$tr('ui.form.prefix')}`,
               options: [
                 {value: 'icon', label: this.$tr('ui.form.icon')},
                 {value: 'text', label: this.$tr('ui.label.text')}
@@ -149,14 +162,13 @@ export default {
               label: this.$tr('ui.form.prefix'),
             }
           },
-
           suffixType: {
             name: 'type',
             value: '',
             type: 'select',
             fakeFieldName: 'suffix',
             props: {
-              label: this.$tr('ui.form.type'),
+              label: `${this.$tr('ui.form.type')} ${this.$tr('ui.form.suffix')}`,
               options: [
                 {value: 'icon', label: this.$tr('ui.form.icon')},
                 {value: 'text', label: this.$tr('ui.label.text')}
@@ -194,19 +206,19 @@ export default {
       this.loading = true
       let params = {params: {}}
       this.$crud.index('apiRoutes.qform.forms', params)
-        .then(response => {
-          this.forms = response.data.map(item => {
-            return {
-              id: item.id,
-              label: item.title
-            }
+          .then(response => {
+            this.forms = response.data.map(item => {
+              return {
+                id: item.id,
+                label: item.title
+              }
+            })
+            this.loading = false
           })
-          this.loading = false
-        })
-        .catch(error => {
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-          this.loading = false
-        })
+          .catch(error => {
+            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.loading = false
+          })
     },
   },
 }

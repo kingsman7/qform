@@ -1,20 +1,20 @@
 export default {
-  newForm : 'Nuevo Formulario',
-  updateForm : 'Actualizar Formulario',
-  newField : 'Nuevo Campo',
-  updateField : 'Actualizar Campo',
+  newForm: 'Nuevo Formulario',
+  updateForm: 'Actualizar Formulario',
+  newField: 'Nuevo Campo',
+  updateField: 'Actualizar Campo',
   newBlock: 'Nuevo Bloque',
   updateBlock: 'Actualizar bloque',
   deleteBlock: 'Eliminar bloque',
-  form : {
+  form: {
     label: 'Etiqueta',
     placeholder: 'Placeholder',
     form: 'Formulario',
     order: 'Orden',
     suffix: 'Sufijo',
-    urlTermsAndConditions : 'URL Terminos y condiciones',
+    urlTermsAndConditions: 'URL Terminos y condiciones',
     value: 'Valor',
-    columns:{
+    columns: {
       three: '25%',
       four: '33%',
       six: '50%',
@@ -23,7 +23,7 @@ export default {
       full: 'Full Ancho',
     },
   },
-  message : {
-
+  message: {
+    helpToOptionsField: 'Escribe la opción y preciona enter...'
   }
 }

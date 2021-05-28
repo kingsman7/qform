@@ -23,5 +23,7 @@ export default {
       full: 'Full Width',
     },
   },
-  message: {}
+  message: {
+    helpToOptionsField: 'Type the option and press enter...'
+  }
 }
