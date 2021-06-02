@@ -13,132 +13,125 @@
       <div class="col-12" v-if="formData">
         <!--Content-->
         <div class="box box-auto-height row items-center justify-between">
-          <!--Form Info-->
-          <div class="box-title">
-            <q-icon name="fab fa-wpforms"/>
-            {{ $tr('ui.label.form') }}: {{ formData.title }}
-          </div>
-          <!--Actions-->
-          <div class="row">
-            <!--Button to create block-->
-            <q-btn @click="$refs.crudBlocks.create()" color="green" icon="fas fa-plus" round unelevated
-                   size="12px" style="font-size: 8px; padding: 6px">
-              <q-tooltip>{{ $tr('qform.layout.newBlock') }}</q-tooltip>
-            </q-btn>
+          <div class="relative-position col-12 q-py-xs">
+            <!--Form Info-->
+            <div class="box-title ellipsis q-pr-xl">
+              <q-icon name="fab fa-wpforms"/>
+              {{ $tr('ui.label.form') }}: {{ formData.title }}
+            </div>
+            <!--Actions-->
+            <div class="row absolute-top-right">
+              <!--Button to create block-->
+              <q-btn @click="$refs.crudBlocks.create()" color="green" icon="fas fa-plus" round unelevated padding="sm"
+                     size="10px">
+                <q-tooltip>{{ $tr('qform.layout.newBlock') }}</q-tooltip>
+              </q-btn>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-12">
-        <!--Block Content-->
-        <draggable @update="updateOrderBlock" @change="updateOrderBlock" :list="formData.blocks" v-bind="dragOptions"
-                   style="min-height: 60px" group="bocksBlocks" v-model="formData.blocks" class="row q-col-gutter-md">
-          <div v-for="block in formData.blocks" class="block-content col-12 col-md-6 col-lg-4">
-            <div class="box">
-              <!--Block info-->
-              <div class="block-info q-mb-md">
-                <!--Block Title-->
-                <div class="box-title  row justify-between">
-                  <div class="block-info__title ellipsis cursor-pointer col">
-                    <q-icon name="fas fa-arrows-alt"></q-icon>
-                    {{ $tr('ui.label.block') }} #{{ block.sortOrder }} | {{ block.title }}
-                    <q-tooltip>{{ block.title }}</q-tooltip>
-                  </div>
-                  <!--Button action-->
-                  <q-btn class="file-card__bottom_actions col-1" icon="fas fa-ellipsis-v" unelevated round
-                         size="xs" color="blue-grey" flat>
-                    <!---Menu actions-->
-                    <q-menu anchor="bottom left" self="bottom end">
-                      <q-list style="min-width: 100px">
-                        <q-item clickable v-close-popup v-for="(actionBlock, itemKey) in fileActionsBlock"
-                                :key="itemKey" @click.native="actionBlock.action(block)">
-                          <q-item-section>
-                            <div class="row items-center">
-                              <q-icon :name="actionBlock.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
-                              {{ actionBlock.label }}
-                            </div>
-                          </q-item-section>
-                        </q-item>
-                      </q-list>
-                    </q-menu>
-                  </q-btn>
-                </div>
-                <!--Separator-->
-                <q-separator class="q-mb-md q-mt-sm"/>
-                <!--Block description-->
-                <div class="block-info__description ellipsis-3-lines">
-                  {{ block.description }}
-                  <q-tooltip>{{ block.description }}</q-tooltip>
+      <!--Blocks content (draggable)-->
+      <draggable @update="updateOrderBlock" @change="updateOrderBlock" :list="formData.blocks" group="bocksBlocks"
+                 v-bind="dragOptions" v-model="formData.blocks"
+                 style="min-height: 60px" class="list-group row col-12">
+        <div v-for="block in formData.blocks" :key="block.id"
+             class="block-content q-px-xs col-12 col-md-6 col-lg-4">
+          <div class="box">
+            <!--Block info-->
+            <div class="block-info relative-position row justify-between items-center q-mb-md">
+              <!--Block Title-->
+              <div class="box-title col-12 q-py-sm q-pr-xl">
+                <div class="block-info-title ellipsis cursor-pointer">
+                  <q-icon name="fas fa-arrows-alt"></q-icon>
+                  {{ $tr('ui.label.block') }} #{{ block.sortOrder }} | {{ block.title }}
+                  <q-tooltip>{{ block.title }}</q-tooltip>
                 </div>
               </div>
-              <!--Block Fields-->
-              <div class="block-fields">
-                <!--Fields Information-->
-                <div class="row justify-between items-center">
-                  <!--Title-->
-                  <div class="box-title">{{ $trp('ui.label.field') }}</div>
-                  <!--Btn to create field-->
-                  <q-btn @click="blockCreateField = block.id; $refs.crudFields.create()" icon="fas fa-plus"
-                         color="green"
-                         size="12px" style="font-size: 8px; padding: 6px" round unelevated>
-                    <q-tooltip>{{ $tr('qform.layout.newField') }}</q-tooltip>
-                  </q-btn>
-                </div>
-                <!--Separator-->
-                <!--                <q-separator class="q-mb-md q-mt-sm"/>-->
-                <div id="contentFields" class="q-mt-md">
-                  <q-scroll-area :thumb-style="thumbStyle" :content-active-style="contentActiveStyle"
-                                 style="height: 200px">
-                    <!--Fields content (draggable)-->
-                    <draggable @update="updateOrderField" @change="updateOrderField" v-bind="dragOptions"
-                               :list="block.fields" group="bocksfields" v-model="block.fields">
-                      <transition-group class="list-group block" style="min-height: 199px; width: 100%">
-
-                        <div v-for="(field, fieldKey) in block.fields" :key="field.name"
-                             class="block-field items-center cursor-pointer">
-                          <!--Field-->
-                          <div class="row row justify-between">
-                            <!--Field title-->
-                            <div class="block-field__title text-grey-9">
-                              <q-icon class="cursor-pointer" name="fas fa-arrows-alt"/>
-                              {{ field.label }}
-                            </div>
-                            <!--Field Actions-->
-                            <q-btn class="file-card__bottom_actions col-1" icon="fas fa-ellipsis-v" unelevated round
-                                   size="xs" color="blue-grey" flat>
-                              <!---Menu actions-->
-                              <q-menu anchor="bottom left" self="bottom end">
-                                <q-list style="min-width: 100px">
-                                  <q-item clickable v-close-popup v-for="(actionfield, itemKey) in fileActionsField"
-                                          :key="itemKey" @click.native="actionfield.action(field)">
-                                    <q-item-section>
-                                      <div class="row items-center">
-                                        <q-icon :name="actionfield.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
-                                        {{ actionfield.label }}
-                                      </div>
-                                    </q-item-section>
-                                  </q-item>
-                                </q-list>
-                              </q-menu>
-                            </q-btn>
-                            <!--Separator-->
-                            <div class="col-12 q-my-sm">
-                              <q-separator/>
-                            </div>
+              <!--Button action-->
+              <div class="absolute-top-right">
+                <q-btn class="file-card-bottom-actionss" icon="fas fa-ellipsis-v" unelevated round flat
+                       padding="sm" size="10px" color="blue-grey">
+                  <!---Menu actions-->
+                  <q-menu anchor="bottom left" self="bottom end">
+                    <q-list style="min-width: 100px">
+                      <q-item clickable v-close-popup v-for="(actionBlock, itemKey) in fileActionsBlock"
+                              :key="itemKey" @click.native="actionBlock.action(block)">
+                        <q-item-section>
+                          <div class="row items-center">
+                            <q-icon :name="actionBlock.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
+                            {{ actionBlock.label }}
                           </div>
-                        </div>
-
-
-                      </transition-group>
-                    </draggable>
-                  </q-scroll-area>
-
-                </div>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-menu>
+                </q-btn>
+              </div>
+              <!--Block description-->
+              <div class="block-info-description q-mt-xs col-12 ellipsis-3-lines">
+                {{ block.description }}
+                <q-tooltip>{{ block.description }}</q-tooltip>
               </div>
             </div>
-
+            <!--Block Fields-->
+            <div class="block-fields">
+              <!--Fields Information-->
+              <div class="row justify-between items-center">
+                <!--Title-->
+                <div class="box-title">{{ $trp('ui.label.field') }}</div>
+                <!--Btn to create field-->
+                <q-btn @click="blockCreateField = block.id; $refs.crudFields.create()" icon="fas fa-plus"
+                       color="green" padding="sm" size="10px" round unelevated>
+                  <q-tooltip>{{ $tr('qform.layout.newField') }}</q-tooltip>
+                </q-btn>
+              </div>
+              <div id="contentFields" class="q-mt-md">
+                <q-scroll-area :thumb-style="thumbStyle" :content-active-style="contentActiveStyle"
+                               style="height: 200px">
+                  <!--Fields content (draggable)-->
+                  <draggable @update="updateOrderField" @change="updateOrderField" :list="formData.fields"
+                             group="bocksfields"
+                             v-bind="dragOptions" v-model="block.fields" class="list-group block"
+                             style="min-height: 199px; width: 100%">
+                    <div v-for="(field, fieldkey) in block.fields" :key="field.id" class="items-center cursor-pointer">
+                      <!--Field-->
+                      <div class="row justify-between items-center relative-position q-py-xs">
+                        <!--Field title-->
+                        <div class="ellipsis text-grey-9 q-mr-xl">
+                          <q-icon class="cursor-pointer" name="fas fa-arrows-alt"/>
+                          {{ field.label }} {{ field.id }} ||| {{ field.order }}
+                        </div>
+                        <!--Field Actions-->
+                        <q-btn class="absolute-top-right" icon="fas fa-ellipsis-v" unelevated round flat
+                               padding="sm" size="10px" color="blue-grey">
+                          <!---Menu actions-->
+                          <q-menu anchor="bottom left" self="bottom end">
+                            <q-list style="min-width: 100px">
+                              <q-item clickable v-close-popup v-for="(actionfield, itemKey) in fileActionsField"
+                                      :key="itemKey" @click.native="actionfield.action(field)">
+                                <q-item-section>
+                                  <div class="row items-center">
+                                    <q-icon :name="actionfield.icon" class="q-mr-sm" color="blue-grey" size="18px"/>
+                                    {{ actionfield.label }}
+                                  </div>
+                                </q-item-section>
+                              </q-item>
+                            </q-list>
+                          </q-menu>
+                        </q-btn>
+                        <!--Separator-->
+                        <div class="col-12 q-my-xs">
+                          <q-separator class="col-12 q-my-xs"/>
+                        </div>
+                      </div>
+                    </div>
+                  </draggable>
+                </q-scroll-area>
+              </div>
+            </div>
           </div>
-        </draggable>
-      </div>
+        </div>
+      </draggable>
       <!--Inner Loading-->
       <inner-loading :visible="loading"/>
     </div>
@@ -178,7 +171,6 @@ export default {
       loading: false,
       dragOptions: {
         animation: 200,
-        group: "bocksfields",
         disabled: false,
         ghostClass: "ghost"
       },
@@ -188,7 +180,7 @@ export default {
 
       //Style of Scroll area
       thumbStyle: {
-        right: '-1px',
+        right: '-11px',
         borderRadius: '5px',
         backgroundColor: '#555',
         width: '5px',
@@ -208,8 +200,8 @@ export default {
             //Transform data of created
             if (typeForm == 'create') {
               loading: true,
-                  //asigned sortOrder
-                  data.sortOrder = this.formData.blocks ? (this.formData.blocks.length + 1) : 1
+                //asigned sortOrder
+                data.sortOrder = this.formData.blocks ? (this.formData.blocks.length + 1) : 1
             }
             resolve(data)
           })
@@ -224,7 +216,7 @@ export default {
             //Transform data of created
             if (typeForm == 'create') {
               loading: true,
-                  data.blockId = this.blockCreateField
+                data.blockId = this.blockCreateField
               //asigned order
               data.Order = this.formData.order ? (this.formData.order.length + 1) : 1
             }
@@ -318,7 +310,6 @@ export default {
           response.push(field)
         })
       })
-
       //Response
       return response
     },
@@ -330,14 +321,14 @@ export default {
       let dataFields = {attributes: this.getDataFields()}
 
       this.$crud.put('apiRoutes.qform.formFields', dataFields)
-          .then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
-            this.loading = false
-          })
-          .catch(error => {
-            this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-          })
+        .then(response => {
+          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+          this.loading = false
+        })
+        .catch(error => {
+          this.loading = false
+          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+        })
     },
 
     getDataBlock() {
@@ -356,14 +347,14 @@ export default {
       this.loading = true
       let dataBlocks = {attributes: this.getDataBlock()}
       this.$crud.put('apiRoutes.qform.formBlocks', dataBlocks)
-          .then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
-            this.loading = false
-          })
-          .catch(error => {
-            this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-          })
+        .then(response => {
+          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+          this.loading = false
+        })
+        .catch(error => {
+          this.loading = false
+          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+        })
     }
   }
 }
@@ -373,34 +364,17 @@ export default {
 
   .block-content
 
-    .block-info
-      position relative
-
-      .block-info__title, .file-card__bottom_actions
-        padding 7px 7px 7px 0
-
-      .block-info__actions
-        position absolute
-        top 0
-        right 0
-
-      .block-info__description
-        line-height 1.2
-        font-size 14px
-        text-align justify
-        color $grey-8
-
-    .file-card__bottom_actions
-      height 30px
-      width 30px
-
-      i
-        margin 0px !important
-
+    .block-info-description
+      line-height 1.2
+      font-size 14px
+      text-align justify
+      color $grey-8
+      max-height 50px
+      min-height 50px
 
   #contentFields
     border-style dotted
     border-width 1px
     boder-color #cccccc
-    padding 5px
+    padding 7px 15px 7px 7px
 </style>

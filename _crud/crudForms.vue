@@ -59,7 +59,9 @@ export default {
             }
           ]
         },
-        update: true,
+        update: {
+          title: this.$tr('qform.layout.updateForm')
+        },
         delete: true,
         formLeft: {
           id: {value: ''},
