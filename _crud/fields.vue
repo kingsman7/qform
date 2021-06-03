@@ -157,6 +157,7 @@ export default {
             fakeFieldName: 'prefix',
             props: {
               label: this.$tr('ui.form.prefix'),
+              vIf: (this.crudInfo.prefix && this.crudInfo.prefix.type) ? true : false
             }
           },
           suffixType: {
@@ -179,6 +180,7 @@ export default {
             fakeFieldName: 'suffix',
             props: {
               label: this.$tr('ui.form.suffix'),
+              vIf: (this.crudInfo.suffix && this.crudInfo.suffix.type) ? true : false
             }
           },
 

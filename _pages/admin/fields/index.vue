@@ -99,7 +99,7 @@
                         <!--Field title-->
                         <div class="ellipsis text-grey-9 q-mr-xl">
                           <q-icon class="cursor-pointer" name="fas fa-arrows-alt"/>
-                          {{ field.label }} {{ field.id }} ||| {{ field.order }}
+                          {{ field.label }}
                         </div>
                         <!--Field Actions-->
                         <q-btn class="absolute-top-right" icon="fas fa-ellipsis-v" unelevated round flat
