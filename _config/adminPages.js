@@ -26,7 +26,7 @@ export default {
     authenticated: true
   },
   fields: {
-    permission: null,
+    permission: 'iforms.fields.manage',
     activated: true,
     path: '/form/fields/:id',
     name: 'qform.admin.fields.index',
@@ -69,7 +69,7 @@ export default {
     }
   },
   leads: {
-    permission: null,
+    permission: 'iforms.leads.manage',
     activated: true,
     path: '/form/lead',
     name: 'qform.admin.leads.index',
@@ -81,28 +81,7 @@ export default {
     authenticated: true,
     subHeader: {
       refresh: true,
-      breadcrumb: ['qform.forms'],
-      export: {
-        title: 'qform.sidebar.adminLead',
-        icon: 'fas fa-leaf',
-        moduleName: "Iforms",
-        exportName: "LeadsPerFormExport",
-        fileName: "Leads"
-      },
-      exportFields: {
-        formId: {
-          value: null,
-          type: 'select',
-          required: true,
-          props: {
-            label: 'Formulario*',
-          },
-          loadOptions: {
-            apiRoute: 'apiRoutes.qform.forms',
-            select: {label: 'title', id: 'id'},
-          }
-        }
-      },
+      breadcrumb: ['qform.forms']
     }
   },
   leadsShow: {
