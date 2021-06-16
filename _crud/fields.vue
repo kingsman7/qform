@@ -61,10 +61,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('qform.layout.form.label') + '*',
-              rules: [
-                val => !!val || this.$tr('ui.message.fieldRequired')
-              ]
+              label: this.$tr('qform.layout.form.label')
             }
           },
           placeholder: {
@@ -72,10 +69,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('qform.layout.form.placeholder') + '*',
-              rules: [
-                val => !!val || this.$tr('ui.message.fieldRequired')
-              ]
+              label: this.$tr('qform.layout.form.placeholder')
             }
           },
           description: {
@@ -83,10 +77,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('ui.form.description') + '*',
-              rules: [
-                val => !!val || this.$tr('ui.message.fieldRequired')
-              ]
+              label: this.$tr('ui.form.description')
             }
           },
           width: {
