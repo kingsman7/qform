@@ -201,10 +201,10 @@ export default {
           return new Promise((resolve, reject) => {
             //Transform data of created
             if (typeForm == 'create') {
-              loading: true,
-                //asigned sortOrder
-                data.sortOrder = this.formData.blocks ? (this.formData.blocks.length + 1) : 1
+              //asigned sortOrder
+              data.sortOrder = this.formData.blocks ? (this.formData.blocks.length + 1) : 1
             }
+
             resolve(data)
           })
         },
@@ -217,11 +217,15 @@ export default {
           return new Promise((resolve, reject) => {
             //Transform data of created
             if (typeForm == 'create') {
-              loading: true,
-                data.blockId = this.blockCreateField
+              //Set block ID
+              data.blockId = this.blockCreateField
               //asigned order
               data.Order = this.formData.order ? (this.formData.order.length + 1) : 1
+              //Set field name value
+              data.name = this.$helper.getSlug(data[this.$store.state.qsiteApp.defaultLocale].label)
             }
+
+            //Response
             resolve(data)
           })
         },
@@ -323,14 +327,14 @@ export default {
       let dataFields = {attributes: this.getDataFields()}
 
       this.$crud.put('apiRoutes.qform.formFields', dataFields)
-        .then(response => {
-          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
-          this.loading = false
-        })
-        .catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-        })
+          .then(response => {
+            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.loading = false
+          })
+          .catch(error => {
+            this.loading = false
+            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          })
     },
 
     getDataBlock() {
@@ -349,14 +353,14 @@ export default {
       this.loading = true
       let dataBlocks = {attributes: this.getDataBlock()}
       this.$crud.put('apiRoutes.qform.formBlocks', dataBlocks)
-        .then(response => {
-          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
-          this.loading = false
-        })
-        .catch(error => {
-          this.loading = false
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-        })
+          .then(response => {
+            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.loading = false
+          })
+          .catch(error => {
+            this.loading = false
+            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          })
     }
   }
 }

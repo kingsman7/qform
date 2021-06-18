@@ -45,23 +45,15 @@ export default {
           id: {value: ''},
           formId: {value: this.$route.params.id},
           blockId: {value: this.$route.params.blockId},
-          name: {
-            value: '',
-            type: 'input',
-            isTranslatable: false,
-            props: {
-              label: this.$tr('ui.form.name') + '*',
-              rules: [
-                val => !!val || this.$tr('ui.message.fieldRequired')
-              ]
-            }
-          },
           label: {
             value: '',
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('qform.layout.form.label')
+              label: `${this.$tr('qform.layout.form.label')}*`,
+              rules: [
+                val => !!val || this.$tr('ui.message.fieldRequired')
+              ],
             }
           },
           placeholder: {
@@ -195,26 +187,6 @@ export default {
     crudInfo() {
       return this.$store.state.qcrudComponent.component[this.crudId] || {}
     }
-  },
-  methods: {
-    getForms() {
-      this.loading = true
-      let params = {params: {}}
-      this.$crud.index('apiRoutes.qform.forms', params)
-          .then(response => {
-            this.forms = response.data.map(item => {
-              return {
-                id: item.id,
-                label: item.title
-              }
-            })
-            this.loading = false
-          })
-          .catch(error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-            this.loading = false
-          })
-    },
-  },
+  }
 }
 </script>
