@@ -55,7 +55,8 @@ export default {
             {
               icon: 'fas fa-list-ol',
               color: 'info',
-              route: 'qform.admin.fields.index'
+              route: 'qform.admin.fields.index',
+              label: this.$trp('ui.label.field')
             }
           ]
         },
