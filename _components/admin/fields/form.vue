@@ -89,12 +89,12 @@
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
         v-if="productId"
-        color="positive" :loading="loading"
+        color="green" :loading="loading"
         icon="fas fa-edit" :label="$tr('ui.label.update')" @click="updateItem()"
         rounded/>
       <q-btn
         v-else
-        color="positive" :loading="loading"
+        color="green" :loading="loading"
         icon="fas fa-edit" :label="$tr('ui.label.create')" @click="createItem()"
         rounded/>
     </q-page-sticky>

@@ -33,7 +33,7 @@
                v-model="locale.formTemplate.options.urlTermsAndConditions"
                :label="`${$tr('qform.layout.form.urlTermsAndConditions')}`"/>
 
-      <q-btn class="float-right" v-if="itemId" color="positive" :loading="loading" rounded
+      <q-btn class="float-right" v-if="itemId" color="green" :loading="loading" rounded
              icon="fas fa-edit" :label="$tr('ui.label.update')" type="submit"/>
     </q-form>
 
