@@ -11,23 +11,10 @@
     <div id="formfieldsPageContent" class="row q-col-gutter-md relative-position">
       <!--Form info-->
       <div class="col-12" v-if="formData">
-        <!--Content-->
-        <div class="box box-auto-height row items-center justify-between">
-          <div class="relative-position col-12 q-py-xs">
-            <!--Form Info-->
-            <div class="box-title ellipsis q-pr-xl">
-              <q-icon name="fab fa-wpforms"/>
-              {{ $tr('ui.label.form') }}: {{ formData.title }}
-            </div>
-            <!--Actions-->
-            <div class="row absolute-top-right">
-              <!--Button to create block-->
-              <q-btn @click="$refs.crudBlocks.create()" color="green" icon="fas fa-plus" round unelevated padding="sm"
-                     size="10px">
-                <q-tooltip>{{ $tr('qform.layout.newBlock') }}</q-tooltip>
-              </q-btn>
-            </div>
-          </div>
+        <!--Page Actions-->
+        <div class="box box-auto-height">
+          <page-actions :title="`${$tr('ui.label.form')}: ${formData.title}`" :extra-actions="['new']"
+                        @new="$refs.crudBlocks.create()"/>
         </div>
       </div>
       <!--Blocks content (draggable)-->
