@@ -22,6 +22,8 @@ export default {
       nine: '75%',
       full: 'Full Width',
     },
+    successText : 'Success text',
+    submitText : 'Submit text',
   },
   message: {
     helpToOptionsField: 'Type the option and press enter...'

@@ -122,6 +122,28 @@ export default {
             }
           },
         },
+        formRight: {
+          successText: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('qform.layout.form.successText')}`,
+              type: 'textarea',
+              rows: "3",
+            },
+          },
+          submitText: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('qform.layout.form.submitText')}`,
+              type: 'textarea',
+              rows: "3",
+            },
+          }
+        },
         getDataForm: (data, typeForm) => {
           return new Promise((resolve, reject) => {
             if (typeForm == 'create') {

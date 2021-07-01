@@ -22,6 +22,8 @@ export default {
       nine: '75%',
       full: 'Full Ancho',
     },
+    successText: 'Texto de exito',
+    submitText: 'Texto de enviado',
   },
   message: {
     helpToOptionsField: 'Escribe la opción y preciona enter...'
