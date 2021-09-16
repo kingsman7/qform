@@ -6,6 +6,7 @@ export default {
   newBlock: 'Nuevo Bloque',
   updateBlock: 'Actualizar bloque',
   deleteBlock: 'Eliminar bloque',
+  replyTo: 'Campo para responder',
   form: {
     label: 'Etiqueta',
     placeholder: 'Placeholder',

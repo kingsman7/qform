@@ -142,6 +142,20 @@ export default {
               type: 'textarea',
               rows: "3",
             },
+          },
+          replyTo: {
+            value: null,
+            type: 'select',
+            isFakeField: true,
+            props: {
+              vIf: this.crudInfo.typeForm == 'update',
+              label: this.$tr('qform.layout.replyTo')
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qform.fields',
+              requestParams: {filter: {formId: this.crudInfo.id}},
+              select: {label: 'name', id: 'id'}
+            }
           }
         },
         getDataForm: (data, typeForm) => {
