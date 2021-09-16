@@ -104,6 +104,7 @@ export default {
           },
           actions: [
             {
+              name: 'viewLead',
               icon: 'fas fa-eye',
               color: 'info',
               tooltip: this.$tr('ui.label.view'),
