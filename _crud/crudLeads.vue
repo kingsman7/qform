@@ -1,44 +1,35 @@
 <template>
-  <q-dialog id="leadShowModal" v-model="modal.show" content-class="modal-form-crud"
-            persistent transition-show="slide-up" transition-hide="slide-down"
-            @hide="resetModal()">
-    <q-card class="bg-grey-1 backend-page row" v-if="modal.lead">
-      <!--Header-->
-      <q-toolbar class="bg-primary text-white">
-        <q-toolbar-title>
-          <label class="ellipsis">{{ modal.lead.form.title }}</label>
-        </q-toolbar-title>
-        <q-btn class="q-hide q-md-show" flat v-close-popup icon="fas fa-times"/>
-      </q-toolbar>
-
-      <!--Content-->
-      <q-card-section id="cardContent" class="relative-position col-12 q-pa-none">
-        <!--Items-->
-        <q-list separator>
-          <q-item v-for="(item, itemKey) in showLeadItems" :key="itemKey">
-            <q-item-section>
-              <q-item-label>{{ item.label }}</q-item-label>
-              <q-item-label caption>{{ item.value }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-        <!--Loading-->
-        <inner-loading :visible="modal.loading"/>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+  <master-modal v-model="modal.show" @hide="resetModal()" :title="modal.lead ? modal.lead.form.title : ''">
+    <div class="box">
+      <q-list separator dense>
+        <q-item v-for="(item, itemKey) in showLeadItems" :key="itemKey" style="padding: 8px 0">
+          <q-item-section>
+            <q-item-label v-if="item.fieldType != 'media'">{{ item.label }}</q-item-label>
+            <!--File preview-->
+            <q-item-label v-if="item.fieldType == 'media'">
+              <file-list v-model="item.value" grid-col-class="col-12" hide-header/>
+            </q-item-label>
+            <!--value-->
+            <q-item-label v-else caption>{{ item.value }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </div>
+  </master-modal>
 </template>
 
 <script>
+//Components
+import fileList from '@imagina/qsite/_components/master/fileList'
+
 export default {
+  components: {fileList},
   data() {
     return {
       crudId: this.$uid(),
       modal: {
         show: false,
-        lead: false,
-        loading: false,
-        fields: []
+        lead: false
       }
     }
   },
@@ -80,7 +71,7 @@ export default {
             {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
           ],
           requestParams: {
-            include: 'form,assignedTo',
+            include: 'form,assignedTo,files',
             filter: {
               order: {
                 field: 'created_at',
@@ -111,7 +102,6 @@ export default {
               action: (item) => {
                 this.modal.lead = item
                 this.modal.show = true
-                this.getFormFields()
               }
             }
           ]
@@ -148,14 +138,30 @@ export default {
       let response = []
 
       if (this.modal.lead) {
-        let fields = this.$clone(this.modal.fields)
         let leadValues = this.$clone(this.modal.lead.values || [])
+        let files = this.$clone(this.modal.lead.files)
 
         //Merge values
-        fields.forEach(field => {
+        this.$clone(this.modal.lead.form.fields).forEach(field => {
+          //get field type
+          let fieldType = field.dynamicField ? (field.dynamicField.type || 'input') : 'input'
+          //get field value
+          let fieldValue = leadValues[field.name] || '-'
+          //Get field file
+          let fieldFile = (fieldType != 'media') ? null : files.find(item => item.zone == fieldValue.split('/').pop())
+
+          //Add extra data to field
           response.push({
+            ...field,
             label: field.label,
-            value: leadValues[field.name] || '-'
+            value: (fieldType != 'media') ? fieldValue : [{
+              id: this.$uid(),
+              ...fieldFile,
+              path: fieldValue,
+              mediumThumb: fieldValue,
+              filename: field.label,
+            }],
+            fieldType: fieldType
           })
         })
       }
@@ -165,44 +171,13 @@ export default {
     }
   },
   methods: {
-    //Get form field
-    getFormFields(refresh = false) {
-      return new Promise(resolve => {
-        this.modal.loading = true
-        //Request Params
-        let requestParams = {
-          refresh: true,
-          params: {
-            filter: {
-              formId: this.modal.lead.formId,
-              order: {field: 'order', way: 'asc'}
-            }
-          }
-        }
-        //Request
-        this.$crud.index('apiRoutes.qform.fields', requestParams).then(response => {
-          this.modal.fields = response.data
-          this.modal.loading = false
-        }).catch(error => this.modal.loading = false)
-      })
-    },
     //Reset Modal
     resetModal() {
-      this.modal = {
-        show: false,
-        lead: false,
-        loading: false,
-        fields: []
-      }
+      this.modal = {show: false, lead: false}
     }
   }
 }
 </script>
 
 <style lang="stylus">
-#leadShowModal
-  #cardContent
-    min-height 150px
-    max-height calc(100vh - 150px) !important
-    overflow-y scroll
 </style>
