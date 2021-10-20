@@ -14,19 +14,19 @@ export default {
       this.loading = true
       let params = {params: {}}
       this.$crud.index('apiRoutes.qform.forms', params)
-        .then(response => {
-          this.forms = response.data.map(item => {
-            return {
-              id: item.id,
-              label: item.title
-            }
+          .then(response => {
+            this.forms = response.data.map(item => {
+              return {
+                id: item.id,
+                label: item.title
+              }
+            })
+            this.loading = false
           })
-          this.loading = false
-        })
-        .catch(error => {
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-          this.loading = false
-        })
+          .catch(error => {
+            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.loading = false
+          })
     },
   },
   computed: {
@@ -67,6 +67,16 @@ export default {
             isTranslatable: true,
             props: {
               label: this.$tr('ui.form.title'),
+            }
+          },
+          name: {
+            value: '',
+            type: 'input',
+            props: {
+              label: this.$tr('ui.form.name'),
+              rules: [
+                val => (val ? this.$helper.validateAlphaNumeric(val) : true) || this.$tr('ui.message.mustContainAlphanumeric')
+              ]
             }
           },
           description: {
