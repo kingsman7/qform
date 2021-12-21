@@ -1,4 +1,5 @@
 export default {
+  moduleName: 'iforms',
   //Entities
   entityNames: {
     field: 'field',
