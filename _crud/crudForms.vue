@@ -15,24 +15,24 @@ export default {
         permission: 'iforms.forms',
         extraFormFields: 'iforms.crud-fields.forms',
         create: {
-          title: this.$tr('qform.layout.newForm'),
+          title: this.$tr('iforms.cms.newForm'),
         },
         read: {
           columns: [
-            {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px', align: 'left'},
-            {name: 'title', label: this.$tr('ui.form.title'), field: 'title', align: 'left'},
-            {name: 'slug', label: this.$tr('ui.form.slug'), field: 'systemName', align: 'left'},
-            {name: 'active', label: this.$tr('ui.form.status'), field: 'active', align: 'left'},
+            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px', align: 'left'},
+            {name: 'title', label: this.$tr('isite.cms.form.title'), field: 'title', align: 'left'},
+            {name: 'slug', label: this.$tr('isite.cms.form.slug'), field: 'systemName', align: 'left'},
+            {name: 'active', label: this.$tr('isite.cms.form.status'), field: 'active', align: 'left'},
             {
-              name: 'user', label: this.$tr('ui.label.user'), field: 'user', align: 'left',
+              name: 'user', label: this.$tr('isite.cms.label.user'), field: 'user', align: 'left',
               format: val => (val && val.fullName) ? val.fullName : '-'
             },
             {
-              name: 'destinationEmail', label: this.$trp('ui.label.email'), field: 'destinationEmail', align: 'left',
+              name: 'destinationEmail', label: this.$trp('isite.cms.label.email'), field: 'destinationEmail', align: 'left',
               classes: 'ellipsis', style: 'max-width : 250px', format: val => val ? val.join(', ') : '-'
             },
 
-            {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
+            {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
           ],
           requestParams: {include: 'fields,leads,user'},
           filters: {
@@ -40,9 +40,9 @@ export default {
               value: '0',
               type: 'select',
               props: {
-                label: this.$tr('ui.label.user'),
+                label: this.$tr('isite.cms.label.user'),
                 options: [
-                  {label: this.$tr('ui.label.all'), value: '0'}
+                  {label: this.$tr('isite.cms.label.all'), value: '0'}
                 ],
               },
               loadOptions: {
@@ -56,12 +56,12 @@ export default {
               icon: 'fas fa-list-ol',
               color: 'info',
               route: 'qform.admin.fields.index',
-              label: this.$trp('ui.label.field')
+              label: this.$trp('isite.cms.label.field')
             }
           ]
         },
         update: {
-          title: this.$tr('qform.layout.updateForm')
+          title: this.$tr('iforms.cms.updateForm')
         },
         delete: true,
         formLeft: {
@@ -71,18 +71,18 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: `${this.$tr('ui.form.title')}*`,
-              rules: [val => !!val || this.$tr('ui.message.fieldRequired')],
+              label: `${this.$tr('isite.cms.form.title')}*`,
+              rules: [val => !!val || this.$tr('isite.cms.message.fieldRequired')],
             }
           },
           status: {
             value: '1',
             type: 'select',
             props: {
-              label: this.$tr('ui.form.status'),
+              label: this.$tr('isite.cms.form.status'),
               options: [
-                {label: this.$tr('ui.label.enabled'), value: '1'},
-                {label: this.$tr('ui.label.disabled'), value: '0'}
+                {label: this.$tr('isite.cms.label.enabled'), value: '1'},
+                {label: this.$tr('isite.cms.label.disabled'), value: '0'}
               ]
             },
           },
@@ -90,7 +90,7 @@ export default {
             value: null,
             type: 'select',
             props: {
-              label: `${this.$tr('ui.label.email')}`,
+              label: `${this.$tr('isite.cms.label.email')}`,
               useInput: true,
               useChips: true,
               multiple: true,
@@ -105,7 +105,7 @@ export default {
             value: null,
             type: 'select',
             props: {
-              label: this.$tr('ui.label.user'),
+              label: this.$tr('isite.cms.label.user'),
               clearable: true,
             },
             loadOptions: {
@@ -118,7 +118,7 @@ export default {
             type: 'input',
             isFakeField: true,
             props: {
-              label: `${this.$tr('qform.layout.form.urlTermsAndConditions')}`,
+              label: `${this.$tr('iforms.cms.form.urlTermsAndConditions')}`,
             }
           },
         },
@@ -128,7 +128,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: `${this.$tr('qform.layout.form.successText')}`,
+              label: `${this.$tr('iforms.cms.form.successText')}`,
               type: 'textarea',
               rows: "3",
             },
@@ -138,7 +138,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: `${this.$tr('qform.layout.form.submitText')}`,
+              label: `${this.$tr('iforms.cms.form.submitText')}`,
               type: 'textarea',
               rows: "3",
             },
@@ -149,7 +149,7 @@ export default {
             isFakeField: true,
             props: {
               vIf: this.crudInfo.typeForm == 'update',
-              label: this.$tr('qform.layout.replyTo')
+              label: this.$tr('iforms.cms.replyTo')
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qform.fields',

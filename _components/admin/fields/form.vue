@@ -17,37 +17,37 @@
             <q-field
               class="q-mt-sm"
               :error="$v.locale.formTemplate.name.$error"
-              :error-label="$tr('ui.message.fieldRequired')">
+              :error-label="$tr('isite.cms.message.fieldRequired')">
               <q-input
                 v-model="locale.formTemplate.name"
-                :stack-label="`${$tr('ui.form.name')}*`"/>
+                :stack-label="`${$tr('isite.cms.form.name')}*`"/>
             </q-field>
 
             <q-field
               :error="$v.locale.formTemplate.label.$error"
-              :error-label="$tr('ui.message.fieldRequired')">
+              :error-label="$tr('isite.cms.message.fieldRequired')">
               <q-input
                 v-model="locale.formTemplate.label"
-                :stack-label="`${$tr('qform.layout.form.label')} (${locale.language})*`"/>
+                :stack-label="`${$tr('iforms.cms.form.label')} (${locale.language})*`"/>
             </q-field>
 
             <q-field
               :error="$v.locale.formTemplate.placeholder.$error"
-              :error-label="$tr('ui.message.fieldRequired')">
+              :error-label="$tr('isite.cms.message.fieldRequired')">
               <q-input
                 v-model="locale.formTemplate.placeholder"
-                :stack-label="`${$tr('qform.layout.form.placeholder')} (${locale.language})*`"/>
+                :stack-label="`${$tr('iforms.cms.form.placeholder')} (${locale.language})*`"/>
             </q-field>
 
             <q-field
               :error="$v.locale.formTemplate.description.$error"
-              :error-label="$tr('ui.message.fieldRequired')">
+              :error-label="$tr('isite.cms.message.fieldRequired')">
               <q-input
                 v-model="locale.formTemplate.description"
-                :stack-label="`${$tr('ui.form.description')} (${locale.language})*`"/>
+                :stack-label="`${$tr('isite.cms.form.description')} (${locale.language})*`"/>
             </q-field>
 
-            <div class="input-title">{{$tr('ui.form.type')}}</div>
+            <div class="input-title">{{$tr('isite.cms.form.type')}}</div>
             <tree-select
               v-model="locale.formTemplate.type"
               :clearable="false"
@@ -63,7 +63,7 @@
           <!--Form right-->
           <div class="col-12 col-md-4" v-if="locale.success">
 
-            <div class="input-title q-mt-xs">{{$tr('qform.layout.form.form')}}</div>
+            <div class="input-title q-mt-xs">{{$tr('iforms.cms.form.form')}}</div>
             <tree-select
               v-model="locale.formTemplate.formId"
               :clearable="false"
@@ -71,14 +71,14 @@
               placeholder=""/>
 
             <q-checkbox
-              :label="$tr('ui.form.required')"
+              :label="$tr('isite.cms.form.required')"
               v-model="locale.formTemplate.required"
               class="q-mt-lg"/>
 
             <q-field>
               <q-input
                 v-model="locale.formTemplate.order"
-                :stack-label="`${$tr('qform.layout.form.order')}`"/>
+                :stack-label="`${$tr('iforms.cms.form.order')}`"/>
             </q-field>
 
           </div>
@@ -90,12 +90,12 @@
       <q-btn
         v-if="productId"
         color="green" :loading="loading"
-        icon="fas fa-edit" :label="$tr('ui.label.update')" @click="updateItem()"
+        icon="fas fa-edit" :label="$tr('isite.cms.label.update')" @click="updateItem()"
         rounded/>
       <q-btn
         v-else
         color="green" :loading="loading"
-        icon="fas fa-edit" :label="$tr('ui.label.create')" @click="createItem()"
+        icon="fas fa-edit" :label="$tr('isite.cms.label.create')" @click="createItem()"
         rounded/>
     </q-page-sticky>
 
@@ -236,7 +236,7 @@
               this.orderDataItemToLocale(response.data)
               resolve(true)//Resolve
             }).catch(error => {
-              this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+              this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
               this.loading = false
               reject(false)//Resolve
             })
@@ -258,14 +258,14 @@
           this.loading = true
           let configName = 'apiRoutes.qform.fields'
           this.$crud.create(configName, this.getDataForm()).then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordCreated')} ID: ${response.data.id}`})
+            this.$alert.success({message: `${this.$tr('isite.cms.message.recordCreated')} ID: ${response.data.id}`})
             //this.$router.push({name: 'qform.admin.fields.index'})
           }).catch(error => {
             this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.recordNoCreated'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.recordNoCreated'), pos: 'bottom'})
           })
         } else {
-          this.$alert.error({message: this.$tr('ui.message.formInvalid'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.formInvalid'), pos: 'bottom'})
         }
       },
       //Update Product
@@ -276,14 +276,14 @@
           this.loading = true
           let configName = 'apiRoutes.qform.fields'
           this.$crud.update(configName, this.productId, this.getDataForm()).then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
             this.initForm()
           }).catch(error => {
             this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.recordNoUpdated'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
           })
         } else {
-          this.$alert.error({message: this.$tr('ui.message.formInvalid'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.formInvalid'), pos: 'bottom'})
         }
       },
       //Get just values not null from form
@@ -320,7 +320,7 @@
             this.loading = false
           })
           .catch( error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
       },
@@ -338,7 +338,7 @@
             this.loading = false
           })
           .catch( error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
       },
@@ -356,7 +356,7 @@
             this.loading = false
           })
           .catch( error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
       },

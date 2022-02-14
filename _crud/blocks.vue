@@ -24,7 +24,7 @@ export default {
             this.loading = false
           })
           .catch(error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
     },
@@ -38,24 +38,24 @@ export default {
         permission: 'iforms.blocks',
         extraFormFields: 'iforms.crud-fields.blocks',
         create: {
-          title: this.$tr('qform.layout.newBlock'),
+          title: this.$tr('iforms.cms.newBlock'),
         },
         read: {
           columns: [
-            {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
-            {name: 'title', label: this.$tr('ui.form.title'), field: 'title'},
+            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
+            {name: 'title', label: this.$tr('isite.cms.form.title'), field: 'title'},
             {
-              name: 'description', label: this.$tr('ui.label.description'), field: 'description',
+              name: 'description', label: this.$tr('isite.cms.label.description'), field: 'description',
               style: 'width: 150px'
             },
-            {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
+            {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
           ],
         },
         update: {
-          title: this.$tr('qform.layout.updateBlock'),
+          title: this.$tr('iforms.cms.updateBlock'),
         },
         delete: {
-          title: this.$tr('qform.layout.deleteBlock'),
+          title: this.$tr('iforms.cms.deleteBlock'),
         },
 
         formLeft: {
@@ -66,16 +66,16 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('ui.form.title'),
+              label: this.$tr('isite.cms.form.title'),
             }
           },
           name: {
             value: '',
             type: 'input',
             props: {
-              label: this.$tr('ui.form.name'),
+              label: this.$tr('isite.cms.form.name'),
               rules: [
-                val => (val ? this.$helper.validateAlphaNumeric(val) : true) || this.$tr('ui.message.mustContainAlphanumeric')
+                val => (val ? this.$helper.validateAlphaNumeric(val) : true) || this.$tr('isite.cms.message.mustContainAlphanumeric')
               ]
             }
           },
@@ -84,7 +84,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('ui.label.description'),
+              label: this.$tr('isite.cms.label.description'),
             }
           },
         },

@@ -12,55 +12,55 @@
 
           <q-form autocorrect="off" autocomplete="off" ref="formContent" class="q-col-gutter-x-md full-width row"
                   v-if="locale.success" @submit="fieldId ? update() : create()"
-                  @validation-error="$alert.error($tr('ui.message.formInvalid'))">
+                  @validation-error="$alert.error($tr('isite.cms.message.formInvalid'))">
             <!--Form left-->
             <div class="col-12 col-md-8" v-if="locale.success">
-              <q-input data-testid="name" outlined dense v-model="locale.formTemplate.name" :label="`${$tr('ui.form.name')}*`"
-                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"/>
+              <q-input data-testid="name" outlined dense v-model="locale.formTemplate.name" :label="`${$tr('isite.cms.form.name')}*`"
+                       :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"/>
 
               <q-input data-testid="label" outlined dense v-model="locale.formTemplate.label"
-                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
-                       :label="`${$tr('qform.layout.form.label')} (${locale.language})*`"/>
+                       :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                       :label="`${$tr('iforms.cms.form.label')} (${locale.language})*`"/>
 
               <q-input data-testid="placeholder" outlined dense v-model="locale.formTemplate.placeholder"
-                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
-                       :label="`${$tr('qform.layout.form.placeholder')} (${locale.language})*`"/>
+                       :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                       :label="`${$tr('iforms.cms.form.placeholder')} (${locale.language})*`"/>
 
               <q-input data-testid="description" outlined dense v-model="locale.formTemplate.description"
-                       :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
-                       :label="`${$tr('ui.form.description')} (${locale.language})*`"/>
+                       :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                       :label="`${$tr('isite.cms.form.description')} (${locale.language})*`"/>
               <div class="row q-col-gutter-sm">
                   <div class="col-12">
-                    <span class="text-caption">{{ `${$tr('ui.form.prefix')}` }}</span>
+                    <span class="text-caption">{{ `${$tr('isite.cms.form.prefix')}` }}</span>
                   </div>
                   <div class="col-4">
                     <q-select data-testid="prefixType" v-model="locale.formTemplate.prefix.type" :options="prefixTypes"
-                              outlined dense emit-value map-options :label="`${$tr('ui.form.type')}`"/>
+                              outlined dense emit-value map-options :label="`${$tr('isite.cms.form.type')}`"/>
                   </div>
                   <div class="col-8">
-                    <q-input data-testid="prefixValue" outlined dense :label="`${$tr('qform.layout.form.value')}`" v-model="locale.formTemplate.prefix.value" />
+                    <q-input data-testid="prefixValue" outlined dense :label="`${$tr('iforms.cms.form.value')}`" v-model="locale.formTemplate.prefix.value" />
                   </div>
               </div>
               <div class="row q-col-gutter-sm">
                   <div class="col-12">
-                    <span class="text-caption">{{ `${$tr('qform.layout.form.suffix')}` }}</span>
+                    <span class="text-caption">{{ `${$tr('iforms.cms.form.suffix')}` }}</span>
                   </div>
                   <div class="col-4">
                     <q-select data-testid="prefixType" v-model="locale.formTemplate.suffix.type" :options="prefixTypes"
-                              outlined dense emit-value map-options :label="`${$tr('ui.form.type')}`"/>
+                              outlined dense emit-value map-options :label="`${$tr('isite.cms.form.type')}`"/>
                   </div>
                   <div class="col-8">
-                    <q-input data-testid="suffix" outlined dense :label="`${$tr('qform.layout.form.value')}`" v-model="locale.formTemplate.suffix.value" />
+                    <q-input data-testid="suffix" outlined dense :label="`${$tr('iforms.cms.form.value')}`" v-model="locale.formTemplate.suffix.value" />
                   </div>
               </div>
 
               <q-select data-testid="type" v-model="locale.formTemplate.width" :options="columnWidths"
-                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
-                        outlined dense emit-value map-options :label="`${$tr('ui.form.width')}*`"/>
+                        :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                        outlined dense emit-value map-options :label="`${$tr('isite.cms.form.width')}*`"/>
 
               <q-select data-testid="type" v-model="locale.formTemplate.type" :options="types"
-                        :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
-                        outlined dense emit-value map-options :label="`${$tr('ui.form.type')}*`"/>
+                        :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
+                        outlined dense emit-value map-options :label="`${$tr('isite.cms.form.type')}*`"/>
 
               <div v-if="[5,6,8].indexOf(locale.formTemplate.type) >= 0" class="options-for-select">
                 <optionsForSelect :model="locale.formTemplate"/>
@@ -70,16 +70,16 @@
 
             <!--Form right-->
             <div class="col-12 col-md-4" v-if="locale.success">
-              <q-input data-testid="order" outlined dense v-model="locale.formTemplate.order" :label="`${$tr('qform.layout.form.order')}`"/>
-              <q-checkbox data-testid="required" :label="$tr('ui.form.required')" v-model="locale.formTemplate.required"/>
+              <q-input data-testid="order" outlined dense v-model="locale.formTemplate.order" :label="`${$tr('iforms.cms.form.order')}`"/>
+              <q-checkbox data-testid="required" :label="$tr('isite.cms.form.required')" v-model="locale.formTemplate.required"/>
             </div>
 
             <!--buttons-->
             <div class="col-12 text-right">
               <q-btn v-if="fieldId" color="positive" :loading="loading" icon="fas fa-edit"
-                     :label="$tr('ui.label.update')" rounded type="submit"/>
+                     :label="$tr('isite.cms.label.update')" rounded type="submit"/>
               <q-btn v-else color="positive" :loading="loading" icon="fas fa-edit"
-                     :label="$tr('ui.label.create')" rounded type="submit"/>
+                     :label="$tr('isite.cms.label.create')" rounded type="submit"/>
             </div>
           </q-form>
         </div>
@@ -137,16 +137,16 @@
         forms: [],
         fields: [],
         prefixTypes:[
-          {value: 'icon', label: this.$tr('ui.form.icon')},
-          {value: 'text', label: this.$tr('ui.label.text')}
+          {value: 'icon', label: this.$tr('isite.cms.form.icon')},
+          {value: 'text', label: this.$tr('isite.cms.label.text')}
         ],
         columnWidths:[
-          {value: 12, label: this.$tr('qform.layout.form.columns.full')},
-          {value: 9, label: this.$tr('qform.layout.form.columns.nine')},
-          {value: 8, label: this.$tr('qform.layout.form.columns.eight')},
-          {value: 6, label: this.$tr('qform.layout.form.columns.six')},
-          {value: 4, label: this.$tr('qform.layout.form.columns.four')},
-          {value: 3, label: this.$tr('qform.layout.form.columns.three')},
+          {value: 12, label: this.$tr('iforms.cms.form.columns.full')},
+          {value: 9, label: this.$tr('iforms.cms.form.columns.nine')},
+          {value: 8, label: this.$tr('iforms.cms.form.columns.eight')},
+          {value: 6, label: this.$tr('iforms.cms.form.columns.six')},
+          {value: 4, label: this.$tr('iforms.cms.form.columns.four')},
+          {value: 3, label: this.$tr('iforms.cms.form.columns.three')},
         ]
       }
     },
@@ -233,7 +233,7 @@
               resolve(true)//Resolve
             }).catch(error => {
               console.error(error)
-              this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+              this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
               this.loading = false
               reject(false)//Resolve
             })
@@ -255,11 +255,11 @@
           this.loading = true
           let configName = 'apiRoutes.qform.fields'
           this.$crud.create(configName, this.getDataForm()).then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordCreated')} ID: ${response.data.id}`})
+            this.$alert.success({message: `${this.$tr('isite.cms.message.recordCreated')} ID: ${response.data.id}`})
             this.$router.push({name: 'qform.admin.fields.index', params: {id: this.$route.params.formId}})
           }).catch(error => {
             this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.recordNoCreated'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.recordNoCreated'), pos: 'bottom'})
           })
         }
       },
@@ -270,11 +270,11 @@
           this.loading = true
           let configName = 'apiRoutes.qform.fields'
           this.$crud.update(configName, this.fieldId, this.getDataForm()).then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
             this.initForm()
           }).catch(error => {
             this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.recordNoUpdated'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
           })
         }
       },
@@ -304,7 +304,7 @@
           })
           this.loading = false
         }).catch(error => {
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
           this.loading = false
         })
       },
@@ -323,7 +323,7 @@
           })
           .catch(error => {
             console.error(error)
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
       },
@@ -341,7 +341,7 @@
             this.loading = false
           })
           .catch(error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
       },

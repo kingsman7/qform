@@ -8,7 +8,7 @@
 
       <!--Form-->
       <q-form @submit="sendForm()" ref="formContent" autocomplete="off"
-              @validation-error="$alert.error($tr('ui.message.formInvalid'))"
+              @validation-error="$alert.error($tr('isite.cms.message.formInvalid'))"
               class="row q-col-gutter-x-md relative-position backend-page q-pa-md">
         <!--Load dynamic fields-->
         <div v-for="(field, key) in fields" :class="fields.length >= 6 ? 'col-12 col-md-6' : 'col-12'">
@@ -75,7 +75,7 @@
               props : {
                 type: item.type,
                 label: item.required ? `${item.label} *` : item.label,
-                rules: item.required ? [val => !!val || this.$tr('ui.message.fieldRequired')] : []
+                rules: item.required ? [val => !!val || this.$tr('isite.cms.message.fieldRequired')] : []
               }
             })
           })

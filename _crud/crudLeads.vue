@@ -44,31 +44,31 @@ export default {
         create: false,
         read: {
           columns: [
-            {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
+            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
             {
-              name: 'formName', label: this.$tr('qform.layout.form.form'), field: 'form', align: 'left',
+              name: 'formName', label: this.$tr('iforms.cms.form.form'), field: 'form', align: 'left',
               format: val => val ? val.title : ''
             },
             {
-              name: 'assignedTo', label: this.$tr('ui.form.assignedTo'), field: 'assignedTo', align: 'left',
+              name: 'assignedTo', label: this.$tr('isite.cms.form.assignedTo'), field: 'assignedTo', align: 'left',
               format: val => val ? val.fullName : '-'
             },
             {
-              name: 'values', label: this.$trp('ui.label.data'), field: 'values', align: 'left',
+              name: 'values', label: this.$trp('isite.cms.label.data'), field: 'values', align: 'left',
               classes: 'ellipsis', style: 'max-width : 350px',
               format: val => val ? Object.values(val).join(', ') : ''
             },
             {
-              name: 'createdAt', label: this.$tr('ui.form.createdAt'), field: 'createdAt',
+              name: 'createdAt', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt',
               format: val => val ? this.$trd(val) : '-',
               align: 'left', sortable: true
             },
             {
-              name: 'updatedAt', label: this.$tr('ui.form.updatedAt'), field: 'updatedAt',
+              name: 'updatedAt', label: this.$tr('isite.cms.form.updatedAt'), field: 'updatedAt',
               format: val => val ? this.$trd(val) : '-',
               align: 'left', sortable: true
             },
-            {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
+            {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
           ],
           requestParams: {
             include: 'form,assignedTo,files',
@@ -84,7 +84,7 @@ export default {
               value: null,
               type: 'select',
               props: {
-                label: this.$tr('qform.layout.form.form'),
+                label: this.$tr('iforms.cms.form.form'),
                 clearable: true,
               },
               loadOptions: {
@@ -98,7 +98,7 @@ export default {
               name: 'viewLead',
               icon: 'fas fa-eye',
               color: 'info',
-              tooltip: this.$tr('ui.label.view'),
+              tooltip: this.$tr('isite.cms.label.view'),
               action: (item) => {
                 this.modal.lead = item
                 this.modal.show = true
@@ -117,7 +117,7 @@ export default {
               crudType: 'select',
               crudData: import('@imagina/quser/_crud/users'),
               crudProps: {
-                label: `${this.$trp('ui.form.assignedTo')}`,
+                label: `${this.$trp('isite.cms.form.assignedTo')}`,
               },
               config: {
                 options: {

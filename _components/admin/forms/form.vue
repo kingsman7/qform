@@ -5,36 +5,36 @@
 
     <!--Form-->
     <q-form autocorrect="off" autocomplete="off" ref="formContent" class="q-my-sm" v-if="locale.success"
-            @submit="updateItem()" @validation-error="$alert.error($tr('ui.message.formInvalid'))">
+            @submit="updateItem()" @validation-error="$alert.error($tr('isite.cms.message.formInvalid'))">
       <!--Name-->
-      <q-input outlined dense v-model="locale.formTemplate.title" :label="`${$tr('ui.form.name')} *`"
-               :rules="[val => !!val || $tr('ui.message.fieldRequired')]"/>
+      <q-input outlined dense v-model="locale.formTemplate.title" :label="`${$tr('isite.cms.form.name')} *`"
+               :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"/>
 
       <!--systemName-->
-      <q-input outlined dense v-model="locale.formTemplate.systemName" :label="`${$tr('ui.form.slug')} *`"
-               :rules="[val => !!val || $tr('ui.message.fieldRequired')]" readonly/>
+      <q-input outlined dense v-model="locale.formTemplate.systemName" :label="`${$tr('isite.cms.form.slug')} *`"
+               :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]" readonly/>
 
       <!--Destinations email-->
-      <q-select :label="`${$trp('ui.form.email')} *`" v-model="locale.formTemplate.destinationEmail"
-                :rules="[val => val.length || $tr('ui.message.fieldRequired')]"
+      <q-select :label="`${$trp('isite.cms.form.email')} *`" v-model="locale.formTemplate.destinationEmail"
+                :rules="[val => val.length || $tr('isite.cms.message.fieldRequired')]"
                 use-input use-chips multiple hide-dropdown-icon input-debounce="0"
                 new-value-mode="add-unique" style="width: 100%" outlined dense/>
 
       <!--Status-->
       <q-select outlined dense bg-color="white" v-model="locale.formTemplate.active"
-                :label="$tr('ui.form.status')" style="width: 100%;"
+                :label="$tr('isite.cms.form.status')" style="width: 100%;"
                 emit-value map-options :options="optionStatus"/>
 
       <!--User-->
-      <q-select :label="$tr('ui.form.type')" v-model="locale.formTemplate.userId" :clearable="true"
+      <q-select :label="$tr('isite.cms.form.type')" v-model="locale.formTemplate.userId" :clearable="true"
                 :options="users" outlined dense emit-value map-options/>
 
       <q-input data-testid="urlTermsAndConditions" outlined dense
                v-model="locale.formTemplate.options.urlTermsAndConditions"
-               :label="`${$tr('qform.layout.form.urlTermsAndConditions')}`"/>
+               :label="`${$tr('iforms.cms.form.urlTermsAndConditions')}`"/>
 
       <q-btn class="float-right" v-if="itemId" color="green" :loading="loading" rounded
-             icon="fas fa-edit" :label="$tr('ui.label.update')" type="submit"/>
+             icon="fas fa-edit" :label="$tr('isite.cms.label.update')" type="submit"/>
     </q-form>
 
     <div class="q-my-sm" v-if="locale.success">
@@ -86,8 +86,8 @@
       },
       optionStatus() {
         return [
-          {label: this.$tr('ui.label.enabled'), value: 1,},
-          {label: this.$tr('ui.label.disabled'), value: 0,},
+          {label: this.$tr('isite.cms.label.enabled'), value: 1,},
+          {label: this.$tr('isite.cms.label.disabled'), value: 0,},
         ]
       }
     },
@@ -120,7 +120,7 @@
               this.orderDataItemToLocale(response.data)
               resolve(true)//Resolve
             }).catch(error => {
-              this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+              this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
               this.loading = false
               reject(false)//Resolve
             })
@@ -139,12 +139,12 @@
           this.loading = true
           let configName = 'apiRoutes.qform.forms'
           this.$crud.update(configName, this.itemId, this.getDataForm()).then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
             //this.initForm()
             this.loading = false
           }).catch(error => {
             this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.recordNoUpdated'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.recordNoUpdated'), pos: 'bottom'})
           })
         }
       },
@@ -178,7 +178,7 @@
             this.loading = false
           })
           .catch(error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
       },

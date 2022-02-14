@@ -7,7 +7,7 @@ export default {
     crud: import('@imagina/qform/_crud/crudForms'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qform.sidebar.adminForm',
+    title: 'iforms.cms.sidebar.adminForm',
     icon: 'fab fa-wpforms',
     authenticated: true,
     subHeader: {
@@ -21,7 +21,7 @@ export default {
     name: 'qform.admin.form.design',
     page: () => import('@imagina/qform/_pages/admin/forms/design'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qform.sidebar.designForm',
+    title: 'iforms.cms.sidebar.designForm',
     icon: 'fab fa-wpforms',
     authenticated: true
   },
@@ -32,7 +32,7 @@ export default {
     name: 'qform.admin.fields.index',
     page: () => import('@imagina/qform/_pages/admin/fields/index'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qform.sidebar.adminField',
+    title: 'iforms.cms.sidebar.adminField',
     icon: 'fas fa-grip-horizontal',
     authenticated: true,
     subHeader: {
@@ -47,7 +47,7 @@ export default {
     name: 'qform.admin.fields.create',
     page: () => import('@imagina/qform/_pages/admin/fields/form'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qform.layout.newField',
+    title: 'iforms.cms.newField',
     icon: 'fas fa-grip-horizontal',
     authenticated: true,
     subHeader: {
@@ -61,7 +61,7 @@ export default {
     name: 'qform.admin.fields.update',
     page: () => import('@imagina/qform/_pages/admin/fields/form'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qform.layout.updateField',
+    title: 'iforms.cms.updateField',
     icon: 'fas fa-grip-horizontal',
     authenticated: true,
     subHeader: {
@@ -76,7 +76,7 @@ export default {
     crud: import('@imagina/qform/_crud/crudLeads'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qform.sidebar.adminLead',
+    title: 'iforms.cms.sidebar.adminLead',
     icon: 'fas fa-leaf',
     authenticated: true,
     subHeader: {
@@ -91,7 +91,7 @@ export default {
     name: 'qform.admin.leads.show',
     page: () => import('@imagina/qform/_pages/admin/leads/show'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qform.sidebar.adminLead',
+    title: 'iforms.cms.sidebar.adminLead',
     icon: 'fas fa-chalkboard-teacher',
     authenticated: true
   },

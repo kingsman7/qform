@@ -70,7 +70,7 @@ export default {
         })
         .catch(error => {
           this.loading = false
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
         })
     },
     getFields() {
@@ -90,7 +90,7 @@ export default {
         })
         .catch(error => {
           this.loading = false
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
         })
     },
     orderColumnsForTable(array) {
@@ -122,7 +122,7 @@ export default {
         .catch(error => {
           this.loading = false
           console.error(error)
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
         })
     },
     orderDataForTable(array) {

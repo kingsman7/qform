@@ -1,17 +1,17 @@
 <template>
   <div class="row q-my-md">
-    
+
     <!--Countries-->
     <div class="col-md-12">
-    
+
     </div>
-    
+
     <!--Provinces-->
     <div class="col-md-12"></div>
-  
+
     <!--Cities-->
     <div class="col-md-12"></div>
-    
+
   </div>
 </template>
 
@@ -48,14 +48,14 @@
         })
         .catch( error => {
           this.countries.loading = false
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
         })
       },
       getProvinces(countryId) {
-      
+
       },
       getCities(provinceId){
-      
+
       }
     }
   }

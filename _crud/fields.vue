@@ -18,19 +18,19 @@ export default {
         permission: 'iforms.fields',
         extraFormFields: 'iforms.crud-fields.fields',
         create: {
-          title: this.$tr('qform.layout.newField'),
+          title: this.$tr('iforms.cms.newField'),
         },
         read: {
           columns: [
-            {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
-            {name: 'typeName', label: this.$tr('ui.form.type'), field: 'typeName'},
-            {name: 'label', label: this.$tr('qform.layout.form.label'), field: 'label'},
-            {name: 'order', label: this.$tr('qform.layout.form.order'), field: 'order'},
+            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
+            {name: 'typeName', label: this.$tr('isite.cms.form.type'), field: 'typeName'},
+            {name: 'label', label: this.$tr('iforms.cms.form.label'), field: 'label'},
+            {name: 'order', label: this.$tr('iforms.cms.form.order'), field: 'order'},
             {
-              name: '_form.vue', label: this.$tr('qform.layout.form.form'), field: '_form.vue',
+              name: '_form.vue', label: this.$tr('iforms.cms.form.form'), field: '_form.vue',
               format: val => (val && val.title) ? val.title : '-'
             },
-            {name: 'actions', label: this.$tr('ui.form.actions'), align: 'right'},
+            {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
           ],
           requestParams: {
             filter: {
@@ -39,7 +39,7 @@ export default {
             include: '_form.vue'
           },
         },
-        update: {title: this.$tr('qform.layout.updateField')},
+        update: {title: this.$tr('iforms.cms.updateField')},
         delete: true,
         formLeft: {
           id: {value: ''},
@@ -50,9 +50,9 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: `${this.$tr('qform.layout.form.label')}*`,
+              label: `${this.$tr('iforms.cms.form.label')}*`,
               rules: [
-                val => !!val || this.$tr('ui.message.fieldRequired')
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
             }
           },
@@ -61,7 +61,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('qform.layout.form.placeholder')
+              label: this.$tr('iforms.cms.form.placeholder')
             }
           },
           description: {
@@ -69,24 +69,24 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: this.$tr('ui.form.description')
+              label: this.$tr('isite.cms.form.description')
             }
           },
           width: {
             value: 12,
             type: 'select',
             props: {
-              label: this.$tr('ui.form.width'),
+              label: this.$tr('isite.cms.form.width'),
               rules: [
-                val => !!val || this.$tr('ui.message.fieldRequired')
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
               ],
               options: [
-                {value: 12, label: this.$tr('qform.layout.form.columns.full')},
-                {value: 9, label: this.$tr('qform.layout.form.columns.nine')},
-                {value: 8, label: this.$tr('qform.layout.form.columns.eight')},
-                {value: 6, label: this.$tr('qform.layout.form.columns.six')},
-                {value: 4, label: this.$tr('qform.layout.form.columns.four')},
-                {value: 3, label: this.$tr('qform.layout.form.columns.three')},
+                {value: 12, label: this.$tr('iforms.cms.form.columns.full')},
+                {value: 9, label: this.$tr('iforms.cms.form.columns.nine')},
+                {value: 8, label: this.$tr('iforms.cms.form.columns.eight')},
+                {value: 6, label: this.$tr('iforms.cms.form.columns.six')},
+                {value: 4, label: this.$tr('iforms.cms.form.columns.four')},
+                {value: 3, label: this.$tr('iforms.cms.form.columns.three')},
               ],
             },
           },
@@ -94,7 +94,7 @@ export default {
             value: 1,
             type: 'select',
             props: {
-              label: `${this.$tr('ui.form.type')} ${this.$tr('ui.label.field')}`,
+              label: `${this.$tr('isite.cms.form.type')} ${this.$tr('isite.cms.label.field')}`,
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qform.types',
@@ -107,7 +107,7 @@ export default {
             type: 'select',
             isFakeField: true,
             props: {
-              label: this.$trp('ui.form.option'),
+              label: this.$trp('isite.cms.form.option'),
               useInput: true,
               useChips: true,
               multiple: true,
@@ -115,7 +115,7 @@ export default {
               inputDebounce: "0",
               newValueMode: "add-unique",
               vIf: ([5, 6, 8].indexOf(parseInt(this.crudInfo.type || 0)) != -1) ? true : false,
-              hint: this.$tr('qform.layout.message.helpToOptionsField')
+              hint: this.$tr('iforms.cms.message.helpToOptionsField')
             }
           },
         },
@@ -131,10 +131,10 @@ export default {
             type: 'select',
             fakeFieldName: 'prefix',
             props: {
-              label: `${this.$tr('ui.form.type')} ${this.$tr('ui.form.prefix')}`,
+              label: `${this.$tr('isite.cms.form.type')} ${this.$tr('isite.cms.form.prefix')}`,
               options: [
-                {value: 'icon', label: this.$tr('ui.form.icon')},
-                {value: 'text', label: this.$tr('ui.label.text')}
+                {value: 'icon', label: this.$tr('isite.cms.form.icon')},
+                {value: 'text', label: this.$tr('isite.cms.label.text')}
               ],
             }
           },
@@ -144,7 +144,7 @@ export default {
             type: 'input',
             fakeFieldName: 'prefix',
             props: {
-              label: this.$tr('ui.form.prefix'),
+              label: this.$tr('isite.cms.form.prefix'),
               vIf: (this.crudInfo.prefix && this.crudInfo.prefix.type) ? true : false
             }
           },
@@ -154,10 +154,10 @@ export default {
             type: 'select',
             fakeFieldName: 'suffix',
             props: {
-              label: `${this.$tr('ui.form.type')} ${this.$tr('ui.form.suffix')}`,
+              label: `${this.$tr('isite.cms.form.type')} ${this.$tr('isite.cms.form.suffix')}`,
               options: [
-                {value: 'icon', label: this.$tr('ui.form.icon')},
-                {value: 'text', label: this.$tr('ui.label.text')}
+                {value: 'icon', label: this.$tr('isite.cms.form.icon')},
+                {value: 'text', label: this.$tr('isite.cms.label.text')}
               ],
             }
           },
@@ -167,7 +167,7 @@ export default {
             type: 'input',
             fakeFieldName: 'suffix',
             props: {
-              label: this.$tr('ui.form.suffix'),
+              label: this.$tr('isite.cms.form.suffix'),
               vIf: (this.crudInfo.suffix && this.crudInfo.suffix.type) ? true : false
             }
           },
@@ -176,7 +176,7 @@ export default {
             value: false,
             type: 'checkbox',
             props: {
-              label: this.$tr('ui.form.required'),
+              label: this.$tr('isite.cms.form.required'),
             }
           },
         }

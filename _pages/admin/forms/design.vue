@@ -77,7 +77,7 @@
             this.loading = false
           })
           .catch( error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
       },
@@ -99,7 +99,7 @@
             this.loading = false
           })
           .catch( error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
             this.loading = false
           })
       },
@@ -107,10 +107,10 @@
         data.order = newOrder
         this.$crud.update('apiRoutes.qform.fields', data.id, data)
           .then( respose => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
           })
           .catch( error => {
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
           })
       },
       handleEvents(event){

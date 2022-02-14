@@ -13,7 +13,7 @@
       <div class="col-12" v-if="formData">
         <!--Page Actions-->
         <div class="box box-auto-height">
-          <page-actions :title="`${$tr('ui.label.form')}: ${formData.title}`" :extra-actions="['new']"
+          <page-actions :title="`${$tr('isite.cms.label.form')}: ${formData.title}`" :extra-actions="['new']"
                         @new="$refs.crudBlocks.create()"/>
         </div>
       </div>
@@ -30,7 +30,7 @@
                 <div class="box-title col-12 q-py-sm q-pr-xl">
                   <div class="block-info-title ellipsis cursor-pointer">
                     <q-icon name="fas fa-arrows-alt"></q-icon>
-                    {{ $tr('ui.label.block') }} #{{ block.sortOrder }} | {{ block.title }}
+                    {{ $tr('isite.cms.label.block') }} #{{ block.sortOrder }} | {{ block.title }}
                     <q-tooltip>{{ block.title }}</q-tooltip>
                   </div>
                 </div>
@@ -65,11 +65,11 @@
                 <!--Fields Information-->
                 <div class="row justify-between items-center">
                   <!--Title-->
-                  <div class="box-title">{{ $trp('ui.label.field') }}</div>
+                  <div class="box-title">{{ $trp('isite.cms.label.field') }}</div>
                   <!--Btn to create field-->
                   <q-btn @click="blockCreateField = block.id; $refs.crudFields.create()" icon="fas fa-plus"
                          color="green" padding="sm" size="10px" round unelevated>
-                    <q-tooltip>{{ $tr('qform.layout.newField') }}</q-tooltip>
+                    <q-tooltip>{{ $tr('iforms.cms.newField') }}</q-tooltip>
                   </q-btn>
                 </div>
                 <div id="contentFields" class="q-mt-md">
@@ -222,7 +222,7 @@ export default {
     fileActionsField() {
       return [
         {
-          label: this.$tr('ui.label.edit'),
+          label: this.$tr('isite.cms.label.edit'),
           icon: 'fas fa-pen',
           color: 'green',
           action: (field) => {
@@ -230,7 +230,7 @@ export default {
           }
         },
         {
-          label: this.$tr('ui.label.delete'),
+          label: this.$tr('isite.cms.label.delete'),
           icon: 'fas fa-trash',
           color: 'red',
           action: (field) => {
@@ -243,7 +243,7 @@ export default {
     fileActionsBlock() {
       return [
         {
-          label: this.$tr('ui.label.edit'),
+          label: this.$tr('isite.cms.label.edit'),
           icon: 'fas fa-pen',
           color: 'green',
           action: (block) => {
@@ -251,7 +251,7 @@ export default {
           }
         },
         {
-          label: this.$tr('ui.label.delete'),
+          label: this.$tr('isite.cms.label.delete'),
           icon: 'fas fa-trash',
           color: 'red',
           action: (block) => {
@@ -315,12 +315,12 @@ export default {
 
       this.$crud.put('apiRoutes.qform.formFields', dataFields)
           .then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
             this.loading = false
           })
           .catch(error => {
             this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
           })
     },
 
@@ -341,12 +341,12 @@ export default {
       let dataBlocks = {attributes: this.getDataBlock()}
       this.$crud.put('apiRoutes.qform.formBlocks', dataBlocks)
           .then(response => {
-            this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+            this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
             this.loading = false
           })
           .catch(error => {
             this.loading = false
-            this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+            this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
           })
     }
   }
