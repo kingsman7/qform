@@ -34,7 +34,7 @@ export default {
 
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'right'},
           ],
-          requestParams: {include: 'fields,leads,user'},
+          requestParams: {include: 'user'},
           filters: {
             userId: {
               value: '0',
