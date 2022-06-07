@@ -1,0 +1,141 @@
+{
+  "crudId": "iforms-crud-forms",
+  "entityName": "form",
+  "apiRoute": "/iform/v4/forms",
+  "permission": "iforms.forms",
+  "extraFormFields": "iforms.crud-fields.forms",
+  "create": {
+    "title":"iforms.cms.newForm"
+  },
+  "read": {
+    "columns": [
+      {
+        "name": "id",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.id"
+        },
+        "field": "id",
+        "align": "left",
+        "style": "width: 50px",
+        "sortable": false
+      },
+      {
+        "name": "title",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.title"
+        },
+        "field": "title",
+        "sortable": false,
+        "align": "left"
+      },
+      {
+        "name": "slug",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.slug"
+        },
+        "field": "systemName",
+        "align": "left",
+        "sortable": false
+      },
+      {
+        "name": "active",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.status"
+        },
+        "field": "active",
+        "align": "left",
+        "sortable": false
+      },
+      {
+        "name": "user",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.label.user"
+        },
+        "field": "user",
+        "sortable": false,
+        "align": "left",
+        "format":{
+          "type":"str",
+          "child":["fullName"]
+        }
+      },
+      {
+        "name": "destinationEmail",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.label.email"
+        },
+        "field": "destinationEmail",
+        "sortable": false,
+        "align": "left",
+        "style": "max-width : 250px",
+        "classes":"ellipsis",
+        "format":{
+          "type":"array",
+          "method":["join"],
+          "join":", "
+        }
+      },
+      {
+        "name": "actions",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.actions"
+        },
+        "field": "actions",
+        "sortable": false,
+        "align": "left"
+      }
+    ],
+    "requestParams": {
+      "include": "user"
+    },
+    "filters":[
+      {
+        "filterName": "userId",
+        "value": "0",
+        "type": "select",
+        "props": {
+          "label": {
+            "isTranslatable": {
+              "type": "singular",
+              "value": "isite.cms.label.user"
+            },
+            "options": [
+              {
+                "label": "isite.cms.label.all", 
+                "value": "0"
+              }
+            ]
+            
+          }
+        },
+        "loadOptions": {
+          "apiRoute": "/profile/v1/users",
+          "select": {"label": "fullName", "id": "id"}
+        }
+      }
+    ],
+    "actions": [
+      {
+        "icon":"fas fa-list-ol",
+        "color":"info",
+        "route": "qform.admin.fields.index",
+        "label": {
+          "isTranslatable": "plural",
+          "value": "isite.cms.label.field"
+        }
+        
+      }
+    ]
+  },
+  "update": {
+    "title": "iforms.cms.updateForm"
+  },
+  "delete": true
+}

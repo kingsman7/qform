@@ -1,6 +1,13 @@
-<template></template>
+<template>
+  <config-crud ref="configCrud" />
+</template>
 <script>
+import configCrud from "@imagina/qcrud/_config/CrudConfig"
+import Json from "@imagina/qform/_crud/crudForms.json"
 export default {
+  components:{
+    configCrud
+  },
   data() {
     return {
       crudId: this.$uid()
@@ -9,7 +16,8 @@ export default {
   computed: {
     crudData() {
       return {
-        crudId: this.crudId,
+        ...this.$refs.configCrud.getData(Json),
+       /* crudId: this.crudId,
         entityName: config("main.qform.entityNames.form"),
         apiRoute: 'apiRoutes.qform.forms',
         permission: 'iforms.forms',
@@ -63,7 +71,7 @@ export default {
         update: {
           title: this.$tr('iforms.cms.updateForm')
         },
-        delete: true,
+        delete: true,*/
         formLeft: {
           id: {value: ''},
           title: {

@@ -1,5 +1,9 @@
-<template></template>
+<template>
+  <config-crud ref="configCrud" />
+</template>
 <script>
+import configCrud from "@imagina/qcrud/_config/CrudConfig"
+import Json from "@imagina/qform/_crud/blocks.json"
 export default {
   data() {
     return {
@@ -32,7 +36,8 @@ export default {
   computed: {
     crudData() {
       return {
-        crudId: this.crudId,
+        ...this.$refs.configCrud.getData(Json),
+       /* crudId: this.crudId,
         entityName: config("main.qform.entityNames.blocks"),
         apiRoute: 'apiRoutes.qform.blocks',
         permission: 'iforms.blocks',
@@ -56,7 +61,7 @@ export default {
         },
         delete: {
           title: this.$tr('iforms.cms.deleteBlock'),
-        },
+        },*/
 
         formLeft: {
           id: {value: ''},

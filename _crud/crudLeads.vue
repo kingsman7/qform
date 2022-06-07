@@ -1,29 +1,33 @@
 <template>
-  <master-modal v-model="modal.show" @hide="resetModal()" :title="modal.lead ? modal.lead.form.title : ''">
-    <div class="box">
-      <q-list separator dense>
-        <q-item v-for="(item, itemKey) in showLeadItems" :key="itemKey" style="padding: 8px 0">
-          <q-item-section>
-            <q-item-label v-if="item.fieldType != 'media'">{{ item.label }}</q-item-label>
-            <!--File preview-->
-            <q-item-label v-if="item.fieldType == 'media'">
-              <file-list v-model="item.value" grid-col-class="col-12" hide-header/>
-            </q-item-label>
-            <!--value-->
-            <q-item-label v-else caption>{{ item.value }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </div>
-  </master-modal>
+  <div>
+    <config-crud ref="configCrud" />
+    <master-modal v-model="modal.show" @hide="resetModal()" :title="modal.lead ? modal.lead.form.title : ''">
+      <div class="box">
+        <q-list separator dense>
+          <q-item v-for="(item, itemKey) in showLeadItems" :key="itemKey" style="padding: 8px 0">
+            <q-item-section>
+              <q-item-label v-if="item.fieldType != 'media'">{{ item.label }}</q-item-label>
+              <!--File preview-->
+              <q-item-label v-if="item.fieldType == 'media'">
+                <file-list v-model="item.value" grid-col-class="col-12" hide-header/>
+              </q-item-label>
+              <!--value-->
+              <q-item-label v-else caption>{{ item.value }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+    </master-modal>
+  </div>
 </template>
 
 <script>
 //Components
 import fileList from '@imagina/qsite/_components/master/fileList'
-
+import configCrud from "@imagina/qcrud/_config/CrudConfig"
+import Json from "@imagina/qform/_crud/crudLeads.json"
 export default {
-  components: {fileList},
+  components: {fileList, configCrud},
   data() {
     return {
       crudId: this.$uid(),
@@ -36,7 +40,8 @@ export default {
   computed: {
     crudData() {
       return {
-        crudId: this.crudId,
+        ...this.$refs.configCrud.getData(Json, null, null,null, this.modal),
+       /* crudId: this.crudId,
         entityName: config("main.qform.entityNames.lead"),
         apiRoute: 'apiRoutes.qform.leads',
         permission: 'iforms.leads',
@@ -107,7 +112,7 @@ export default {
           ]
         },
         update: true,
-        delete: false,
+        delete: false,*/
         formLeft: {
           id: {value: ''},
           assignedToId: {

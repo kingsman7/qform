@@ -1,0 +1,150 @@
+{
+  "crudId": "iforms-crud-leads",
+  "entityName": "lead",
+  "apiRoute": "/iform/v4/leads",
+  "permission": "iforms.leads",
+  "extraFormFields": "iforms.crud-fields.leads",
+  "create": false,
+  "read": {
+    "columns": [
+      {
+        "name": "id",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.id"
+        },
+        "field": "id",
+        "align": "left",
+        "style": "width: 50px",
+        "sortable": false
+      },
+      {
+        "name": "formName",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "iforms.cms.form.form"
+        },
+        "field": "form",
+        "sortable": false,
+        "align": "left",
+        "format":{
+          "type":"str",
+          "child":["title"]
+        }
+      },
+      {
+        "name": "assignedTo",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.assignedTo"
+        },
+        "field": "assignedTo",
+        "sortable": false,
+        "align": "left",
+        "format":{
+          "type":"str",
+          "child":["fullName"]
+        }
+      },
+      {
+        "name": "values",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.label.data"
+        },
+        "field": "values",
+        "align": "left",
+        "classes": "ellipsis", 
+        "style": "max-width : 350px",
+        "sortable": false,
+        "format":{
+          "type":"obj",
+          "param":"val",
+          "join":", "
+        }
+      },
+      {
+        "name": "createdAt",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.createdAt"
+        },
+        "field": "createdAt",
+        "sortable": true,
+        "align": "left",
+        "format":{
+          "type":"date"
+        }
+      },
+      {
+        "name": "updatedAt",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.updatedAt"
+        },
+        "field": "updatedAt",
+        "sortable": true,
+        "align": "left",
+        "format":{
+          "type":"date"
+        }
+      },
+      {
+        "name": "actions",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.actions"
+        },
+        "field": "actions",
+        "sortable": false,
+        "align": "left"
+      }
+    ],
+    "requestParams": {
+      "include": "form,assignedTo,files",
+      "filter": {
+        "filter": {
+          "filterName":"order",
+          "field": "created_at",
+          "way": "desc"
+        }
+      }
+    },
+    "filters":[
+      {
+        "filterName": "formId",
+        "value": null,
+        "type": "select",
+        "props": {
+          "label": {
+            "isTranslatable": {
+              "type": "singular",
+              "value": "iforms.cms.form.form"
+            }
+          },
+          "clearable": true
+        },
+        "loadOptions": {
+          "apiRoute": "/iform/v4/forms",
+          "select": {"label": "title", "id": "id"}
+        }
+      }
+    ],
+    "actions": [
+      {
+        "name": "viewLead",
+        "icon":"fas fa-eye",
+        "color":"info",
+        "tooltip": "isite.cms.label.view",
+        "action": {
+          "type":"modal",
+          "value":"slug", 
+          "data":"lead",
+          "open":"show"
+        }
+      }
+    ]
+  },
+  "update": true,
+  "delete": false
+}

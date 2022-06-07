@@ -1,0 +1,97 @@
+{
+  "crudId": "iforms-crud-fields",
+  "entityName": "field",
+  "apiRoute": "/iform/v4/fields",
+  "permission": "iforms.fields",
+  "extraFormFields": "iforms.crud-fields.fields",
+  "create": {
+    "title": "iforms.cms.newField"
+  },
+  "read": {
+    "columns": [
+      {
+        "name": "id",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.id"
+        },
+        "field": "id",
+        "align": "left",
+        "style": "width: 50px",
+        "sortable": false
+      },
+      {
+        "name": "typeName",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.type"
+        },
+        "field": "typeName",
+        "sortable": false,
+        "align": ""
+      },
+      {
+        "name": "label",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.label"
+        },
+        "field": "label",
+        "sortable": false,
+        "align": ""
+      },
+      {
+        "name": "order",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.label"
+        },
+        "field": "label",
+        "sortable": false,
+        "align": ""
+      },
+      {
+        "name": "_form.vue",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.form"
+        },
+        "field": "_form.vue",
+        "align": "",
+        "sortable": false,
+        "format": {
+          "type": "str",
+          "child": [
+            "title"
+          ]
+        }
+      },
+      {
+        "name": "actions",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.actions"
+        },
+        "field": "actions",
+        "sortable": false,
+        "align": "left"
+      }
+    ],
+    "requestParams": {
+      "include": "_form.vue",
+      "filter": {
+        "filter": {
+          "filterName": "formId",
+          "hook": "$route",
+          "child": [
+            "params"
+          ]
+        }
+      }
+    }
+  },
+  "update": {
+    "title": "iforms.cms.updateField"
+  },
+  "delete": true
+}

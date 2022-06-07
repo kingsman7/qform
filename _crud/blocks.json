@@ -1,0 +1,75 @@
+{
+  "crudId": "iforms-crud-blocks",
+  "entityName": "block",
+  "apiRoute": "/iform/v4/blocks",
+  "permission": "iforms.blocks",
+  "extraFormFields": "iforms.crud-fields.blocks",
+  "create": {
+    "title":"iforms.cms.newBlock"
+  },
+  "read": {
+    "columns": [
+      {
+        "name": "id",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.id"
+        },
+        "field": "id",
+        "align": "left",
+        "style": "width: 50px",
+        "sortable": false
+      },
+      {
+        "name": "title",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.title"
+        },
+        "field": "title",
+        "sortable": false,
+        "align": "right"
+      },
+      {
+        "name": "description",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.description"
+        },
+        "field": "description",
+        "align": "left",
+        "style": "width: 50px",
+        "sortable": false
+      },
+      {
+        "name": "status",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.status"
+        },
+        "field": "status",
+        "align": "left",
+        "sortable": false
+      },
+      {
+        "name": "actions",
+        "label": {
+          "isTranslatable": "singular",
+          "value": "isite.cms.form.actions"
+        },
+        "field": "actions",
+        "sortable": false,
+        "align": "left"
+      }
+    ],
+    "requestParams": {
+      "include": "parent"
+    }
+  },
+  "update": {
+    "title": "iforms.cms.updateBlock"
+  },
+  "delete": {
+    "title": "iforms.cms.deleteBlock"
+  }
+}
